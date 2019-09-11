@@ -10,7 +10,7 @@
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
             <!-- Custom styles for this template -->
-            <link href="css/floating-labels.css" rel="stylesheet">
+            <!--<link href="css/floating-labels.css" rel="stylesheet">-->
         </head>
         <body>
             <form class="form-signin" action="login.handler" method="POST">

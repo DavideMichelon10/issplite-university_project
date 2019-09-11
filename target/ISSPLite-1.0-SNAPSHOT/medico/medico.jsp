@@ -13,5 +13,16 @@
     </head>
     <body>
         <h1>Hello Medico!</h1>
+            <form class="form-signin" action="medici.handler" method="GET">
+                  
+                <div class="form-label-group">
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+                    <label for="username">Username</label>
+                </div>
+                
+               
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+
     </body>
 </html>

@@ -9,7 +9,6 @@ import com.mycompany.issplite.persistence.dao.MedicoDAO;
 import com.mycompany.issplite.persistence.dao.factories.DAOException;
 import com.mycompany.issplite.persistence.dao.factories.jdbc.JDBCDAO;
 import com.mycompany.issplite.persistence.entities.Medico;
-import com.mycompany.issplite.persistence.entities.SSP;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

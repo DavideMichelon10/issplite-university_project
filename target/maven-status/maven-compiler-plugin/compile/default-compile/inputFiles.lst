@@ -4,8 +4,10 @@ C:\Users\Davide\Desktop\uni\4 semestre\progWeb\progetto\ISSPLite\src\main\java\c
 C:\Users\Davide\Desktop\uni\4 semestre\progWeb\progetto\ISSPLite\src\main\java\com\mycompany\issplite\persistence\dao\factories\DAOException.java
 C:\Users\Davide\Desktop\uni\4 semestre\progWeb\progetto\ISSPLite\src\main\java\com\mycompany\issplite\persistence\dao\PazienteDAO.java
 C:\Users\Davide\Desktop\uni\4 semestre\progWeb\progetto\ISSPLite\src\main\java\com\mycompany\issplite\servlets\LoginServlet.java
+C:\Users\Davide\Desktop\uni\4 semestre\progWeb\progetto\ISSPLite\src\main\java\com\mycompany\issplite\filters\AuthFilter.java
 C:\Users\Davide\Desktop\uni\4 semestre\progWeb\progetto\ISSPLite\src\main\java\com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAOFactory.java
 C:\Users\Davide\Desktop\uni\4 semestre\progWeb\progetto\ISSPLite\src\main\java\com\mycompany\issplite\persistence\entities\Medico.java
+C:\Users\Davide\Desktop\uni\4 semestre\progWeb\progetto\ISSPLite\src\main\java\com\mycompany\issplite\servlets\MediciServlet.java
 C:\Users\Davide\Desktop\uni\4 semestre\progWeb\progetto\ISSPLite\src\main\java\com\mycompany\issplite\persistence\entities\Paziente.java
 C:\Users\Davide\Desktop\uni\4 semestre\progWeb\progetto\ISSPLite\src\main\java\com\mycompany\issplite\persistence\dao\factories\DAO.java
 C:\Users\Davide\Desktop\uni\4 semestre\progWeb\progetto\ISSPLite\src\main\java\com\mycompany\issplite\persistence\dao\MedicoDAO.java

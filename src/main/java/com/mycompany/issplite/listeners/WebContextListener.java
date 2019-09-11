@@ -34,7 +34,6 @@ public class WebContextListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        System.out.println("CONTEXT DESTROYED");
         DAOFactory daoFactory = (DAOFactory) sce.getServletContext().getAttribute("daoFactory");
         if (daoFactory != null) {
             daoFactory.shutdown();

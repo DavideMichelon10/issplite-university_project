@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.mycompany.issplite.servlets;
 
 import com.mycompany.issplite.persistence.dao.MedicoDAO;
@@ -63,7 +59,7 @@ public class LoginServlet extends HttpServlet {
         }
     }
    
-    
+   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("username");
@@ -84,23 +80,32 @@ public class LoginServlet extends HttpServlet {
                     ssp = searchForSSP(id, password);
                     if(ssp == null){
                         
-                        request.setAttribute("status", "not_found");
-                        request.getRequestDispatcher("./login.jsp").forward(request,response);
-
+                        //request.setAttribute("status", "not_found");
+                        //request.getRequestDispatcher("./login.jsp").forward(request,response);
+                       
                         //dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/login.jsp"));
                         //dispatcher.forward(request, response);
-                        //response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp"));
-                        
+                        //String destination = "/login.jsp";
+
+                        //RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+                        //rd.forward(request, response);
+    
+                        response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp"));
+
                     }else{
                         addUserToCookie(ssp.getIdSSP(),request, response);
                         request.getSession().setAttribute("ssp", ssp);
                         response.sendRedirect(response.encodeRedirectURL(contextPath + "ssp/ssp.jsp"));
                     }
                 }else{
-                    
                     addUserToCookie(medico.getIdMedico(),request, response);
                     request.getSession().setAttribute("medico", medico);
-                    response.sendRedirect(response.encodeRedirectURL(contextPath + "medico/medico.jsp"));
+
+                    response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/medici.html"));
+                    //String destination = "/medico/medico.jsp";
+
+                    //RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+                    //rd.forward(request, response);
                 }
             } else {
                 
@@ -119,8 +124,8 @@ public class LoginServlet extends HttpServlet {
         }
         return null;
     }
-    
 
+    
     private SSP searchForSSP(String id, String password) {
         try {
             return sspDao.getByIdAndPassword(id, password);
@@ -150,7 +155,5 @@ public class LoginServlet extends HttpServlet {
             cookie.setMaxAge(60);
             response.addCookie(cookie);
         }
-
     }
-
 }

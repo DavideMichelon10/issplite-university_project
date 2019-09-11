@@ -11,8 +11,10 @@ com\mycompany\issplite\persistence\dao\factories\DAO.class
 com\mycompany\issplite\persistence\dao\MedicoDAO.class
 com\mycompany\issplite\persistence\dao\factories\DAOFactory.class
 com\mycompany\issplite\servlets\LoginServlet.class
+com\mycompany\issplite\filters\AuthFilter.class
 com\mycompany\issplite\listeners\WebContextListener.class
 com\mycompany\issplite\persistence\dao\factories\DAOFactoryException.class
+com\mycompany\issplite\servlets\MediciServlet.class
 com\mycompany\issplite\persistence\dao\jdbc\JDBCPazienteDAO.class
 com\mycompany\issplite\persistence\dao\PazienteDAO.class
 com\mycompany\issplite\persistence\dao\jdbc\JDBCSSPDAO.class
