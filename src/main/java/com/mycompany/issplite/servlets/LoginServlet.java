@@ -30,14 +30,14 @@ public class LoginServlet extends HttpServlet {
     private MedicoDAO medicoDao;
     private SSPDAO sspDao;
 
-    private final HashMap<String, String> authenticatedUsers; // jsession + ID
+    private static HashMap<String, String> authenticatedUsers; // jsession + ID
 
     public LoginServlet() {
         super();       
         authenticatedUsers = new HashMap<>();
     }
     
-    private String retrieveId(String jSessionId) {
+    public static String retrieveId(String jSessionId) {
         return authenticatedUsers.get(jSessionId);
     }
 
@@ -136,7 +136,7 @@ public class LoginServlet extends HttpServlet {
             String jSessionId = Long.toHexString(Double.doubleToLongBits(Math.random()));
 
             authenticatedUsers.put(jSessionId, username);
-            Cookie cookie = new Cookie("jsessionid", jSessionId);
+            Cookie cookie = new Cookie("ISSPLiteId", jSessionId);
             cookie.setMaxAge(60);
             response.addCookie(cookie);
         }
