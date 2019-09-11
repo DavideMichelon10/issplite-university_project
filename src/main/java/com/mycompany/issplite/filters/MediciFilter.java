@@ -26,14 +26,14 @@ import javax.servlet.http.HttpSession;
  *
  * @author Davide
  */
-public class AuthFilter implements Filter {
+public class MediciFilter implements Filter {
     
-    private static final boolean DEBUG = true;
+    protected static final boolean DEBUG = true;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
-    private FilterConfig filterConfig = null;
+    protected FilterConfig filterConfig = null;
     
     
     @Override
@@ -46,31 +46,27 @@ public class AuthFilter implements Filter {
         if (request instanceof HttpServletRequest) {
             ServletContext servletContext = ((HttpServletRequest) request).getServletContext();
             HttpSession session = ((HttpServletRequest) request).getSession(false);
-            Medico medico = null;
-            if (session != null) {
-                medico = (Medico) session.getAttribute("medico");
-            }
-            if (medico == null) {
-                String contextPath = servletContext.getContextPath();
-                if (!contextPath.endsWith("/")) {
-                    contextPath += "/";
+            
+            String contextPath = servletContext.getContextPath();
+                    if (!contextPath.endsWith("/")) {
+                        contextPath += "/";
+                    }
+            try{
+                Medico medico = (Medico) session.getAttribute("medico");
+                if (medico == null) {
+                    
+                    ((HttpServletResponse) response).sendRedirect(((HttpServletResponse) response).encodeRedirectURL(contextPath + "login.jsp"));
+                }else{
+                    chain.doFilter(request, response);
                 }
-
+            }catch(NullPointerException e){
                 ((HttpServletResponse) response).sendRedirect(((HttpServletResponse) response).encodeRedirectURL(contextPath + "login.jsp"));
-                
-            }else{
-               
-                System.out.println("MEDICO NON NULL");
-                chain.doFilter(request, response);
-
             }
+            
         }
-        
-        //String requestUri = ((HttpServletRequest) request).getRequestURI();
-        //System.out.println("requestUri: " + requestUri);        
+      
         Throwable problem = null;
-        
-        
+
         doAfterProcessing(request, response);
 
         if (problem != null) {
@@ -87,18 +83,21 @@ public class AuthFilter implements Filter {
 
    
     @Override
-    public void destroy() { 
-        System.out.println("IN DESTROY");
-    }
+    public void destroy() { }
 
     
     @Override
     public void init(FilterConfig filterConfig) {        
-        System.out.println("IN INIT");
+        this.filterConfig = filterConfig;
+        if (filterConfig != null) {
+            if (DEBUG) {
+                log("AuthenticationFilter:Initializing filter");
+            }
+        }
     }
 
 
-    private void sendProcessingError(Throwable t, ServletResponse response) {
+    protected void sendProcessingError(Throwable t, ServletResponse response) {
         String stackTrace = getStackTrace(t);
 
         if (stackTrace != null && !stackTrace.equals("")) {
@@ -138,6 +137,7 @@ public class AuthFilter implements Filter {
             sw.close();
             stackTrace = sw.getBuffer().toString();
         } catch (IOException | RuntimeException ex) {
+            
         }
         return stackTrace;
     }
@@ -150,7 +150,7 @@ public class AuthFilter implements Filter {
         }
     }
 
-    private void doAfterProcessing(ServletRequest request, ServletResponse response) {
+    protected void doAfterProcessing(ServletRequest request, ServletResponse response) {
         if (DEBUG) {
             log("AuthenticationFilter:DoAfterProcessing");
         }

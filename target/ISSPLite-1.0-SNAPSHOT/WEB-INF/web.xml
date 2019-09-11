@@ -1,15 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <filter>
-        <filter-name>AuthFilter</filter-name>
-        <filter-class>com.mycompany.issplite.filters.AuthFilter</filter-class>
+        <filter-name>MediciFilter</filter-name>
+        <filter-class>com.mycompany.issplite.filters.MediciFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>PazientiFilter</filter-name>
+        <filter-class>com.mycompany.issplite.filters.PazientiFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>SSPFilter</filter-name>
+        <filter-class>com.mycompany.issplite.filters.SSPFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>AuthFilter</filter-name>
-        <url-pattern>/restricted/*</url-pattern>
+        <filter-name>SSPFilter</filter-name>
+        <url-pattern>/sspi/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
-
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>PazientiFilter</filter-name>
+        <url-pattern>/pazienti/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>MediciFilter</filter-name>
+        <url-pattern>/medici/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
     </filter-mapping>
     <listener>
         <description>ServletContextListener</description>
@@ -24,20 +49,54 @@
         <servlet-class>com.mycompany.issplite.servlets.MediciServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>PazientiServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.PazientiServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SSPServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.SSPServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>MediciPage</servlet-name>
         <jsp-file>/medico/medico.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>PazientiPage</servlet-name>
+        <jsp-file>/paziente/paziente.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>SSPPage</servlet-name>
+        <jsp-file>/ssp/ssp.jsp</jsp-file>
+    </servlet>
+    
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login.handler</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MediciServlet</servlet-name>
-        <url-pattern>/restricted/medici.handler</url-pattern>
+        <url-pattern>/medici/medici.handler</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>PazientiServlet</servlet-name>
+        <url-pattern>/pazienti/pazienti.handler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SSPServlet</servlet-name>
+        <url-pattern>/sspi/sspi.html</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
         <servlet-name>MediciPage</servlet-name>
-        <url-pattern>/restricted/medici.html</url-pattern>
+        <url-pattern>/medici/medici.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PazientiPage</servlet-name>
+        <url-pattern>/pazienti/pazienti.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SSPPage</servlet-name>
+        <url-pattern>/ssp/ssp.html</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

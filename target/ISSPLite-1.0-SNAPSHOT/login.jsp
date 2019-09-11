@@ -32,17 +32,20 @@
                         <input type="checkbox" name="rememberMe" value="true"> Remember me
                     </label>
                 </div>
+
                  <div class="container-fluid">
-                    <c:if test="${not empty status}">
+                    <c:if test="${not empty sessionScope.status}">
                         <c:choose>
-                            <c:when test="${status eq 'not_found'}">
+                            <c:when test="${sessionScope.status eq 'not_found'}">
                                 <div class="alert alert-danger alert-dismissible" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     Le credenziali <strong>NON </strong> corrispondono! Riprova!
                                 </div>
                             </c:when>
                         </c:choose>
+                        <c:remove var="status" scope="session" />
                     </c:if>
+                     
              </div>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
             </form>

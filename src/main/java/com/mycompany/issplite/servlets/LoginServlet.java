@@ -79,39 +79,24 @@ public class LoginServlet extends HttpServlet {
                 if(medico == null){
                     ssp = searchForSSP(id, password);
                     if(ssp == null){
-                        
-                        //request.setAttribute("status", "not_found");
-                        //request.getRequestDispatcher("./login.jsp").forward(request,response);
-                       
-                        //dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/login.jsp"));
-                        //dispatcher.forward(request, response);
-                        //String destination = "/login.jsp";
-
-                        //RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
-                        //rd.forward(request, response);
-    
+                        request.getSession().setAttribute("status", "not_found");
                         response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp"));
 
                     }else{
                         addUserToCookie(ssp.getIdSSP(),request, response);
                         request.getSession().setAttribute("ssp", ssp);
-                        response.sendRedirect(response.encodeRedirectURL(contextPath + "ssp/ssp.jsp"));
+                        response.sendRedirect(response.encodeRedirectURL(contextPath + "sspi/sspi.html"));
                     }
                 }else{
                     addUserToCookie(medico.getIdMedico(),request, response);
                     request.getSession().setAttribute("medico", medico);
-
-                    response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/medici.html"));
-                    //String destination = "/medico/medico.jsp";
-
-                    //RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
-                    //rd.forward(request, response);
+                    response.sendRedirect(response.encodeRedirectURL(contextPath + "medici/medici.html"));
                 }
             } else {
                 
                 addUserToCookie(paziente.getIdPaziente(),request, response);
                 request.getSession().setAttribute("paziente", paziente);
-                response.sendRedirect(response.encodeRedirectURL(contextPath + "paziente/paziente.jsp"));
+                response.sendRedirect(response.encodeRedirectURL(contextPath + "pazienti/pazienti.html"));
             }
         
     }
