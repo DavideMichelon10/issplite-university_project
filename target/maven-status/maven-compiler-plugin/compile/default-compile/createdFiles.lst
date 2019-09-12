@@ -19,6 +19,7 @@ com\mycompany\issplite\filters\PazientiFilter.class
 com\mycompany\issplite\persistence\dao\factories\DAOException.class
 com\mycompany\issplite\persistence\dao\MedicoDAO.class
 com\mycompany\issplite\persistence\dao\factories\DAOFactory.class
+com\mycompany\issplite\servlets\LogoutServlet.class
 com\mycompany\issplite\filters\AuthenticationFilter.class
 com\mycompany\issplite\servlets\MediciServlet.class
 com\mycompany\issplite\filters\SSPFilter.class

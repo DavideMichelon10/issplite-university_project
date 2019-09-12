@@ -82,6 +82,10 @@
         <servlet-name>SSPPage</servlet-name>
         <jsp-file>/ssp/ssp.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.LogoutServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login.handler</url-pattern>
@@ -109,6 +113,10 @@
     <servlet-mapping>
         <servlet-name>SSPPage</servlet-name>
         <url-pattern>/ssp/ssp.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout.handler</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
