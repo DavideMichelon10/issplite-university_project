@@ -3,6 +3,7 @@
     Created on : 5 set 2019, 17:19:19
     Author     : Davide
 --%>
+<%@page import="com.mycompany.issplite.persistence.entities.Paziente"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -32,14 +33,11 @@
             <c:forEach var="paziente" items="${pazienti}">
                 <tr>
                     <div class="card">
-                        <div class="card-header" id="heading<%=index%>">
-                                    <td>${paziente.ssn}</td>
-                                    <td>${paziente.erogationDateEsame}</td>
-                                    <td>${paziente.nameEsame}</td>
-                                    <td>${paziente.erogationDateFarmaco}</td>
-                                    <td>${paziente.nameFarmaco}</td>
-
-                        </div>
+                            <td><a href="<c:url value="/medici/prescrizioni.html?idMedico=${param.idMedico}&idPaziente=${paziente.idpaziente}"/>">${paziente.ssn}</a></td>
+                            <td>${paziente.erogationDateEsame}</td>
+                            <td>${paziente.nameEsame}</td>
+                            <td>${paziente.erogationDateFarmaco}</td>
+                            <td>${paziente.nameFarmaco}</td>
                     </div>
                 </tr>
             </c:forEach>

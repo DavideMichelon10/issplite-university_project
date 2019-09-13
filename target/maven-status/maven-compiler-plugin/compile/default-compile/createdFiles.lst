@@ -7,6 +7,7 @@ com\mycompany\issplite\persistence\dao\SSPDAO.class
 com\mycompany\issplite\persistence\entities\SSP.class
 com\mycompany\issplite\persistence\dao\jdbc\JDBCMedicoDAO.class
 com\mycompany\issplite\persistence\dao\factories\DAO.class
+com\mycompany\issplite\servlets\MediciPrescrizioniServlet.class
 com\mycompany\issplite\servlets\LoginServlet.class
 com\mycompany\issplite\listeners\WebContextListener.class
 com\mycompany\issplite\persistence\dao\factories\DAOFactoryException.class

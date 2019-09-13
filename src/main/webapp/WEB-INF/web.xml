@@ -86,6 +86,10 @@
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>com.mycompany.issplite.servlets.LogoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MediciPrescrizioniServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.MediciPrescrizioniServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login.handler</url-pattern>
@@ -117,6 +121,10 @@
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/logout.handler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MediciPrescrizioniServlet</servlet-name>
+        <url-pattern>/medici/prescrizioni.html</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
