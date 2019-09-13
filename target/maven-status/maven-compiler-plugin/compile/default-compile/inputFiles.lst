@@ -19,6 +19,7 @@ C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistenc
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\filters\AuthenticationFilter.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\factories\DAOException.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\filters\MediciFilter.java
+C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\entities\PazienteUltimiEsamiFarmaci.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAO.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\servlets\SSPServlet.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\factories\DAOFactoryException.java

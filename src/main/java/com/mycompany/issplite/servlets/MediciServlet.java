@@ -1,7 +1,17 @@
 package com.mycompany.issplite.servlets;
 
+import com.mycompany.issplite.persistence.dao.MedicoDAO;
+import com.mycompany.issplite.persistence.dao.factories.DAOException;
+import com.mycompany.issplite.persistence.dao.factories.DAOFactory;
+import com.mycompany.issplite.persistence.dao.factories.DAOFactoryException;
+import com.mycompany.issplite.persistence.entities.PazienteUltimiEsamiFarmaci;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,60 +20,66 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MediciServlet extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet MediciServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet MediciServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+    private MedicoDAO medicoDao;
+
+    @Override
+    public void init() throws ServletException {
+        DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+        if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+        try {
+            medicoDao = daoFactory.getDAO(MedicoDAO.class);
+        } catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        System.out.println("In DO GET MEDICISERVLET");
+        
+        String cp = getServletContext().getContextPath();
+        if (!cp.endsWith("/")) {
+            cp += "/";
+        }
+
+        Set<String> paramNames = request.getParameterMap().keySet();
+        
+        // iterating over parameter names and get its value
+        for (String name : paramNames) {
+            String value = request.getParameter(name);
+            System.out.println("NAME: "+name+ "  VALUE: "+value);
+        }
+        
+        String idMedico = request.getParameter("idMedico");
+        
+        if (idMedico == null) {
+            System.out.println("ID MEDICO NULL");
+            response.sendRedirect(cp + "login.jsp");
+            return;
+        }
+        List<PazienteUltimiEsamiFarmaci> pazienti = new ArrayList<>();
+        try {
+            pazienti = medicoDao.getLastEsameFarmacoDate(idMedico);
+            /*for (PazienteUltimiEsamiFarmaci paz : pazienti) {
+                System.out.println("NAMEESAME:  "+paz.getNameEsame());
+            }*/
+        } catch (DAOException ex) {
+            response.sendError(500, ex.getMessage());
+            return;
+        }
+        
+        request.setAttribute("pazienti", pazienti);
+        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/medici/medico.html?idMedico="+idMedico));
+        dispatcher.forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

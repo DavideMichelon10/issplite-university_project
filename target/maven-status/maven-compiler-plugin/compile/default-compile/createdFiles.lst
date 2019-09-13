@@ -13,6 +13,7 @@ com\mycompany\issplite\persistence\dao\factories\DAOFactoryException.class
 com\mycompany\issplite\filters\MediciFilter.class
 com\mycompany\issplite\persistence\dao\jdbc\JDBCPazienteDAO.class
 com\mycompany\issplite\persistence\dao\PazienteDAO.class
+com\mycompany\issplite\persistence\entities\PazienteUltimiEsamiFarmaci.class
 com\mycompany\issplite\persistence\dao\jdbc\JDBCSSPDAO.class
 com\mycompany\issplite\persistence\entities\Medico.class
 com\mycompany\issplite\filters\PazientiFilter.class

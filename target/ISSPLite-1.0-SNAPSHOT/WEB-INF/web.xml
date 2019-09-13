@@ -92,7 +92,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MediciServlet</servlet-name>
-        <url-pattern>/medici/medici.handler</url-pattern>
+        <url-pattern>/medici/medici.html</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PazientiServlet</servlet-name>
@@ -104,7 +104,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MediciPage</servlet-name>
-        <url-pattern>/medici/medici.html</url-pattern>
+        <url-pattern>/medici/medico.html</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PazientiPage</servlet-name>
