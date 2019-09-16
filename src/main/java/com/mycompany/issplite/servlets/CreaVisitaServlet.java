@@ -91,11 +91,17 @@ private MedicoDAO medicoDao;
         
         try {
             int idVisita = medicoDao.insertVisita(isPagato);
-            System.out.println(idPaziente);
             medicoDao.insertEroga(getIdMedico(request), idPaziente, idVisita);
+            for(int idEsame : idEsamiPrescritti){
+                medicoDao.insertPrescrizione(idEsame, idVisita);
+            }
+            
+            
         }catch (DAOException ex) {
             Logger.getLogger(CreaVisitaServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("IN CERA INFONDo");
+        response.sendRedirect("/medici/prescrizione.html?idPaziente="+idPaziente);
     }
     
     private String getIdMedico(HttpServletRequest request){

@@ -39,6 +39,8 @@ public class JDBCMedicoDAO extends JDBCDAO<Medico, String> implements MedicoDAO 
     private static final String GETFARMACIPRESCRITTI = "select  F.idFarmaco, F.name, F.description, PR.erogationdate, V.ticketPagato from paziente P, Eroga E, Visita V, Prescrizione PR, Farmaco F where P.idPaziente = ? AND E.Paziente_IdPaziente = P.IdPaziente AND V.idVisita = E.Visita_idVisita AND PR.Visita_idVisita = V.idVisita AND F.idFarmaco = PR.Farmaco_idFarmaco;";
     private static final String INSERTVISITA = "INSERT INTO visita(visitdate, ticket, ticketpagato) VALUES(?,11, ?);";
     private static final String INSERTEROGA = "insert into Eroga(medico_idmedico, paziente_idpaziente, visita_idvisita) values (?, ?, ?);";
+    private static final String INSERTRISULTATO = "insert into risultato(resultdate, esame_idesame) values (?,?);";
+    private static final String INSERTPRESCRIZIONE = "insert into Prescrizione(erogationdate, ticketpagato, visita_idvisita, risultato_idrisultato) values (?, 0, ?, ?);";
     
     public JDBCMedicoDAO(Connection con) {
         super(con);
@@ -274,6 +276,43 @@ public class JDBCMedicoDAO extends JDBCDAO<Medico, String> implements MedicoDAO 
             
         } catch (SQLException ex) {
             throw new DAOException("Impossible to insert eroga", ex);
+        }
+    }
+
+    @Override
+    public void insertPrescrizione(int idEsame, int idVisita) throws DAOException {
+        if ( ((Integer) idEsame == null) || ((Integer) idVisita == null)){
+            throw new DAOException("esame and visita and visita are mandatory fields", new NullPointerException("esame or visita are null"));
+        }
+        
+        try (PreparedStatement stm = CON.prepareStatement(INSERTRISULTATO, Statement.RETURN_GENERATED_KEYS)) {
+            Date date = new Date();
+            Timestamp ts = new Timestamp(date.getTime());
+
+            stm.setTimestamp(1, ts);
+            stm.setInt(2, idEsame);
+            
+            stm.executeUpdate();
+            
+            ResultSet keys = stm.getGeneratedKeys();
+            int lastKey = 1;
+            while (keys.next()) {
+              lastKey = keys.getInt(1);
+            }
+            
+            try (PreparedStatement stmt = CON.prepareStatement(INSERTPRESCRIZIONE)) {
+                
+                stmt.setTimestamp(1, ts);
+                stmt.setInt(2, idVisita);
+                stmt.setInt(3, lastKey);
+                
+                stmt.executeUpdate();
+            }
+
+            
+            
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to insert visita", ex);
         }
     }
     
