@@ -12,7 +12,7 @@ package com.mycompany.issplite.persistence.entities;
 public class Esame {
     private int idEsame;
     private String name;
-    private int costo;
+    private float costo;
 
     public int getIdEsame() {
         return idEsame;
@@ -30,11 +30,11 @@ public class Esame {
         this.name = name;
     }
 
-    public int getCosto() {
+    public float getCosto() {
         return costo;
     }
 
-    public void setCosto(int costo) {
+    public void setCosto(float costo) {
         this.costo = costo;
     }
 

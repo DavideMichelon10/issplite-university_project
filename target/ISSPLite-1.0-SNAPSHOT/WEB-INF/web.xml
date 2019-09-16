@@ -87,6 +87,10 @@
         <jsp-file>/medico/prescrizioni.jsp</jsp-file>
     </servlet>
     <servlet>
+        <servlet-name>CreaVisitaPage</servlet-name>
+        <jsp-file>/medico/creaVisita.jsp</jsp-file>
+    </servlet>
+    <servlet>
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>com.mycompany.issplite.servlets.LogoutServlet</servlet-class>
     </servlet>
@@ -122,6 +126,12 @@
         <servlet-name>PrescrizioniPage</servlet-name>
         <url-pattern>/medici/prescrizioni.html</url-pattern>
     </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>CreaVisitaPage</servlet-name>
+        <url-pattern>/medici/visite.html</url-pattern>
+    </servlet-mapping>
+    
     <servlet-mapping>
         <servlet-name>PazientiPage</servlet-name>
         <url-pattern>/pazienti/pazienti.html</url-pattern>
@@ -140,7 +150,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreaVisitaServlet</servlet-name>
-        <url-pattern>/medici/creavisita.handler</url-pattern>
+        <url-pattern>/medici/visita.html</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

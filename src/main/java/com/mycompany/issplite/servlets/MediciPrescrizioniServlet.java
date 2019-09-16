@@ -61,11 +61,10 @@ public class MediciPrescrizioniServlet extends HttpServlet {
             return;
         }
         try {
+            
             farmaciPrescritti = medicoDao.getFarmaciPrescritti(idPaziente);
             esamiPrescritti = medicoDao.getEsamiPrescritti(idPaziente);
-            for (EsamePrescritto f : esamiPrescritti) {
-                System.out.println(f.toString());
-            }
+            
         } catch (DAOException ex) {
             response.sendError(500, ex.getMessage());
             return;

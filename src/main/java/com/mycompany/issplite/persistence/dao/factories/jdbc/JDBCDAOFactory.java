@@ -77,9 +77,7 @@ public class JDBCDAOFactory implements DAOFactory {
         Package pkg = daoInterface.getPackage();
         String prefix = pkg.getName() + ".jdbc.JDBC";
         try {
-            System.out.println(prefix);
             
-            System.out.println(prefix + daoInterface.getSimpleName());
             Class daoClass = Class.forName(prefix + daoInterface.getSimpleName());
 
             Constructor<DAO_CLASS> constructor = daoClass.getConstructor(Connection.class);
