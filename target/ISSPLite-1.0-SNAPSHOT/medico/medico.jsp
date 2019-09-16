@@ -3,7 +3,6 @@
     Created on : 5 set 2019, 17:19:19
     Author     : Davide
 --%>
-<%@page import="com.mycompany.issplite.persistence.entities.Paziente"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,9 +17,7 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign out</button>
         </form>
         <h1>Lista pazienti:</h1>
-        <jsp:scriptlet>
-            int index = 1;
-        </jsp:scriptlet>
+
         <table>
             <tr>
                 <th>SSN</th>

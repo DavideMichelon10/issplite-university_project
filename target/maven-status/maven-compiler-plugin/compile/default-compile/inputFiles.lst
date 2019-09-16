@@ -1,6 +1,9 @@
+C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\entities\EsamePrescritto.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\MedicoDAO.java
+C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\servlets\CreaVisitaServlet.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAOFactory.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\servlets\PazientiServlet.java
+C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\entities\Esame.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\servlets\MediciServlet.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\jdbc\JDBCMedicoDAO.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\PazienteDAO.java
@@ -11,6 +14,7 @@ C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistenc
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\factories\DAO.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\filters\SSPFilter.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\servlets\LoginServlet.java
+C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\entities\FarmacoPrescritto.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\servlets\MediciPrescrizioniServlet.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\jdbc\JDBCSSPDAO.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\SSPDAO.java
@@ -23,6 +27,7 @@ C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\filters\Me
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\entities\PazienteUltimiEsamiFarmaci.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAO.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\servlets\SSPServlet.java
+C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\entities\Farmaco.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\factories\DAOFactoryException.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\listeners\WebContextListener.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\entities\Medico.java

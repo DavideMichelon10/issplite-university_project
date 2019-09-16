@@ -49,11 +49,7 @@ public class MediciPrescrizioniServlet extends HttpServlet {
         if (!cp.endsWith("/")) {
             cp += "/";
         }
-        
-        //String idMedico = request.getParameter("idMedico");
-        //String idPaziente = request.getParameter("idPaziente");
-        //System.out.println(idMedico + "   "+ idPaziente);
-        
+
         List<EsamePrescritto> esamiPrescritti = new ArrayList<>();
         List<FarmacoPrescritto> farmaciPrescritti = new ArrayList<>();
         
@@ -67,6 +63,9 @@ public class MediciPrescrizioniServlet extends HttpServlet {
         try {
             farmaciPrescritti = medicoDao.getFarmaciPrescritti(idPaziente);
             esamiPrescritti = medicoDao.getEsamiPrescritti(idPaziente);
+            for (EsamePrescritto f : esamiPrescritti) {
+                System.out.println(f.toString());
+            }
         } catch (DAOException ex) {
             response.sendError(500, ex.getMessage());
             return;
