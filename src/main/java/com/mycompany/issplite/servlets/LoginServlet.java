@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -93,7 +91,7 @@ public class LoginServlet extends HttpServlet {
                     addUserToCookie(medico.getIdMedico(),request, response);
                     request.getSession().setAttribute("medico", medico);
                     
-                    response.sendRedirect("/medici/medici.html?idMedico=" +medico.getIdMedico());
+                    response.sendRedirect("/medici/medici.html");
 
                     //response.sendRedirect(response.encodeRedirectURL(contextPath + "medici/medici.html?idMedico="+medico.getIdMedico()));
                 }

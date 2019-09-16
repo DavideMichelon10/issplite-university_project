@@ -33,7 +33,7 @@
             <c:forEach var="paziente" items="${pazienti}">
                 <tr>
                     <div class="card">
-                            <td><a href="<c:url value="/medici/prescrizioni.html?idMedico=${param.idMedico}&idPaziente=${paziente.idpaziente}"/>">${paziente.ssn}</a></td>
+                            <td><a href="<c:url value="/medici/prescrizione.html?idPaziente=${paziente.idpaziente}"/>">${paziente.ssn}</a></td>
                             <td>${paziente.erogationDateEsame}</td>
                             <td>${paziente.nameEsame}</td>
                             <td>${paziente.erogationDateFarmaco}</td>
