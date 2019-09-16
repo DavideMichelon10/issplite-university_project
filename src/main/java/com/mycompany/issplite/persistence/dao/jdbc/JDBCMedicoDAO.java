@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -37,6 +38,8 @@ public class JDBCMedicoDAO extends JDBCDAO<Medico, String> implements MedicoDAO 
     private static final String GETESAMIPRESCRITTI = "select ES.idEsame, ES.name, R.description, PR.erogationdate, R.ResultDate, V.ticketPagato from paziente P, Eroga E, Visita V, Prescrizione PR, Risultato R, Esame ES where P.idPaziente = ? AND E.Paziente_IdPaziente = P.IdPaziente AND V.idVisita = E.Visita_idVisita AND PR.Visita_idVisita = V.idVisita AND R.idRisultato = PR.Risultato_idRisultato AND R.esame_idEsame = ES.idEsame;";
     private static final String GETFARMACIPRESCRITTI = "select  F.idFarmaco, F.name, F.description, PR.erogationdate, V.ticketPagato from paziente P, Eroga E, Visita V, Prescrizione PR, Farmaco F where P.idPaziente = ? AND E.Paziente_IdPaziente = P.IdPaziente AND V.idVisita = E.Visita_idVisita AND PR.Visita_idVisita = V.idVisita AND F.idFarmaco = PR.Farmaco_idFarmaco;";
     private static final String INSERTVISITA = "INSERT INTO visita(visitdate, ticket, ticketpagato) VALUES(?,11, ?);";
+    private static final String INSERTEROGA = "insert into Eroga(medico_idmedico, paziente_idpaziente, visita_idvisita) values (?, ?, ?);";
+    
     public JDBCMedicoDAO(Connection con) {
         super(con);
     }
@@ -225,8 +228,9 @@ public class JDBCMedicoDAO extends JDBCDAO<Medico, String> implements MedicoDAO 
     }    
 
     @Override
-    public void insertVisita(boolean isPagato) throws DAOException {
-        try (PreparedStatement stm = CON.prepareStatement(INSERTVISITA)) {
+    public int insertVisita(boolean isPagato) throws DAOException {
+
+        try (PreparedStatement stm = CON.prepareStatement(INSERTVISITA, Statement.RETURN_GENERATED_KEYS)) {
             Date date = new Date();
             Timestamp ts = new Timestamp(date.getTime());
 
@@ -236,10 +240,40 @@ public class JDBCMedicoDAO extends JDBCDAO<Medico, String> implements MedicoDAO 
             }else{
                 stm.setInt(2, 0);
             }
+            
             stm.executeUpdate();
             
+            ResultSet keys = stm.getGeneratedKeys();
+            int lastKey = 1;
+            while (keys.next()) {
+              lastKey = keys.getInt(1);
+            }
+            return lastKey;
+            
         } catch (SQLException ex) {
-            Logger.getLogger(JDBCMedicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("Impossible to insert visita", ex);
+        }
+    }
+
+    @Override
+    public void insertEroga(String idMedico, String idPaziente, int idVisita) throws DAOException {
+        
+        if ( ((Integer) idVisita == null) || (idMedico == null) || (idPaziente == null)){
+            throw new DAOException("paziente and medico and visita are mandatory fields", new NullPointerException("paziente or medico or visita are null"));
+        }
+        
+        try (PreparedStatement stm = CON.prepareStatement(INSERTEROGA)) {
+            
+
+            stm.setString(1, idMedico);
+            stm.setString(2, idPaziente);
+            stm.setInt(3, idVisita);
+           
+            stm.executeUpdate();
+            
+            
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to insert eroga", ex);
         }
     }
     

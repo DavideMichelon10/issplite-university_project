@@ -6,6 +6,7 @@ import com.mycompany.issplite.persistence.dao.factories.DAOException;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactory;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactoryException;
 import com.mycompany.issplite.persistence.entities.Esame;
+import com.mycompany.issplite.persistence.entities.Medico;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 public class CreaVisitaServlet extends HttpServlet {
@@ -71,23 +73,35 @@ private MedicoDAO medicoDao;
         //contiene id di esami checked
         List<String> parameterNamesList = Collections.list(request.getParameterNames());
         List<Integer> idEsamiPrescritti = new ArrayList<>();
-        
+        String idPaziente = request.getParameter("idPaziente");
+
         boolean isPagato = false;
         
         for(String s : parameterNamesList){
             
-            if(!s.equals("pagato")){
-                idEsamiPrescritti.add(Integer.valueOf(s));
-            }else{
+            if(s.equals("pagato")){
                 isPagato = Boolean.valueOf(request.getParameter(s));
+            }else if(s.equals("idPaziente")){
+            }else{
+                idEsamiPrescritti.add(Integer.valueOf(s));
             }
         }
         
+        
+        
         try {
-            medicoDao.insertVisita(isPagato);
+            int idVisita = medicoDao.insertVisita(isPagato);
+            System.out.println(idPaziente);
+            medicoDao.insertEroga(getIdMedico(request), idPaziente, idVisita);
         }catch (DAOException ex) {
             Logger.getLogger(CreaVisitaServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private String getIdMedico(HttpServletRequest request){
+        HttpSession session = ((HttpServletRequest)request).getSession(false);            
+        Medico medico = (Medico) session.getAttribute("medico");
+        return medico.getIdMedico();
     }
 
 }

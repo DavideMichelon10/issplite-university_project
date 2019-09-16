@@ -20,6 +20,7 @@
         
         
         <form class="form-signin" action="${pageContext.request.contextPath}/medici/visita.html" method="POST">
+        <input type="hidden" name="idPaziente" value="${param.idPaziente}">
 
             <c:forEach var="esame" items="${esami}">
                 <tr>

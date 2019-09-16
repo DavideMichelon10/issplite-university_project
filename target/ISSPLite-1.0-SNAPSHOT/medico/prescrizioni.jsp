@@ -14,9 +14,8 @@
     </head>
     <body>
         <h1>Prescrizioni</h1>
-        <form class="form-signin" action="${pageContext.request.contextPath}/medici/visita.html" method="GET">   
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Crea visita</button>
-        </form>
+        <a href="${pageContext.request.contextPath}/medici/visita.html?idPaziente=${param["idPaziente"]}">Crea visita</a>
+
                 
         <h3>Lista esami prescritti al paziente:</h3>
         <table>

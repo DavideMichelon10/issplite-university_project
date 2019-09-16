@@ -24,6 +24,8 @@ public interface MedicoDAO extends DAO<Medico, String> {
     
     public List<FarmacoPrescritto> getFarmaciPrescritti(String idPaziente) throws DAOException;
     
-    public void insertVisita(boolean isPagato) throws DAOException;
+    public int insertVisita(boolean isPagato) throws DAOException;
+    
+    public void insertEroga(String idMedico, String idPaziente, int idVisita) throws DAOException;
 
 }
