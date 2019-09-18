@@ -6,7 +6,9 @@
 package com.mycompany.issplite.persistence.dao;
 
 import com.mycompany.issplite.persistence.dao.factories.DAO;
+import com.mycompany.issplite.persistence.dao.factories.DAOException;
 import com.mycompany.issplite.persistence.entities.Esame;
+
 
 /**
  *
@@ -14,4 +16,5 @@ import com.mycompany.issplite.persistence.entities.Esame;
  */
 public interface EsameDAO extends DAO<Esame, String> {
     
+    public Esame getById(int id) throws DAOException; 
 }

@@ -16,12 +16,12 @@
     <body>
         <h1>Crea visita</h1>
         <h6>Paziente: </h6>
-        <h5>Esami prescritti:</h5>
+        <h5>Esami prescrivibili:</h5>
         
         
         <form class="form-signin" action="${pageContext.request.contextPath}/medici/visita.html" method="POST">
         <input type="hidden" name="idPaziente" value="${param.idPaziente}">
-
+        <tbody>
             <c:forEach var="esame" items="${esami}">
                 <tr>
                     <div class="card">
@@ -29,7 +29,7 @@
                     </div>
                 </tr>
             </c:forEach>
-                
+        </tbody>   
             <hr>
             <div class="container-fluid">
 

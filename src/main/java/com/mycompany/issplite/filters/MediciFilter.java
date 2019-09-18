@@ -46,7 +46,7 @@ public class MediciFilter implements Filter {
         if (request instanceof HttpServletRequest) {
             ServletContext servletContext = ((HttpServletRequest) request).getServletContext();
             HttpSession session = ((HttpServletRequest) request).getSession(false);
-            
+
             String contextPath = servletContext.getContextPath();
                     if (!contextPath.endsWith("/")) {
                         contextPath += "/";

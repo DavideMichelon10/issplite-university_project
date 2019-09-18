@@ -19,44 +19,53 @@
                 
         <h3>Lista esami prescritti al paziente:</h3>
         <table>
-            <tr>
-                <th>Esame</th>
-                <th>Data</th>
-                <th>Risultato</th>
-                <th>UPagato</th>
-
+            
+                <thead>
+                    <tr>
+                    <th>Esame</th>
+                    <th>Data</th>
+                    <th>Risultato</th>
+                    <th>UPagato</th>
+                    <tr>
+                </thead>    
             </tr>
             <c:forEach var="esame" items="${esamiPrescritti}">
-                <tr>
-                    <div class="card">
-                            <td>${esame.name}</td>
-                            <td>${esame.erogationDate}</td>
-                            <td>${esame.risultato}</td>
-                            <td>${esame.isPagato}</td>
-                    </div>
-                </tr>
+                <tbody>
+                    <tr>
+                        <div class="card">
+                                <td>${esame.name}</td>
+                                <td>${esame.erogationDate}</td>
+                                <td>${esame.risultato}</td>
+                                <td>${esame.isPagato}</td>
+                        </div>
+                    </tr>
+                </tbody>
             </c:forEach>
         </table>
 
         <h3>Lista farmaci prescritti al paziente:</h3>
         
         <table>
-            <tr>
-                <th>Nome</th>
-                <th>Descrizione</th> 
-                <th>Data di prescrizione</th>
-                <th>Pagato</th>
-
-            </tr>
-            <c:forEach var="farmaco" items="${farmaciPrescritti}">
+            <thead>
                 <tr>
-                    <div class="card">
-                            <td>${farmaco.name}</td>
-                            <td>${farmaco.description}</td>
-                            <td>${farmaco.prescriptionDate}</td>
-                            <td>${farmaco.isPagato}</td>
-                    </div>
+                    <th>Nome</th>
+                    <th>Descrizione</th> 
+                    <th>Data di prescrizione</th>
+                    <th>Pagato</th>
+
                 </tr>
+            </thead>
+            <c:forEach var="farmaco" items="${farmaciPrescritti}">
+                <tbody>
+                    <tr>
+                        <div class="card">
+                                <td>${farmaco.name}</td>
+                                <td>${farmaco.description}</td>
+                                <td>${farmaco.prescriptionDate}</td>
+                                <td>${farmaco.isPagato}</td>
+                        </div>
+                    </tr>
+                </tbody>
             </c:forEach>
         </table>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

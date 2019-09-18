@@ -19,24 +19,28 @@
         <h1>Lista pazienti:</h1>
 
         <table>
-            <tr>
-                <th>SSN</th>
-                <th>Data ultimo esame fatto</th> 
-                <th>Ultimo esame fatto</th>
-                <th>Data ultima ricetta prescritta</th>
-                <th>Ultima ricetta prescritta</th>
-
-            </tr>
-            <c:forEach var="paziente" items="${pazienti}">
+            <thead>
                 <tr>
-                    <div class="card">
-                            <td><a href="<c:url value="/medici/prescrizione.html?idPaziente=${paziente.idpaziente}"/>">${paziente.ssn}</a></td>
-                            <td>${paziente.erogationDateEsame}</td>
-                            <td>${paziente.nameEsame}</td>
-                            <td>${paziente.erogationDateFarmaco}</td>
-                            <td>${paziente.nameFarmaco}</td>
-                    </div>
+                    <th>SSN</th>
+                    <th>Data ultimo esame fatto</th> 
+                    <th>Ultimo esame fatto</th>
+                    <th>Data ultima ricetta prescritta</th>
+                    <th>Ultima ricetta prescritta</th>
+
                 </tr>
+            </thead>
+            <c:forEach var="paziente" items="${pazienti}">
+                <tbody>
+                    <tr>
+                        <div class="card">
+                                <td><a href="<c:url value="/medici/prescrizione.html?idPaziente=${paziente.idpaziente}"/>">${paziente.ssn}</a></td>
+                                <td>${paziente.erogationDateEsame}</td>
+                                <td>${paziente.nameEsame}</td>
+                                <td>${paziente.erogationDateFarmaco}</td>
+                                <td>${paziente.nameFarmaco}</td>
+                        </div>
+                    </tr>
+                </tbody>
             </c:forEach>
                 
                
