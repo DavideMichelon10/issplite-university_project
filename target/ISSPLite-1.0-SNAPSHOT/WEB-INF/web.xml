@@ -102,6 +102,10 @@
         <servlet-name>CreaVisitaServlet</servlet-name>
         <servlet-class>com.mycompany.issplite.servlets.CreaVisitaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PazientiprescrizioniServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.PazientiprescrizioniServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login.handler</url-pattern>
@@ -109,10 +113,6 @@
     <servlet-mapping>
         <servlet-name>MediciServlet</servlet-name>
         <url-pattern>/medici/medici.html</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PazientiServlet</servlet-name>
-        <url-pattern>/pazienti/pazienti.handler</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SSPServlet</servlet-name>
@@ -126,15 +126,17 @@
         <servlet-name>PrescrizioniPage</servlet-name>
         <url-pattern>/medici/prescrizioni.html</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>CreaVisitaPage</servlet-name>
         <url-pattern>/medici/visite.html</url-pattern>
     </servlet-mapping>
-    
+    <servlet-mapping>
+        <servlet-name>PazientiServlet</servlet-name>
+        <url-pattern>/pazienti/pazienti.html</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PazientiPage</servlet-name>
-        <url-pattern>/pazienti/pazienti.html</url-pattern>
+        <url-pattern>/pazienti/paziente.html</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SSPPage</servlet-name>
@@ -151,6 +153,10 @@
     <servlet-mapping>
         <servlet-name>CreaVisitaServlet</servlet-name>
         <url-pattern>/medici/visita.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PazientiprescrizioniServlet</servlet-name>
+        <url-pattern>/PazientiprescrizioniServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

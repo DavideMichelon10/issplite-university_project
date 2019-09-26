@@ -140,12 +140,13 @@ private PazienteDAO pazienteDao;
         props.setProperty("mail.debug", "true");
 
 
-                System.out.println("prima di session");
+        System.out.println("prima di session");
         Session session = Session.getInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 
                 System.out.println("IN getPasswordAuthentication");
+                    String password = "DavideEbbasta";
                     return new PasswordAuthentication(username, password);
                 }
             });

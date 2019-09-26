@@ -5,12 +5,28 @@
  */
 package com.mycompany.issplite.servlets;
 
+import com.mycompany.issplite.persistence.dao.PazienteDAO;
+import com.mycompany.issplite.persistence.dao.factories.DAOException;
+import com.mycompany.issplite.persistence.dao.factories.DAOFactory;
+import com.mycompany.issplite.persistence.dao.factories.DAOFactoryException;
+import com.mycompany.issplite.persistence.entities.Esame;
+import com.mycompany.issplite.persistence.entities.EsamiSostenutiPaziente;
+import com.mycompany.issplite.persistence.entities.Medico;
+import com.mycompany.issplite.persistence.entities.Paziente;
+import com.mycompany.issplite.persistence.entities.PazienteUltimiEsamiFarmaci;
+import com.mycompany.issplite.persistence.entities.RicettePrescrittePaziente;
+import com.mycompany.issplite.persistence.entities.RichiamiPrescrittiPaziente;
+import com.mycompany.issplite.persistence.entities.Visita;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -18,69 +34,64 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class PazientiServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet PazientiServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet PazientiServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+    private PazienteDAO pazienteDao;
+
+    @Override
+    public void init() throws ServletException {
+        DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+        if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+        try {
+            pazienteDao = daoFactory.getDAO(PazienteDAO.class);
+        } catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        String cp = getServletContext().getContextPath();
+        if (!cp.endsWith("/")) {
+            cp += "/";
+        }     
+        HttpSession session = ((HttpServletRequest)request).getSession(false);            
+        Paziente paziente = (Paziente) session.getAttribute("paziente");
+        String idPaziente = paziente.getIdPaziente();
+        
+        if (idPaziente == null) {
+            response.sendRedirect(cp + "login.jsp");
+            return;
+        }
+        
+        List<EsamiSostenutiPaziente> esamiSostenuti = new ArrayList<>();
+        List<RicettePrescrittePaziente> ricettePrescritte = new ArrayList<>();
+        List<RichiamiPrescrittiPaziente> richiamiPrescritti = new ArrayList<>();
+        List<Visita> visitePaziente = new ArrayList<>();
+        
+        try {
+            esamiSostenuti = pazienteDao.getAllExamByIdPaziente(idPaziente);
+            ricettePrescritte = pazienteDao.getAllDrugByIdPaziente(idPaziente);
+            richiamiPrescritti = pazienteDao.getAllRecallByIdPaziente(idPaziente);
+            visitePaziente = pazienteDao.getAllVisitByIdPaziente(idPaziente);
+        } catch (DAOException ex) {
+            response.sendError(500, ex.getMessage());
+            return;
+        }
+        request.setAttribute("esamiSostenuti", esamiSostenuti);
+        request.setAttribute("ricettePrescritte", ricettePrescritte);
+        request.setAttribute("richiamiPrescritti", richiamiPrescritti);
+        request.setAttribute("visitePrescritte", visitePaziente);
+        request.setAttribute("datiPaziente", paziente);
+        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/pazienti/paziente.html"));
+        dispatcher.forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }
