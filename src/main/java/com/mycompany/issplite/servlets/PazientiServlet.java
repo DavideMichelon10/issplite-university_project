@@ -80,6 +80,7 @@ public class PazientiServlet extends HttpServlet {
             response.sendError(500, ex.getMessage());
             return;
         }
+        
         request.setAttribute("esamiSostenuti", esamiSostenuti);
         request.setAttribute("ricettePrescritte", ricettePrescritte);
         request.setAttribute("richiamiPrescritti", richiamiPrescritti);
