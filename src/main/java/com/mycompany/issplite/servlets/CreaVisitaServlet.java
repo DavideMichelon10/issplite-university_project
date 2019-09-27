@@ -55,19 +55,20 @@ private PazienteDAO pazienteDao;
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String cp = getServletContext().getContextPath();
-
+        String idPaziente = request.getParameter("idPaziente");
+        Paziente paziente;
         List<Esame> esami = new ArrayList<>();        
    
         try {
             esami = esameDao.getAll();
-
+            paziente = pazienteDao.getById(idPaziente);
         } catch (DAOException ex) {
             response.sendError(500, ex.getMessage());
             return;
         }
         
         request.setAttribute("esami", esami);
+        request.setAttribute("paziente", paziente);
         
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/medici/visite.html"));
         dispatcher.forward(request, response);
@@ -127,7 +128,7 @@ private PazienteDAO pazienteDao;
         final String host = "smtp.gmail.com";
         final String port = "465";
         final String username = "davidemichelon10@gmail.com";
-        //HttpSession session = ((HttpServletRequest) request).getSession(false);
+        final String password = "xnsgbdlntfywfamw";
 
         Properties props = System.getProperties();
 
@@ -139,14 +140,9 @@ private PazienteDAO pazienteDao;
         props.setProperty("mail.smtp.starttls.enable", "true");
         props.setProperty("mail.debug", "true");
 
-
-        System.out.println("prima di session");
         Session session = Session.getInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                
-                System.out.println("IN getPasswordAuthentication");
-                    String password = "DavideEbbasta";
                     return new PasswordAuthentication(username, password);
                 }
             });
@@ -155,14 +151,11 @@ private PazienteDAO pazienteDao;
             try {
                 msg.setFrom(new InternetAddress(username));
                 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(paziente.getEmail(), false));
-                //OGGETTO
                 msg.setSubject("Prescrizione esame "+esame.getName());
-                //TESTO
                 msg.setText("Salve "+paziente.getName() +" "+paziente.getSurname()+" la informiamo che le è stato prescritto l' esame: "+esame.getName());
                 msg.setSentDate(new Date());
                 Transport.send(msg);
             } catch (MessagingException me) {
-            //TODO: log the exception
                 me.printStackTrace(System.err);
             }
         }

@@ -45,9 +45,9 @@ public class MediciServlet extends HttpServlet {
         
         
         HttpSession session = ((HttpServletRequest)request).getSession(false);            
-        Medico medico = (Medico) session.getAttribute("medico");
-        String idMedico = medico.getIdMedico();
-
+        //Medico medico = (Medico) session.getAttribute("medico");
+        //String idMedico = medico.getIdMedico();
+        String idMedico ="M123";
         if (idMedico == null) {
             response.sendRedirect(cp + "login.jsp");
             return;
