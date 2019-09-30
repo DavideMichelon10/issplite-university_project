@@ -18,12 +18,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -32,11 +30,11 @@ import java.util.logging.Logger;
 
 public class JDBCMedicoDAO extends JDBCDAO<Medico, String> implements MedicoDAO {
 
-    private static final String GETMEDICO = "SELECT * FROM medico WHERE idmedico = ? AND password = ?";
-    private static final String GETMEDICOBYID = "SELECT * FROM medico WHERE idmedico = ? ";
-    private static final String GETLASTESAMEFARMACODATE = "select FA.idpaziente, FA.ssn, FA.name AS farmaconame, FA.erogationdate AS erogationdatefarmaco, ES.name AS esamename, ES.erogationdate AS erogationdateesame from (select idPaziente, ssn, PR.erogationDate, F.name, E.medico_idmedico as medico from paziente P, eroga E, visita V, prescrizione PR, farmaco F where P.idpaziente = E.paziente_idpaziente  AND E.visita_idVisita = V.idVisita AND PR.Visita_idVisita = V.idVisita AND F.idFarmaco = PR.Farmaco_idFarmaco order by erogationdate DESC limit 1) AS FA, (select  P.idPaziente, PR.erogationDate, ES.name, E.medico_idmedico as medico_ from paziente P, eroga E, visita V, prescrizione PR, Risultato R, Esame ES where P.idpaziente = E.paziente_idpaziente  AND E.visita_idVisita = V.idVisita AND PR.Visita_idVisita = V.idVisita AND PR.risultato_idRisultato = R.idRisultato AND R.esame_idEsame = ES.idEsame order by erogationdate DESC limit 1) AS ES where FA.idPaziente = ES.idPaziente AND FA.medico = ES.medico_ AND FA.medico = ?;";
-    private static final String GETESAMIPRESCRITTI = "select ES.idEsame, ES.name, R.description, PR.erogationdate, R.ResultDate, V.ticketPagato from paziente P, Eroga E, Visita V, Prescrizione PR, Risultato R, Esame ES where P.idPaziente = ? AND E.Paziente_IdPaziente = P.IdPaziente AND V.idVisita = E.Visita_idVisita AND PR.Visita_idVisita = V.idVisita AND R.idRisultato = PR.Risultato_idRisultato AND R.esame_idEsame = ES.idEsame;";
-    private static final String GETFARMACIPRESCRITTI = "select  F.idFarmaco, F.name, F.description, PR.erogationdate, V.ticketPagato from paziente P, Eroga E, Visita V, Prescrizione PR, Farmaco F where P.idPaziente = ? AND E.Paziente_IdPaziente = P.IdPaziente AND V.idVisita = E.Visita_idVisita AND PR.Visita_idVisita = V.idVisita AND F.idFarmaco = PR.Farmaco_idFarmaco;";
+    private static final String GETMEDICO = "SELECT * FROM medico M WHERE idmedico = ? AND password = ? ORDER BY M.name";
+    private static final String GETMEDICOBYID = "SELECT * FROM medico M WHERE idmedico = ? ORDER BY M.name"; 
+    private static final String GETLASTESAMEFARMACODATE = "select FA.idpaziente, FA.ssn, FA.name AS farmaconame, FA.erogationdate AS erogationdatefarmaco, ES.name AS esamename, ES.erogationdate AS erogationdateesame from (select idPaziente, ssn, PR.erogationDate, F.name, E.medico_idmedico as medico from paziente P, eroga E, visita V, prescrizione PR, farmaco F where P.idpaziente = E.paziente_idpaziente  AND E.visita_idVisita = V.idVisita AND PR.Visita_idVisita = V.idVisita AND F.idFarmaco = PR.Farmaco_idFarmaco order by erogationdate DESC limit 1) AS FA, (select  P.idPaziente, PR.erogationDate, ES.name, E.medico_idmedico as medico_ from paziente P, eroga E, visita V, prescrizione PR, Risultato R, Esame ES where P.idpaziente = E.paziente_idpaziente  AND E.visita_idVisita = V.idVisita AND PR.Visita_idVisita = V.idVisita AND PR.risultato_idRisultato = R.idRisultato AND R.esame_idEsame = ES.idEsame order by erogationdate DESC limit 1) AS ES where FA.idPaziente = ES.idPaziente AND FA.medico = ES.medico_ AND FA.medico = ? ORDER BY FA.name;";
+    private static final String GETESAMIPRESCRITTI = "select ES.idEsame, ES.name, R.description, PR.erogationdate, R.ResultDate, V.ticketPagato from paziente P, Eroga E, Visita V, Prescrizione PR, Risultato R, Esame ES where P.idPaziente = ? AND E.Paziente_IdPaziente = P.IdPaziente AND V.idVisita = E.Visita_idVisita AND PR.Visita_idVisita = V.idVisita AND R.idRisultato = PR.Risultato_idRisultato AND R.esame_idEsame = ES.idEsame ORDER BY ES.name;";
+    private static final String GETFARMACIPRESCRITTI = "select  F.idFarmaco, F.name, F.description, PR.erogationdate, V.ticketPagato from paziente P, Eroga E, Visita V, Prescrizione PR, Farmaco F where P.idPaziente = ? AND E.Paziente_IdPaziente = P.IdPaziente AND V.idVisita = E.Visita_idVisita AND PR.Visita_idVisita = V.idVisita AND F.idFarmaco = PR.Farmaco_idFarmaco ORDER BY F.name;";
     private static final String INSERTVISITA = "INSERT INTO visita(visitdate, ticket, ticketpagato) VALUES(?,11, ?);";
     private static final String INSERTEROGA = "insert into Eroga(medico_idmedico, paziente_idpaziente, visita_idvisita) values (?, ?, ?);";
     private static final String INSERTRISULTATO = "insert into risultato(resultdate, esame_idesame) values (?,?);";
