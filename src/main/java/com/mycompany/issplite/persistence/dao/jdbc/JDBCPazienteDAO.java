@@ -99,7 +99,7 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
                     paziente.setPhotoPath(rs.getString("photopath"));
                     paziente.setProvincia(rs.getString("provincia"));
                     paziente.setBirthPlace(rs.getString("birthplace"));
-                    paziente.setBirthDate(rs.getDate("birthdate"));
+                    paziente.setBirthDate(rs.getString("birthdate"));
                     paziente.setSex(rs.getBoolean("sex"));
                     paziente.setMedico(rs.getString("medico_idmedico"));
                     paziente.setSsn(rs.getString("ssn"));
