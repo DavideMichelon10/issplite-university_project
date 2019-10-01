@@ -24,6 +24,7 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
 
     private static final String GETPAZIENTE = "SELECT * FROM paziente WHERE idpaziente = ? AND password = ?";
     private static final String GETPAZIENTEBYID = "SELECT * FROM paziente WHERE idpaziente = ? ";
+    private static final String GETPAZIENTEFORMEDICO = "SELECT * FROM paziente WHERE medico_idmedico = ?;";
     private static final String GETESAMIBYIDPAZIENTE = "SELECT V.visitdate, Pr.erogationdate, Es.name, Pr.ticketPagato, R.resultdate\n" +
                                                         "FROM (Paziente P\n" +
                                                         "INNER JOIN Eroga E ON (P.idPaziente = E.Paziente_idPaziente)\n" +
@@ -255,6 +256,36 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             throw new DAOException("Error inside method RichiamoPrescrittoPaziente", ex);
+        }
+    }
+
+    @Override
+    public List<Paziente> getPazientiForMedico(String idMedico) throws DAOException {
+        if (idMedico == null) {
+            throw new DAOException("Something went wrong");
+        }
+
+        try (PreparedStatement stm = CON.prepareStatement(GETPAZIENTEFORMEDICO)) {
+            stm.setString(1, idMedico);
+            try (ResultSet rs = stm.executeQuery()) {
+                List<Paziente> pazienti = new ArrayList<>();
+                               
+                while (rs.next()) {
+                    Paziente paziente = new Paziente();
+                    paziente.setSsn(rs.getString("ssn"));
+                    paziente.setBirthDate(rs.getString("birthdate"));
+                    paziente.setIdPaziente(rs.getString("idpaziente"));
+                    paziente.setEmail(rs.getString("email"));
+                    paziente.setPassword(rs.getString("password"));
+                    paziente.setName(rs.getString("name"));
+                    paziente.setSurname(rs.getString("surname"));
+                    paziente.setPhotoPath(rs.getString("photopath"));
+                    pazienti.add(paziente);
+                }
+                return pazienti;
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error inside method getPazientiForMedico", ex);
         }
     }
 }

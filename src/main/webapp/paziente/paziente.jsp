@@ -18,29 +18,25 @@
         <title>Lista prescrizioni</title>
         <style>
             .imgPagamento{
-                max-width: 20px;
-                max-height: 20px;
-            }
-            .imgSetting{
-                max-width: 20px;
-                max-height: 20px;
-                margin-top: -1px;
+            max-width: 20px;
+            max-height: 20px;
             }
             .imgProfilo{
-                max-width: 150px;
-                max-height: 150px;
+            max-width: 150px;
+            max-height: 150px;
             }
             .tabella{
-                margin-right: 5%;
-                margin-left: 5%;
-            }            
+            margin-right: 5%;
+            margin-left: 5%;
+            }
+            
             table{
                 border: 1px solid black !important;
             }
         </style>
     </head>
     <body>
-        <%@ include file="../common/navbar.jsp" %>
+        <br><br>
         <div class="card mb-3" style="max-width: 540px;">
             <div class="row no-gutters">
                 <div class="col-md-4">
@@ -53,16 +49,9 @@
                         <c:set var = "paziente" scope = "session" value = "${datiPaziente}"/>
                         <h3 class="card-title">Ciao ${paziente.name} ${paziente.surname}.</h3>
                         <h5>Benvenuto nella tua area privata</h5>
-                        <div class="row no-gutters">
-                            <div class="col-md-6">
-                                <form action="${pageContext.request.contextPath}/logout.handler" method="post">
-                                    <button class="btn btn-sm btn-primary btn-block" type="submit">Sign out</button>                            
-                                </form>
-                            </div>
-                            <div class="col-md-6">
-                                <a href="../paziente/areaPersonale.jsp" class="btn btn-sm btn-primary btn-block" role="button"><img src="../images/setting.ico" class="imgSetting"> Area Personale</a>
-                            </div>
-                        </div>
+                        <form action="${pageContext.request.contextPath}/logout.handler" method="post">
+                            <button class="btn btn-sm btn-primary btn-block" type="submit">Sign out</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -99,10 +88,10 @@
                                     <td>
                                         <c:choose>
                                             <c:when test="${esame.pagato}">
-                                                <p>Effettuato    <img src='../images/Tick.png' class="imgPagamento"> </p> 
+                                                <img src='../images/Tick.png' class="imgPagamento">
                                             </c:when>
                                             <c:otherwise>
-                                                <p>Non pervenuto    <img src='../images/Cross.png' class="imgPagamento"> </p>
+                                                <img src='../images/Cross.png' class="imgPagamento">
                                             </c:otherwise>
                                         </c:choose>
                                     </td>                                   
@@ -131,10 +120,10 @@
                                     <td>
                                         <c:choose>
                                             <c:when test="${ricetta.ticketPagato}">
-                                                <p>Effettuato    <img src='../images/Tick.png' class="imgPagamento"> </p> 
+                                                <img src='../images/Tick.png' class="imgPagamento">
                                             </c:when>
                                             <c:otherwise>
-                                                <p>Non pervenuto    <img src='../images/Cross.png' class="imgPagamento"> </p>
+                                                <img src='../images/Cross.png' class="imgPagamento">
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
@@ -186,10 +175,10 @@
                                     <td>
                                         <c:choose>
                                             <c:when test="${visita.ticketPagato}">
-                                                <p>Effettuato    <img src='../images/Tick.png' class="imgPagamento"> </p> 
+                                                <p>Effettuato </p> <img src='../images/Tick.png' class="imgPagamento">
                                             </c:when>
                                             <c:otherwise>
-                                                <p>Non pervenuto    <img src='../images/Cross.png' class="imgPagamento"> </p>
+                                                <img src='../images/Cross.png' class="imgPagamento">
                                             </c:otherwise>
                                         </c:choose>
                                     </td>

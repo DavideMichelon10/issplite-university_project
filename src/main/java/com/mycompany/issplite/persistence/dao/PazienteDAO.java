@@ -21,6 +21,6 @@ public interface PazienteDAO extends DAO<Paziente, String> {
     public List<RicettePrescrittePaziente> getAllDrugByIdPaziente(String id) throws DAOException;
     public List<RichiamiPrescrittiPaziente> getAllRecallByIdPaziente(String id) throws DAOException;
     public List<Visita> getAllVisitByIdPaziente(String id) throws DAOException;
-    
+    public List<Paziente> getPazientiForMedico(String idMedico) throws DAOException;
 
 }

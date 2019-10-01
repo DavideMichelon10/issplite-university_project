@@ -16,27 +16,56 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+       <style>
+
+           .card {
+background: rgba(255,255,255,0.5); 
+
+               border: none;
+        margin: 0 auto; /* Added */
+        float: none; /* Added */
+        margin-bottom: 10px; /* Added */
+}
+.col-md-8 {
+        margin: 0 auto; /* Added */
+        float: none; /* Added */
+        margin-bottom: 10px; /* Added */
+}
+body {
+  background-image: url("../images/background.jpg");
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+}
+       </style>
         <title>Crea visita</title>
     </head>
     <body>
         
         <h1>Crea visita</h1>
-        <h3>Paziente: </h3>
-        <div class="card">
-            Nome: <c:out value="${paziente.name}"/><br>
+        <div class="card mb-3" style="max-width: 85%;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+        <img src="../images/unitn_logo_1024.png" class="card-img" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+           Nome: <c:out value="${paziente.name}"/><br>
             Cognome: <c:out value="${paziente.surname}"/><br>
             email: <c:out value="${paziente.email}"/><br>
-            codice fiscale: <c:out value="${paziente.ssn}"/><br>
+            CF: <c:out value="${paziente.ssn}"/><br>
+      </div>
+    </div>
+  </div>
+</div>
 
-        </div>
-        <div class="container">
-            <h3>Esami prescrivibili:</h3>
-                        
-  
-            
-            <form class="form-signin" action="${pageContext.request.contextPath}/medici/visita.html" method="POST">
+              <div class="card mb-3" style="max-width: 85%;">
+  <div class="row no-gutters">
+
+    <div class="col-md-8">
+      <div class="card-body">
+           <form class="form-signin" action="${pageContext.request.contextPath}/medici/visita.html" method="POST">
             <%--<input type="hidden" name="idPaziente" value="${param.idPaziente}">--%>
-            <input type='text' placeholder='Search' class='text'><br>
+            <input type='text' class="form-control"placeholder='Cerca gli esami da prescrivere'><br>
             
                       <ul class="list-group list-group-flush">
           
@@ -60,11 +89,25 @@
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Crea visita</button>
 
             </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <div class="card">
+           
+
+        </div>
+        <div class="container">
+                        
+  
+            
+            
                   
         </div>
             
             <script>
-                $('.text').keyup(function submitClosure(ev) {
+                $('.form-control').keyup(function submitClosure(ev) {
                     $('.checkbox-wrapper').each(function inputElementClosure(index, element) {
                         element = $(element);
                         console.log("asd" +ev.target.value)
