@@ -3,9 +3,72 @@
     <head>
         <title>Start Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+            
+            *{
+                font-family: Roboto, Arial;
+            }
+            body {
+                background-image: url("images/background.jpg");                
+            }
+            
+            a{
+                color: white;
+            }
+            .center {
+                top: 40%;
+                position: absolute;
+                left: 5%;              
+            }
+            
+            .loginButton{
+                background: transparent;
+                color: whitesmoke;
+                border: 1px solid white;
+                padding-left: 2em;
+                padding-right: 2em;
+                padding-top: 0.5em;
+                padding-bottom: 0.5em;  
+                border-radius: 6px;
+            }
+            
+            .centerButton{
+                text-align: center;
+            }
+            
+            .loginButton:hover{
+                background: #68bf54;
+                color: whitesmoke;
+                border: 1px solid #68bf54;
+                transition: background-color 0.5s ease-out, color 0.5s ease-out, border 0.5s ease-out;               
+            }
+            
+            h1{
+                font-size: 4em;
+                color: gainsboro;
+            }
+            
+        </style>
     </head>
     <body>
-        <h1>Benvenuto in ISSPLite.</h1>
-        <a class="click-me" href="./login.jsp">Login</a>
+        <div class="my-container">
+            <div class="center">
+                <h1>Benvenuto su iSSPLite</h1>
+                <form action="login.jsp" method="get" class="centerButton">
+                    <button type="submit" class="loginButton">Vai al login</button>
+                </form>
+
+            </div>
+        </div>
+        
     </body>
 </html>

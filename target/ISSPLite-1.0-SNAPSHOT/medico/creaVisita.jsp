@@ -36,7 +36,7 @@
             
             <form class="form-signin" action="${pageContext.request.contextPath}/medici/visita.html" method="POST">
             <%--<input type="hidden" name="idPaziente" value="${param.idPaziente}">--%>
-            <input type='text' class="form-control"placeholder='Search'><br>
+            <input type='text' placeholder='Search' class='text'><br>
             
                       <ul class="list-group list-group-flush">
           
@@ -64,7 +64,7 @@
         </div>
             
             <script>
-                $('.form-control').keyup(function submitClosure(ev) {
+                $('.text').keyup(function submitClosure(ev) {
                     $('.checkbox-wrapper').each(function inputElementClosure(index, element) {
                         element = $(element);
                         console.log("asd" +ev.target.value)

@@ -22,8 +22,8 @@ import java.util.List;
  */
 public class JDBCEsameDAO extends JDBCDAO<Esame, String> implements EsameDAO{
 
-    private static final String GETALLESAMI = "SELECT * FROM esame E ORDER BY E.name;";
-    private static final String GETBYID = "SELECT * FROM esame E WHERE idEsame = ? ORDER BY E.name;";
+    private static final String GETALLESAMI = "SELECT * FROM esame;";
+    private static final String GETBYID = "SELECT * FROM esame WHERE idEsame = ?;";
     public JDBCEsameDAO(Connection con) {
         super(con);
     }
