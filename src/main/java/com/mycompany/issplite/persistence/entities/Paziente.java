@@ -15,7 +15,7 @@ public class Paziente {
     private String provincia;
     private String password;
     private String photoPath;
-    private Medico medico;
+    private String medico;
 
     public String getIdPaziente() {
         return idPaziente;
@@ -105,11 +105,11 @@ public class Paziente {
         this.photoPath = photoPath;
     }
 
-    public Medico getMedico() {
+    public String getMedico() {
         return medico;
     }
 
-    public void setMedico(Medico medico) {
+    public void setMedico(String medico) {
         this.medico = medico;
     }
     

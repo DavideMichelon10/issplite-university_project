@@ -5,6 +5,7 @@ com\mycompany\issplite\persistence\entities\Paziente.class
 com\mycompany\issplite\servlets\CreaVisitaServlet.class
 com\mycompany\issplite\servlets\SSPServlet.class
 com\mycompany\issplite\persistence\dao\SSPDAO.class
+com\mycompany\issplite\servlets\AreaPersonalePazienteServlet.class
 com\mycompany\issplite\persistence\entities\SSP.class
 com\mycompany\issplite\persistence\entities\Farmaco.class
 com\mycompany\issplite\persistence\entities\RicettePrescrittePaziente.class

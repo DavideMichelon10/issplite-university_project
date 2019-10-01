@@ -5,6 +5,7 @@ import com.mycompany.issplite.persistence.dao.PazienteDAO;
 import com.mycompany.issplite.persistence.dao.factories.DAOException;
 import com.mycompany.issplite.persistence.dao.factories.jdbc.JDBCDAO;
 import com.mycompany.issplite.persistence.entities.EsamiSostenutiPaziente;
+import com.mycompany.issplite.persistence.entities.Medico;
 import com.mycompany.issplite.persistence.entities.Paziente;
 import com.mycompany.issplite.persistence.entities.RicettePrescrittePaziente;
 import com.mycompany.issplite.persistence.entities.RichiamiPrescrittiPaziente;
@@ -96,7 +97,11 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
                     paziente.setName(rs.getString("name"));
                     paziente.setSurname(rs.getString("surname"));
                     paziente.setPhotoPath(rs.getString("photopath"));
-                    
+                    paziente.setProvincia(rs.getString("provincia"));
+                    paziente.setBirthPlace(rs.getString("birthplace"));
+                    paziente.setBirthDate(rs.getDate("birthdate"));
+                    paziente.setSex(rs.getBoolean("sex"));
+                    paziente.setMedico(rs.getString("medico_idmedico"));
                     paziente.setSsn(rs.getString("ssn"));
                    
                     return paziente;

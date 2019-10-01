@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <!--POSIZIONE FILTRI -->
     <filter>
         <filter-name>MediciFilter</filter-name>
         <filter-class>com.mycompany.issplite.filters.MediciFilter</filter-class>
@@ -50,86 +51,122 @@
         <dispatcher>INCLUDE</dispatcher>
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
+    <!--FINE POSIZIONE FILTRI -->
     <listener>
         <description>ServletContextListener</description>
         <listener-class>com.mycompany.issplite.listeners.WebContextListener</listener-class>
     </listener>
+    <!--LOGIN SERVLET -->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.mycompany.issplite.servlets.LoginServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>MediciServlet</servlet-name>
-        <servlet-class>com.mycompany.issplite.servlets.MediciServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>PazientiServlet</servlet-name>
-        <servlet-class>com.mycompany.issplite.servlets.PazientiServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SSPServlet</servlet-name>
-        <servlet-class>com.mycompany.issplite.servlets.SSPServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>MediciPage</servlet-name>
-        <jsp-file>/medico/medico.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>PazientiPage</servlet-name>
-        <jsp-file>/paziente/paziente.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>SSPPage</servlet-name>
-        <jsp-file>/ssp/ssp.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>PrescrizioniPage</servlet-name>
-        <jsp-file>/medico/prescrizioni.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>CreaVisitaPage</servlet-name>
-        <jsp-file>/medico/creaVisita.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>com.mycompany.issplite.servlets.LogoutServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>MediciPrescrizioniServlet</servlet-name>
-        <servlet-class>com.mycompany.issplite.servlets.MediciPrescrizioniServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CreaVisitaServlet</servlet-name>
-        <servlet-class>com.mycompany.issplite.servlets.CreaVisitaServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>PazientiprescrizioniServlet</servlet-name>
-        <servlet-class>com.mycompany.issplite.servlets.PazientiprescrizioniServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login.handler</url-pattern>
     </servlet-mapping>
+    <!--FINE LOGIN SERVLET-->
+    <!--LOGOUT SERVLET-->
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout.handler</url-pattern>
+    </servlet-mapping>
+    <!--FINE LOGOUT SERVLET-->
+    <!--MEDICO SERVLET-->
+    <servlet>
+        <servlet-name>MediciServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.MediciServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MediciPage</servlet-name>
+        <jsp-file>/medico/medico.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MediciServlet</servlet-name>
         <url-pattern>/medici/medici.html</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>MediciPage</servlet-name>
+        <url-pattern>/medici/medico.html</url-pattern>
+    </servlet-mapping>
+    <!--FINE MEDICO SERVLET-->
+    <!--SSP SERVLET-->
+    <servlet>
+        <servlet-name>SSPServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.SSPServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SSPPage</servlet-name>
+        <jsp-file>/ssp/ssp.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
         <servlet-name>SSPServlet</servlet-name>
         <url-pattern>/sspi/sspi.html</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>MediciPage</servlet-name>
-        <url-pattern>/medici/medico.html</url-pattern>
+        <servlet-name>SSPPage</servlet-name>
+        <url-pattern>/ssp/ssp.html</url-pattern>
     </servlet-mapping>
+    <!--FINE SSP SERVLET-->
+    <!--MEDICO PRESCRIZIONE SERVLET-->
+    <servlet>
+        <servlet-name>MediciPrescrizioniServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.MediciPrescrizioniServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PrescrizioniPage</servlet-name>
+        <jsp-file>/medico/prescrizioni.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PrescrizioniPage</servlet-name>
         <url-pattern>/medici/prescrizioni.html</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>MediciPrescrizioniServlet</servlet-name>
+        <url-pattern>/medici/prescrizione.html</url-pattern>
+    </servlet-mapping>
+    <!--FINE MEDICO PRESCRIZIONE SERVLET-->
+    <!--CREA VISITA SERVLET-->
+    <servlet>
+        <servlet-name>CreaVisitaServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.CreaVisitaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreaVisitaPage</servlet-name>
+        <jsp-file>/medico/creaVisita.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
         <servlet-name>CreaVisitaPage</servlet-name>
         <url-pattern>/medici/visite.html</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreaVisitaServlet</servlet-name>
+        <url-pattern>/medici/visita.html</url-pattern>
+    </servlet-mapping>
+    <!--FINE CREA VISITA SERVLET-->
+    <!--PAZIENTI PRESCRIZIONE SERVLET-->
+    <servlet>
+        <servlet-name>PazientiprescrizioniServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.PazientiprescrizioniServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PazientiprescrizioniServlet</servlet-name>
+        <url-pattern>/PazientiprescrizioniServlet</url-pattern>
+    </servlet-mapping>
+    <!--FINE PAZIENTI PRESCRIZIONE SERVLET-->
+    <!--PAZIENTE SERVLET-->
+    <servlet>
+        <servlet-name>PazientiServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.PazientiServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PazientiPage</servlet-name>
+        <jsp-file>/paziente/paziente.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PazientiServlet</servlet-name>
         <url-pattern>/pazienti/pazienti.html</url-pattern>
@@ -138,26 +175,23 @@
         <servlet-name>PazientiPage</servlet-name>
         <url-pattern>/pazienti/paziente.html</url-pattern>
     </servlet-mapping>
+    <!--FINE PAZIENTE SERVLET-->
+    
+    <!--AREA PERSONALE PAZIENTE-->
+    <servlet>
+        <servlet-name>AreaPersonalePazienteServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.AreaPersonalePazienteServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AreaPersonalePazientePage</servlet-name>
+        <jsp-file>/paziente/areaPersonale.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
-        <servlet-name>SSPPage</servlet-name>
-        <url-pattern>/ssp/ssp.html</url-pattern>
+        <servlet-name>AreaPersonalePazientePage</servlet-name>
+        <url-pattern>/pazienti/areaPersonale.html</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LogoutServlet</servlet-name>
-        <url-pattern>/logout.handler</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>MediciPrescrizioniServlet</servlet-name>
-        <url-pattern>/medici/prescrizione.html</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CreaVisitaServlet</servlet-name>
-        <url-pattern>/medici/visita.html</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PazientiprescrizioniServlet</servlet-name>
-        <url-pattern>/PazientiprescrizioniServlet</url-pattern>
-    </servlet-mapping>
+    <!--FINE AREA PERSONALE PAZIENTE SERVLET-->
+    
     <session-config>
         <session-timeout>
             30

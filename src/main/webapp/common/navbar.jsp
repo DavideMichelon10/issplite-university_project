@@ -15,7 +15,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Navbar</title>
+        <link rel="stylesheet" type="text/css" href="../css/commonStyle.css">
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
@@ -26,15 +27,15 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
         <style>
             .navbar-default {
-                background-color: #99bbb2;  
+                background-color: #087a9c;  
                 display: block;
             }
             
             .testoMenu{
-                color: #354B46 !important;
+                color: whitesmoke !important;
             }
             body { 
-                padding-top: 70px; 
+                padding-top: 55px; 
             }          
         </style>
         
