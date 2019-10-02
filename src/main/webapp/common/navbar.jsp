@@ -36,7 +36,10 @@
             }
             body { 
                 padding-top: 55px; 
-            }          
+            }         
+            .tastoLogout:hover{
+                font-weight: bold;
+            }
         </style>
         
         <%
@@ -55,19 +58,35 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand testoMenu">iSSPLite</a>
+                    <%
+                        if(session.getAttribute("paziente") != null){%>                    
+                            <c:set var = "paziente" scope = "session" value = "${paziente}"/>
+                            <a class="navbar-brand testoMenu" href="../pazienti/pazienti.html">iSSPLite</a>
+                        <%}else if(session.getAttribute("medico") != null){%>                    
+                            <c:set var = "medico" scope = "session" value = "${medico}"/>
+                            <a class="navbar-brand testoMenu" href="../medici/medici.html">iSSPLite</a>
+                        <%}else if(session.getAttribute("ssp") != null){%>                    
+                            <c:set var = "ssp" scope = "session" value = "${ssp}"/>
+                            <a class="navbar-brand testoMenu" href="../ssp/ssp.html">iSSPLite</a>
+                        <%}else{%>                    
+                        <a class="navbar-brand testoMenu" href="../index.html">iSSPLite</a>
+                        <%}
+                    %>              
                 </div>
                 <ul class="nav navbar-nav navbar-right">
                     <%
                         if(session.getAttribute("paziente") != null){%>                    
                             <c:set var = "paziente" scope = "session" value = "${paziente}"/>
                             <li><p class="navbar-text testoMenu">Benvenuto <b><c:out value="${paziente.name}"/> <c:out value="${paziente.surname}"/></b></p></li>
+                            <li><a href="${pageContext.request.contextPath}/logout.handler" class="testoMenu tastoLogout">Log out</a></li>
                         <%}else if(session.getAttribute("medico") != null){%>                    
                             <c:set var = "medico" scope = "session" value = "${medico}"/>
                             <li><p class="navbar-text testoMenu">Benvenuto <b><c:out value="${medico.name}"/> <c:out value="${medico.surname}"/></p></li>
+                            <li><a href="${pageContext.request.contextPath}/logout.handler" class="testoMenu tastoLogout">Log out</a></li>
                         <%}else if(session.getAttribute("ssp") != null){%>                    
                             <c:set var = "ssp" scope = "session" value = "${ssp}"/>
                             <li><p class="navbar-text testoMenu">Benvenuto <b><c:out value="${ssp.provincia}"/></b></p></li>
+                            <li><a href="${pageContext.request.contextPath}/logout.handler" class="testoMenu tastoLogout">Log out</a></li>
                         <%}else{%>                    
                             <li><p class="navbar-text testoMenu">Benvenuto su <b>iSSPLite</b></p></li>
                         <%}
