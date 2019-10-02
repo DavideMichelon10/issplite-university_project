@@ -190,6 +190,10 @@
         <servlet-name>AreaPersonalePazientePage</servlet-name>
         <url-pattern>/pazienti/areaPersonale.html</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AreaPersonalePazienteServlet</servlet-name>
+        <url-pattern>/paziente/areaPersonale.html</url-pattern>
+    </servlet-mapping>
     <!--FINE AREA PERSONALE PAZIENTE SERVLET-->
     
     <session-config>

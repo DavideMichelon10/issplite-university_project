@@ -5,12 +5,22 @@
  */
 package com.mycompany.issplite.servlets;
 
+import com.mycompany.issplite.persistence.dao.MedicoDAO;
+import com.mycompany.issplite.persistence.dao.PazienteDAO;
+import com.mycompany.issplite.persistence.dao.factories.DAOException;
+import com.mycompany.issplite.persistence.dao.factories.DAOFactory;
+import com.mycompany.issplite.persistence.dao.factories.DAOFactoryException;
+import com.mycompany.issplite.persistence.entities.Medico;
+import com.mycompany.issplite.persistence.entities.Paziente;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -18,58 +28,60 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class AreaPersonalePazienteServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            System.out.println("SONO ENTRATO NELLA SERVLET");
+    private PazienteDAO pazienteDao;
+    private MedicoDAO medicoDao;
+    
+    @Override
+    public void init() throws ServletException {
+        DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+        if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for user storage system");
+        }
+        try {
+            pazienteDao = daoFactory.getDAO(PazienteDAO.class);
+            medicoDao = daoFactory.getDAO(MedicoDAO.class);
+
+        } catch (DAOFactoryException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        System.out.println("SONO ENTRATO NELLA SERVLET");
-        processRequest(request, response);
-    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Medico medico = new Medico();
+        
+        String cp = getServletContext().getContextPath();
+        if (!cp.endsWith("/")) {
+            cp += "/";
+        }     
+        
+        HttpSession session = ((HttpServletRequest)request).getSession(false);            
+        Paziente paziente = (Paziente) session.getAttribute("paziente");
+        
+        if (paziente.getIdPaziente() == null) {
+            response.sendRedirect(cp + "login.jsp");
+            return;
+        }
+        
+        try {
+            medico = medicoDao.getById(paziente.getMedico());            
+        } catch (DAOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        System.out.println("Medico: " + medico.getName());
+        request.setAttribute("medico", medico);
+        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/pazienti/areaPersonale.html"));
+        dispatcher.forward(request, response);
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    }
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        System.out.println("SONO ENTRATO NELLA SERVLET s<sfdsd");
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

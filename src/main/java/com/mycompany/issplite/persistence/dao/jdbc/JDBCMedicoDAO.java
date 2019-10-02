@@ -79,6 +79,8 @@ public class JDBCMedicoDAO extends JDBCDAO<Medico, String> implements MedicoDAO 
                     }
                     Medico medico = new Medico();
                     medico.setIdMedico(rs.getString("idmedico"));
+                    medico.setName(rs.getString("name"));
+                    medico.setSurname(rs.getString("surname"));
                     medico.setProvincia(rs.getString("provincia"));
                     medico.setPassword(rs.getString("password"));
                     medico.setEmail(rs.getString("email"));
@@ -113,6 +115,8 @@ public class JDBCMedicoDAO extends JDBCDAO<Medico, String> implements MedicoDAO 
                     Medico medico = new Medico();
                     medico.setIdMedico(rs.getString("idmedico"));
                     medico.setProvincia(rs.getString("provincia"));
+                    medico.setName(rs.getString("name"));
+                    medico.setSurname(rs.getString("surname"));
                     medico.setPassword(rs.getString("password"));
                     medico.setEmail(rs.getString("email"));
                     medico.setCity(rs.getString("city"));

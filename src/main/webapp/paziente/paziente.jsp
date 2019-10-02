@@ -60,7 +60,7 @@
                                 </form>
                             </div>
                             <div class="col-md-6">
-                                <a href="../paziente/areaPersonale.jsp" class="btn btn-sm btn-primary btn-block" role="button"><img src="../images/setting.ico" class="imgSetting"> Area Personale</a>
+                                <a href="../paziente/areaPersonale.html" class="btn btn-sm btn-primary btn-block" role="button"><img src="../images/setting.ico" class="imgSetting"> Area Personale</a>
                             </div>
                         </div>
                     </div>
