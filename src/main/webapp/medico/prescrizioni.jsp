@@ -9,8 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Prescrizioni</title>

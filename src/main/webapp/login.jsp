@@ -309,8 +309,8 @@ input[type=text]:placeholder {
                     <p>Autenticati per poter accedere al tuo profilo personale di paziente/medico/ISSP.</p>
                 </div>
             <form action="login.handler" method="POST">
-                    <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username">
-                    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
+                    <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username" required>
+                    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password" required>
                 <div class="checkbox mb-3">
                     <label>
                         <input type="checkbox" name="rememberMe" value="true"> Remember me
