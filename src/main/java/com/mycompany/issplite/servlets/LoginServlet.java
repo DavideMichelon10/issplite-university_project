@@ -172,4 +172,12 @@ public class LoginServlet extends HttpServlet {
             }
             
         }
+    }
+        private void removeSessionForParticularUser(HttpSession session, Object user, String name){
+        if (user != null) {
+            session.setAttribute(name, null);
+            session.invalidate();
+            user = null;
+        } 
+    }
 }
