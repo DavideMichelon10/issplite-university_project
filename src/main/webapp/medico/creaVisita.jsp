@@ -13,11 +13,10 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <style>
-            ul{
+            .list-ul{
                 overflow:hidden; 
                 overflow-y:scroll;
             }
@@ -63,7 +62,7 @@
                 <form class="form-signin" action="${pageContext.request.contextPath}/medici/visita.html" method="POST">
                     <input type='text' class="form-control"placeholder='Cerca gli esami da prescrivere'><br>
 
-                    <ul  style="height: 150px;" class="list-group list-group-flush">
+                    <ul  style="height: 150px;" class="list-ul">
 
                         <c:forEach var="esame" items="${esami}">
 
