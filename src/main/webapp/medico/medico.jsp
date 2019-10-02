@@ -30,27 +30,8 @@ tr:nth-child(even){background-color: #f2f2f2}
         <title>Lista pazienti</title>
     </head>
     <body>
-        
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">ISSPLite</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Lista pazienti <span class="sr-only">(current)</span></a>
-            </li>
+         <%@ include file="../common/navbar.jsp" %>
 
-            <li>
-            <form action="${pageContext.request.contextPath}/logout.handler" method="post">
-                  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign out</button>
-              </form>
-            </li>
-          </ul>
-        </div>
-      </nav>
-        
         <h1>Lista pazienti:</h1>
 
         <table class="table table-striped">
