@@ -4,12 +4,20 @@ package com.mycompany.issplite.persistence.dao.jdbc;
 import com.mycompany.issplite.persistence.dao.SSPDAO;
 import com.mycompany.issplite.persistence.dao.factories.DAOException;
 import com.mycompany.issplite.persistence.dao.factories.jdbc.JDBCDAO;
+import com.mycompany.issplite.persistence.entities.RicetteErogatePerGiorno;
 import com.mycompany.issplite.persistence.entities.SSP;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,7 +28,14 @@ public class JDBCSSPDAO extends JDBCDAO<SSP, String> implements SSPDAO {
 
     private static final String GETSSP = "SELECT * FROM SSP WHERE idssp = ? and password = ?;";
     private static final String GETSSPBYID = "SELECT * FROM SSP WHERE idssp = ?;";
-
+    private static final String GETRICETTEPERDAY = "SELECT M.name as \"name_medico\", M.surname, F.name, PA.ssn, V.ticket, P.ErogationDate FROM Medico M\n" +
+"	JOIN Eroga E ON E.Medico_idMedico = M.idMedico\n" +
+"	JOIN Paziente PA ON PA.idPaziente = E.Paziente_IdPaziente\n" +
+"	JOIN Visita V ON V.idVisita = E.Visita_idVisita\n" +
+"	JOIN Prescrizione P ON P.Visita_idVisita = V.idVisita\n" +
+"	JOIN Farmaco F ON F.idFarmaco = P.Farmaco_idFarmaco\n" +
+"	WHERE M.Provincia = ? AND P.erogationdate > ? AND P.erogationdate < ?;";
+    
     public JDBCSSPDAO(Connection con) {
         super(con);
     }
@@ -100,5 +115,59 @@ public class JDBCSSPDAO extends JDBCDAO<SSP, String> implements SSPDAO {
             throw new DAOException("Impossible to get the list of users", ex);
         }
     }
-    
+
+    @Override
+    public List<RicetteErogatePerGiorno> getRicettePerDay(String provincia, String date) throws DAOException {
+        try {
+            if (date == null) {
+                throw new DAOException("Date mandatory fields", new NullPointerException("date is null"));
+            }
+            
+            String dateFine;
+            String[] parts = date.split("-");
+            int dayAfter = Integer.parseInt(parts[2]);
+            dayAfter++;
+            dateFine = ""+parts[0]+"-"+parts[1]+"-"+dayAfter;
+            
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsedDate = dateFormat.parse(date);
+            Date parsedDate_ = dateFormat.parse(dateFine);
+            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+            Timestamp timestamp_ = new java.sql.Timestamp(parsedDate_.getTime());
+
+            List<RicetteErogatePerGiorno> ricette = new ArrayList<>();
+            try (PreparedStatement stm = CON.prepareStatement(GETRICETTEPERDAY)) {
+                stm.setString(1, provincia);
+                stm.setTimestamp(2, timestamp);
+                stm.setTimestamp(3, timestamp_);
+                System.out.println("DATE: "+ date +"  DATEFINE: "+dateFine);
+                try (ResultSet rs = stm.executeQuery()) {
+                    
+                    while (rs.next()) {
+                        
+                        RicetteErogatePerGiorno r = new RicetteErogatePerGiorno();
+                        
+                        r.setDate(rs.getString("erogationdate"));
+                        r.setFarmacoName(rs.getString("name"));
+                        r.setMedicoName(rs.getString("name_medico"));
+                        r.setMedicoSurname(rs.getString("surname"));
+                        r.setPazienteSSN(rs.getString("ssn"));
+                        r.setTicket(rs.getInt("ticket"));
+                        
+                        ricette.add(r);
+                    }
+                    for (RicetteErogatePerGiorno ricetteErogatePerGiorno : ricette) {
+                        ricetteErogatePerGiorno.toString();
+                        
+                    }
+                    return ricette;
+                }
+            } catch (SQLException ex) {
+                throw new DAOException("Impossible to get the list of ricette", ex);
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(JDBCSSPDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }    
 }

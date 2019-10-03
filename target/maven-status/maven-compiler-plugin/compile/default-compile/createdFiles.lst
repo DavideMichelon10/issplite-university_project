@@ -1,5 +1,6 @@
 com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAO.class
 com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAOFactory.class
+com\mycompany\issplite\servlets\XLSServlet.class
 com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAOImpl.class
 com\mycompany\issplite\persistence\entities\Paziente.class
 com\mycompany\issplite\servlets\CreaVisitaServlet.class
@@ -14,6 +15,7 @@ com\mycompany\issplite\persistence\dao\factories\DAO.class
 com\mycompany\issplite\servlets\MediciPrescrizioniServlet.class
 com\mycompany\issplite\servlets\PazientiprescrizioniServlet.class
 com\mycompany\issplite\persistence\entities\Visita.class
+com\mycompany\issplite\persistence\entities\RicetteErogatePerGiorno.class
 com\mycompany\issplite\persistence\entities\RichiamiPrescrittiPaziente.class
 com\mycompany\issplite\servlets\LoginServlet.class
 com\mycompany\issplite\listeners\WebContextListener.class

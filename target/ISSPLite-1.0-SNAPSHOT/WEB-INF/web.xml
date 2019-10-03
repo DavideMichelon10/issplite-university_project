@@ -17,7 +17,7 @@
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>com.mycompany.issplite.filters.AuthenticationFilter</filter-class>
     </filter>
-    <filter-mapping>
+    <!--<filter-mapping>
         <filter-name>AuthenticationFilter</filter-name>
         <url-pattern>/sspi/*</url-pattern>
         <url-pattern>/medici/*</url-pattern>
@@ -50,7 +50,7 @@
         <dispatcher>FORWARD</dispatcher>
         <dispatcher>INCLUDE</dispatcher>
         <dispatcher>ERROR</dispatcher>
-    </filter-mapping>
+    </filter-mapping>-->
     <!--FINE POSIZIONE FILTRI -->
     <listener>
         <description>ServletContextListener</description>
@@ -60,6 +60,10 @@
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.mycompany.issplite.servlets.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>XLSServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.XLSServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -109,7 +113,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SSPPage</servlet-name>
-        <url-pattern>/ssp/ssp.html</url-pattern>
+        <url-pattern>/sspi/ssp.html</url-pattern>
     </servlet-mapping>
     <!--FINE SSP SERVLET-->
     <!--MEDICO PRESCRIZIONE SERVLET-->
@@ -176,7 +180,6 @@
         <url-pattern>/pazienti/paziente.html</url-pattern>
     </servlet-mapping>
     <!--FINE PAZIENTE SERVLET-->
-    
     <!--AREA PERSONALE PAZIENTE-->
     <servlet>
         <servlet-name>AreaPersonalePazienteServlet</servlet-name>
@@ -195,7 +198,10 @@
         <url-pattern>/paziente/areaPersonale.html</url-pattern>
     </servlet-mapping>
     <!--FINE AREA PERSONALE PAZIENTE SERVLET-->
-    
+    <servlet-mapping>
+        <servlet-name>XLSServlet</servlet-name>
+        <url-pattern>/sspi/XLSServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

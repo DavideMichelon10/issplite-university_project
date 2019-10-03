@@ -100,7 +100,6 @@ public class LoginServlet extends HttpServlet {
                     removeSession(session);
                     response.sendRedirect("/medici/medici.html");
 
-                    //response.sendRedirect(response.encodeRedirectURL(contextPath + "medici/medici.html?idMedico="+medico.getIdMedico()));
                 }
             } else {
                 
