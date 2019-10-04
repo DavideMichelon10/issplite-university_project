@@ -156,10 +156,7 @@ public class JDBCSSPDAO extends JDBCDAO<SSP, String> implements SSPDAO {
                         
                         ricette.add(r);
                     }
-                    for (RicetteErogatePerGiorno ricetteErogatePerGiorno : ricette) {
-                        ricetteErogatePerGiorno.toString();
-                        
-                    }
+                    
                     return ricette;
                 }
             } catch (SQLException ex) {

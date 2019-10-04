@@ -51,10 +51,10 @@
         <div class="body_div">
             <div class="dati_utente">
 
-                Nome: <c:out value="${paziente.name}"/><br>
-                Cognome: <c:out value="${paziente.surname}"/><br>
-                email: <c:out value="${paziente.email}"/><br>
-                CF: <c:out value="${paziente.ssn}"/><br>
+                <b>Nome:</b> <c:out value="${paziente.name}"/><br>
+                <b>Cognome:</b> <c:out value="${paziente.surname}"/><br>
+                <b>email:</b> <c:out value="${paziente.email}"/><br>
+                <b>CF:</b> <c:out value="${paziente.ssn}"/><br>
             </div>
 
 

@@ -61,10 +61,6 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.mycompany.issplite.servlets.LoginServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>XLSServlet</servlet-name>
-        <servlet-class>com.mycompany.issplite.servlets.XLSServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login.handler</url-pattern>
@@ -198,10 +194,6 @@
         <url-pattern>/paziente/areaPersonale.html</url-pattern>
     </servlet-mapping>
     <!--FINE AREA PERSONALE PAZIENTE SERVLET-->
-    <servlet-mapping>
-        <servlet-name>XLSServlet</servlet-name>
-        <url-pattern>/sspi/XLSServlet</url-pattern>
-    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

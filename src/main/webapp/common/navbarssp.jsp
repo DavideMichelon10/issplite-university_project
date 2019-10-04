@@ -16,31 +16,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Navbar</title>
-        <link rel="stylesheet" type="text/css" href="../css/commonStyle.css">
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-        <style>
-            .navbar-default {
-                background-color: #087a9c;  
-                display: block;
-            }
-            
-            .testoMenu{
-                color: whitesmoke !important;
-            }
-            body { 
-                padding-top: 55px; 
-            }         
-            .tastoLogout:hover{
-                font-weight: bold;
-            }
-        </style>
+       
         
         <%
             String userType = "";

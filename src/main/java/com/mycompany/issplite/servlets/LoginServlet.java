@@ -11,7 +11,6 @@ import com.mycompany.issplite.persistence.entities.Medico;
 import com.mycompany.issplite.persistence.entities.Paziente;
 import com.mycompany.issplite.persistence.entities.SSP;
 import java.io.IOException;
-import java.time.Clock;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;

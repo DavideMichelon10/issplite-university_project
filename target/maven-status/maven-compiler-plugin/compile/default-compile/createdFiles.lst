@@ -1,6 +1,5 @@
 com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAO.class
 com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAOFactory.class
-com\mycompany\issplite\servlets\XLSServlet.class
 com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAOImpl.class
 com\mycompany\issplite\persistence\entities\Paziente.class
 com\mycompany\issplite\servlets\CreaVisitaServlet.class
