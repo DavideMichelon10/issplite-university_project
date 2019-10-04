@@ -29,7 +29,7 @@
                 margin-right: 5%;
             }
         </style>
-        <%@ include file="../common/navbarssp.jsp" %>
+        <%@ include file="../common/navbar.jsp" %>
 
 
         <form action="${pageContext.request.contextPath}/sspi/sspi.html">
