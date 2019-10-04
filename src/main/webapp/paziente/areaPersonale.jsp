@@ -33,7 +33,7 @@
                 width: 100%; 
                 margin-bottom: 10px;
                 text-align: right;
-                
+
             } 
 
             .icon { 
@@ -45,22 +45,40 @@
                 width: 100%; 
                 padding: 10px; 
             } 
-            
+
             .prova{
                 background-color: black;
                 border: 10px solid black;
             }
 
+            .btnStandard{
+                background: transparent;
+                color: black;
+                border: 1px solid #2d3036;
+                padding-left: 2em;
+                padding-right: 2em;
+                padding-top: 0.5em;
+                padding-bottom: 0.5em;  
+                border-radius: 6px;
+                position: initial;
+            }
+            
+            .btnStandard:hover{
+                background: #bee8c8;
+                border: 1px solid #bee8c8;
+                transition: background-color 0.5s ease-out, border 0.5s ease-out;               
+            }
         </style>
 
         <script>
-            
+
             function editFunction() {
                 document.getElementById("email").readOnly = false;
                 document.getElementById("currentPassword").readOnly = false;
                 document.getElementById("newPassword").readOnly = false;
                 document.getElementById("checkPassword").readOnly = false;
-                document.getElementById("comandiBefore").style.display = "none"
+                document.getElementById("comandiBefore").style.display = "none";
+                document.getElementById("btnSubmit").style.display = "block";
                 document.getElementById("comandiAfter").style.display = "block";
             }
 
@@ -69,31 +87,64 @@
                 document.getElementById("currentPassword").readOnly = true;
                 document.getElementById("newPassword").readOnly = true;
                 document.getElementById("checkPassword").readOnly = true;
-                document.getElementById("comandiBefore").style.display = "block"
+                document.getElementById("comandiBefore").style.display = "block";
+                document.getElementById("btnSubmit").style.display = "none";
                 document.getElementById("comandiAfter").style.display = "none";
+                document.getElementById("msgCurrentPsw").style.display = "none";
+                document.getElementById("msgCheckPsw").style.display = "none";
             }
-            
+
             function showPassword(id) {
-                if(document.getElementById(id).type == "password"){
+                if (document.getElementById(id).type == "password") {
                     document.getElementById(id).type = "text";
                     document.getElementById(id).classList.remove(".fa-eye-slash");
-                    document.getElementById(id).classList.add(".prova");                    
-                }else{
-                    document.getElementById(id).type = "password";                    
+                    document.getElementById(id).classList.add(".prova");
+                } else {
+                    document.getElementById(id).type = "password";
                     document.getElementById(id).classList.remove(".fa-eye");
                     document.getElementById(id).classList.add(".prova");
                 }
             }
-            
-            function checkField(oldPassword) {
-                var currentPassword = document.getElementById("currentPassword").value;
-                var oldPassword = '${paziente.password}';
-                if(!currentPassword == oldPassword){
-                    
-                }
-            }
-        </script>
 
+            function checkField() {
+                var currentPsw = document.getElementById("currentPassword").value;
+                var oldPsw = '${paziente.password}';
+                var newPsw = document.getElementById("newPassword").value;
+                var checkPsw = document.getElementById("checkPassword").value;
+                if(document.getElementById("psw").style.display == "block"){
+                    if (currentPsw == oldPsw) {
+                        if (newPsw == checkPsw && newPsw != '' && checkPsw != '') {
+                            return true;
+                        } else {
+                            document.getElementById("msgCheckPsw").style.display = "block";
+                            return false;
+                        }
+                    } else {
+                        document.getElementById("msgCurrentPsw").style.display = "block";
+                        return false;
+                    }
+                }else{
+                    document.getElementById("newPassword").value = null;
+                    return true;
+                }
+                
+            }
+
+            function changePassword() {
+                if (document.getElementById("psw").style.display == "none") {
+                    document.getElementById("psw").style.display = "block";
+                    document.getElementById("btnSubmit").style.display = "block";
+                    document.getElementById("currentPassword").readOnly = false;
+                    document.getElementById("newPassword").readOnly = false;
+                    document.getElementById("checkPassword").readOnly = false;
+                } else {
+                    document.getElementById("psw").style.display = "none";
+                }
+
+            }
+            
+            
+        </script>
 
     </head>
     <body>    
@@ -105,38 +156,25 @@
             <div class="col-md-6">
                 <div class="card cardProfilo">
                     <img class="card-img-top imgProfilo" src="../images/anonProfile.png" alt="Card image cap">
-                    <div class="card-body">
-                        <p class="card-text"><br>Benvenuto <b><c:out value="${paziente.name}"/> <c:out value="${paziente.surname}"/></b> nella tua area personale</p>
-                    </div>
                 </div>
-
                 <div id="comandiBefore">
-                    <button role="button" id="btnEdit" onclick="editFunction()">Modifica</button>
+                    <button role="button" id="btnEdit" class="btnStandard" onclick="editFunction()">Modifica</button>    
                 </div>
                 <div id="comandiAfter" style="display:none">
-                    <button role="button" id="btnBack" onclick="backFunction()">Indietro</button>
+                    <button role="button" id="btnBack" class="btnStandard" onclick="backFunction()">Indietro </button>
                 </div>
+                <button role="button" id="btnCambiaPsw" onclick="changePassword()" class="btnStandard">Cambia Password</button>
 
+                    <br>
                 <div id="form">
-                    <form class="form-horizontal" role="form">
+                    <form class="form-horizontal" role="form"  onsubmit="return checkField()" action="https://www.google.it/">
                         <div class="form-group">
                             <label for="nome" class="col-sm-3 control-label">Nome e Cognome:</label>
                             <div class="col-sm-9">
                                 <input type="text" id="nome" value="${paziente.name} ${paziente.surname}" class="form-control" readonly>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="luogoNascita" class="col-sm-3 control-label">Luogo Nascita:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="luogoNascita" value="${paziente.birthPlace}" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="dataNascita" class="col-sm-3 control-label">Data di Nascita:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="dataNascita" value="${paziente.birthDate}" class="form-control" readonly>
-                            </div>
-                        </div>
+                        
                         <div class="form-group">
                             <label for="email" class="col-sm-3 control-label">Email:</label>
                             <div class="col-sm-9">
@@ -155,36 +193,39 @@
                                 <input type="text" id="medico" value="${medico.name} ${medico.surname}" class="form-control" readonly>
                             </div>
                         </div>
-
-
-                        <div class="form-group">
-                            <label for="currentPassword" class="col-sm-3 control-label">Password Corrente:</label>
-                            <div class="col-sm-9">
-                                <div class="input-icons">
-                                    <div onclick="showPassword('currentPassword')"><i class="fa fa-eye-slash icon"></i></div>
-                                    <input type="password" id="currentPassword" class="form-control input-field" readonly>
+                        <div id="psw" style="display: none;">
+                            <div class="form-group" id="divPswOld">
+                                <label for="currentPassword" class="col-sm-3 control-label">Password Corrente:</label>
+                                <div class="col-sm-9">
+                                    <div class="input-icons">
+                                        <div onclick="showPassword('currentPassword')"><i class="fa fa-eye-slash icon"></i></div>
+                                        <input type="password" id="currentPassword" class="form-control input-field" readonly>
+                                        <p style="color: red; display: none;" id="msgCurrentPsw">Password errata</p>
+                                    </div>                                
                                 </div>
-                            </div>
-                        </div>   
-                        <div class="form-group">
-                            <label for="newPassword" class="col-sm-3 control-label">Nuova Password</label>
-                            <div class="col-sm-9">
-                                <div class="input-icons">
-                                    <div onclick="showPassword('newPassword')"><i class="fa fa-eye-slash icon"></i></div>
-                                    <input type="password" id="newPassword" class="form-control input-field" readonly>
+                            </div>   
+                            <div class="form-group" id="divPswNew">
+                                <label for="newPassword" class="col-sm-3 control-label">Nuova Password</label>
+                                <div class="col-sm-9">
+                                    <div class="input-icons">
+                                        <div onclick="showPassword('newPassword')"><i class="fa fa-eye-slash icon"></i></div>
+                                        <input type="password" id="newPassword" class="form-control input-field" readonly>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>   
-                        <div class="form-group">
-                            <label for="checkPassword" class="col-sm-3 control-label">Conferma Password:</label>
-                            <div class="col-sm-9">
-                                <div class="input-icons">
-                                    <div onclick="showPassword('checkPassword')"><i class="fa fa-eye-slash icon"></i></div>
-                                    <input type="password" id="checkPassword" class="form-control input-field" readonly>
+                            </div>   
+                            <div class="form-group" id="divPswCheck">
+                                <label for="checkPassword" class="col-sm-3 control-label">Conferma Password:</label>
+                                <div class="col-sm-9">
+                                    <div class="input-icons">
+                                        <div onclick="showPassword('checkPassword')"><i class="fa fa-eye-slash icon"></i></div>
+                                        <input type="password" id="checkPassword" class="form-control input-field" readonly>
+                                        <p style="color: red; display: none;" id="msgCheckPsw">Le due password non corrispondono</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>   
-                            <button action="submit" onSubmit="checkField(${oldPassword})">Submit</button>
+                            </div>  
+                        </div>
+                        <br>
+                        <button action="submit" style="display: none" id="btnSubmit" class="btnStandard">Conferma</button>
 
                     </form>                       
                 </div>

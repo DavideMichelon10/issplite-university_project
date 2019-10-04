@@ -38,7 +38,7 @@ public class JDBCDAOFactory implements DAOFactory {
             Properties props = new Properties();
             props.setProperty("user", "postgres");
             props.setProperty("password", "cisco");
-            props.setProperty("password", "broSonoSUper123QQ");
+            //props.setProperty("password", "broSonoSUper123QQ");
             //props.setProperty("ssl", "false");
             
             CON = DriverManager.getConnection(url,props);
