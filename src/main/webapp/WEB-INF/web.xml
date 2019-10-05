@@ -17,7 +17,7 @@
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>com.mycompany.issplite.filters.AuthenticationFilter</filter-class>
     </filter>
-    <!--<filter-mapping>
+    <filter-mapping>
         <filter-name>AuthenticationFilter</filter-name>
         <url-pattern>/sspi/*</url-pattern>
         <url-pattern>/medici/*</url-pattern>
@@ -50,7 +50,7 @@
         <dispatcher>FORWARD</dispatcher>
         <dispatcher>INCLUDE</dispatcher>
         <dispatcher>ERROR</dispatcher>
-    </filter-mapping>-->
+    </filter-mapping>
     <!--FINE POSIZIONE FILTRI -->
     <listener>
         <description>ServletContextListener</description>
@@ -103,6 +103,14 @@
         <servlet-name>SSPPage</servlet-name>
         <jsp-file>/ssp/ssp.jsp</jsp-file>
     </servlet>
+     <servlet>
+        <servlet-name>CreRichiamoSSP</servlet-name>
+        <jsp-file>/ssp/creaRichiamo.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreRichiamoSSP</servlet-name>
+        <url-pattern>/sspi/richiamo.html</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SSPServlet</servlet-name>
         <url-pattern>/sspi/sspi.html</url-pattern>
@@ -131,6 +139,14 @@
     </servlet-mapping>
     <!--FINE MEDICO PRESCRIZIONE SERVLET-->
     <!--CREA VISITA SERVLET-->
+    <servlet>
+        <servlet-name>CreaRichiamoServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.CreaRichiamoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreaRichiamoServlet</servlet-name>
+        <url-pattern>/sspi/richiami.html</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>CreaVisitaServlet</servlet-name>
         <servlet-class>com.mycompany.issplite.servlets.CreaVisitaServlet</servlet-class>

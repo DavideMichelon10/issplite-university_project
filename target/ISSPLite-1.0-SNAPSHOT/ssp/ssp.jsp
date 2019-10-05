@@ -26,6 +26,8 @@
         <title>Lista prescrizioni</title>
     </head>
     <body>
+               <a  style="float: right;" class="btn btn-primary" href="${pageContext.request.contextPath}/sspi/richiami.html">Crea richiamo</a>
+
         <style>
             #div_tab{
                 margin-left: 5%;
@@ -105,10 +107,9 @@
 
                         }
                     ]
-                });
-                table.buttons().container()
-        .appendTo( '#example_wrapper .col-md-6:eq(0)' );
-            });
+                })
+            }
+               
         </script>
     </body>
 </html>
