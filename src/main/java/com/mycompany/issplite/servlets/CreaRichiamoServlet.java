@@ -32,6 +32,7 @@ public class CreaRichiamoServlet extends HttpServlet {
         String femmine = request.getParameter("femmine");
         String motivation = request.getParameter("motivation");
         
+        System.out.println(dateEnd +" "+dateStart+ " "+maschi+" "+femmine+" "+motivation);
         if("".equals(maschi)){
             maschio = false;
         }
