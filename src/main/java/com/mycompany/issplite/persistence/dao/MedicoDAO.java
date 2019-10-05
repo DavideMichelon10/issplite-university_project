@@ -18,6 +18,8 @@ public interface MedicoDAO extends DAO<Medico, String> {
 
     public Medico getByIdAndPassword(String id, String password) throws DAOException;
     
+    public List getByProvincia(String provincia) throws DAOException;
+    
     public List<PazienteUltimiEsamiFarmaci> getLastEsameFarmacoDate(String idMedico) throws DAOException;
     
     public List<EsamePrescritto> getEsamiPrescritti(String idPaziente) throws DAOException;
@@ -29,5 +31,7 @@ public interface MedicoDAO extends DAO<Medico, String> {
     public void insertEroga(String idMedico, String idPaziente, int idVisita) throws DAOException;
     
     public void insertPrescrizione(int idEsame, int idVisita) throws DAOException;
+    
+    public Medico getByIdAndProvincia(String id, String provinica) throws DAOException;
 
 }

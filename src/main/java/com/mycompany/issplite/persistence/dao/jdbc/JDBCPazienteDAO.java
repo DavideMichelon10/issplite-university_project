@@ -52,6 +52,9 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
                                                         "INNER JOIN Eroga E ON (P.idPaziente = E.Paziente_idPaziente)\n" +
                                                         "INNER JOIN Visita V ON (E.Visita_idVisita = V.idVisita))\n" +
                                                         "WHERE P.idpaziente = ?";
+    private static final String CHANGEPASSWORD = "UPDATE Paziente SET password = ? WHERE idPaziente = ?;";
+    private static final String CHANGEEMAIL = "UPDATE Paziente SET email = ? WHERE idPaziente = ?;";
+    private static final String CHANGEMEDICO = "UPDATE Paziente SET medico_idMedico = ? WHERE idPaziente = ?;";
 
 
     public JDBCPazienteDAO(Connection con) {
@@ -138,13 +141,12 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
                     paziente.setName(rs.getString("name"));
                     paziente.setSurname(rs.getString("surname"));
                     paziente.setPhotoPath(rs.getString("photopath"));
-                    
+                    paziente.setProvincia(rs.getString("provincia"));
+                    paziente.setBirthPlace(rs.getString("birthplace"));
+                    paziente.setBirthDate(rs.getString("birthdate"));
+                    paziente.setSex(rs.getBoolean("sex"));
+                    paziente.setMedico(rs.getString("medico_idmedico"));
                     paziente.setSsn(rs.getString("ssn"));
-                    //paziente.setSex(rs.getString("email"));
-                    //paziente.setPassword(rs.getString("password"));
-                    //paziente.setName(rs.getString("name"));
-                    //paziente.setSurname(rs.getString("surname"));
-                    //paziente.setPhotoPath(rs.getString("photopath"));
 
                    
                     return paziente;
@@ -292,5 +294,44 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
         } catch (SQLException ex) {
             throw new DAOException("Error inside method getPazientiForMedico", ex);
         }
+    }
+    
+    public void changePassword(String password, String idPaziente) throws DAOException{
+        if(password == null || idPaziente == null){
+            throw new DAOException("Something went wrong");
+        }
+         try (PreparedStatement stm = CON.prepareStatement(CHANGEPASSWORD)) {
+             stm.setString(1, password);
+             stm.setString(2, idPaziente);
+             stm.executeUpdate();
+         } catch (SQLException ex) {
+            throw new DAOException("Error inside method changePassword", ex);
+        }        
+    }
+    
+    public void changeEmail(String email, String idPaziente) throws DAOException{
+        if(email == null || idPaziente == null){
+            throw new DAOException("Something went wrong");
+        }
+         try (PreparedStatement stm = CON.prepareStatement(CHANGEEMAIL)) {
+             stm.setString(1, email);
+             stm.setString(2, idPaziente);
+             stm.executeUpdate();
+         } catch (SQLException ex) {
+            throw new DAOException("Error inside method changeEmail", ex);
+        }        
+    }
+    
+    public void changeMedico(String medico, String idPaziente) throws DAOException{
+        if(medico == null || idPaziente == null){
+            throw new DAOException("Something went wrong");
+        }
+         try (PreparedStatement stm = CON.prepareStatement(CHANGEMEDICO)) {
+             stm.setString(1, medico);
+             stm.setString(2, idPaziente);
+             stm.executeUpdate();
+         } catch (SQLException ex) {
+            throw new DAOException("Error inside method changeMedico", ex);
+        }        
     }
 }

@@ -68,22 +68,46 @@
                 border: 1px solid #bee8c8;
                 transition: background-color 0.5s ease-out, border 0.5s ease-out;               
             }
+            
+            .btnChange{
+                float: right;
+            }
+            
+            .btnModifica{
+                float: left;
+            }
+            
+            .btnConferma{
+                margin:0 auto;                
+            }
         </style>
 
         <script>
 
             function editFunction() {
+                document.getElementById("visualizzazioneMedico").style.display = "none";
+                document.getElementById("sceltaMedico").style.display = "block";
                 document.getElementById("email").readOnly = false;
+                document.getElementById("psw").style.display = "none"
                 document.getElementById("currentPassword").readOnly = false;
+                document.getElementById("modifica").style.display = "block";
                 document.getElementById("newPassword").readOnly = false;
                 document.getElementById("checkPassword").readOnly = false;
                 document.getElementById("comandiBefore").style.display = "none";
                 document.getElementById("btnSubmit").style.display = "block";
                 document.getElementById("comandiAfter").style.display = "block";
+                document.getElementById("currentPassword").value = "";
+                document.getElementById("newPassword").value = "";
+                document.getElementById("checkPassword").value = "";
             }
 
             function backFunction() {
+                document.getElementById("visualizzazioneMedico").style.display = "block";
+                document.getElementById("visualizzazioneMedico").value = "${medico.idMedico}";
+                document.getElementById("mediciSuggestionBox").value = "${medico.idMedico}";
+                document.getElementById("sceltaMedico").style.display = "none";
                 document.getElementById("email").readOnly = true;
+                document.getElementById("email").value = '${paziente.email}';
                 document.getElementById("currentPassword").readOnly = true;
                 document.getElementById("newPassword").readOnly = true;
                 document.getElementById("checkPassword").readOnly = true;
@@ -98,11 +122,9 @@
                 if (document.getElementById(id).type == "password") {
                     document.getElementById(id).type = "text";
                     document.getElementById(id).classList.remove(".fa-eye-slash");
-                    document.getElementById(id).classList.add(".prova");
                 } else {
                     document.getElementById(id).type = "password";
                     document.getElementById(id).classList.remove(".fa-eye");
-                    document.getElementById(id).classList.add(".prova");
                 }
             }
 
@@ -132,12 +154,16 @@
 
             function changePassword() {
                 if (document.getElementById("psw").style.display == "none") {
+                    document.getElementById("modifica").style.display = "none";
+                    document.getElementById("comandiBefore").style.display = "block";
+                    document.getElementById("comandiAfter").style.display = "none";
                     document.getElementById("psw").style.display = "block";
                     document.getElementById("btnSubmit").style.display = "block";
                     document.getElementById("currentPassword").readOnly = false;
                     document.getElementById("newPassword").readOnly = false;
                     document.getElementById("checkPassword").readOnly = false;
                 } else {
+                    document.getElementById("modifica").style.display = "block";
                     document.getElementById("psw").style.display = "none";
                 }
 
@@ -148,7 +174,7 @@
 
     </head>
     <body>    
-        <c:set var = "medico" scope = "session" value = "${medico}"/>
+
         <br><br>
         <%@ include file="../common/navbar.jsp" %>
         <div class="row">
@@ -157,49 +183,60 @@
                 <div class="card cardProfilo">
                     <img class="card-img-top imgProfilo" src="../images/anonProfile.png" alt="Card image cap">
                 </div>
+                <br><br>
                 <div id="comandiBefore">
-                    <button role="button" id="btnEdit" class="btnStandard" onclick="editFunction()">Modifica</button>    
+                    <button role="button" id="btnEdit" class="btnStandard btnModifica" onclick="editFunction()">Modifica</button>    
                 </div>
                 <div id="comandiAfter" style="display:none">
-                    <button role="button" id="btnBack" class="btnStandard" onclick="backFunction()">Indietro </button>
+                    <button role="button" id="btnBack" class="btnStandard btnModifica" onclick="backFunction()">Annulla</button>
                 </div>
-                <button role="button" id="btnCambiaPsw" onclick="changePassword()" class="btnStandard">Cambia Password</button>
+                <button role="button" id="btnCambiaPsw" onclick="changePassword()" class="btnStandard btnChange">Cambia Password</button>
 
-                    <br>
+                <br><br><br>
                 <div id="form">
-                    <form class="form-horizontal" role="form"  onsubmit="return checkField()" action="https://www.google.it/">
-                        <div class="form-group">
-                            <label for="nome" class="col-sm-3 control-label">Nome e Cognome:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="nome" value="${paziente.name} ${paziente.surname}" class="form-control" readonly>
+                    <form class="form-horizontal" role="form"  onsubmit="return checkField()" action="areaPersonale.html" method="POST">
+                        <div id="modifica" style="display: block;">
+                            <div class="form-group">
+                                <label for="nome" class="col-sm-3 control-label">Nome e Cognome:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="nome" id="nome" value="${paziente.name} ${paziente.surname}" class="form-control" readonly>
+                                </div>
+                            </div>                        
+                            <div class="form-group">
+                                <label for="email" class="col-sm-3 control-label">Email:</label>
+                                <div class="col-sm-9">
+                                    <input type="email" name="email" id="email" value="${paziente.email}" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="provincia" class="col-sm-3 control-label">Provincia:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="provincia" id="provincia" value="${paziente.provincia}" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="medico" class="col-sm-3 control-label">Medico:</label>
+                                <div class="col-sm-9" id="visualizzazioneMedico" style="display:block">
+                                    <input type="text" id="medico" value="${medico.idMedico}" class="form-control" readonly>
+                                </div>
+                                <div class="col-sm-9" id="sceltaMedico" style="display:none">                                    
+                                    <input id="mediciSuggestionBox" list="medici" name="newMedico" class="form-control" value="${medico.idMedico}">
+                                    <datalist id="medici">
+                                        <c:forEach var="mediciDisponibili" items="${mediciDisponibili}">
+                                            <option value="${mediciDisponibili.idMedico}">                                                
+                                        </c:forEach>                                                
+                                    </datalist>                                   
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="email" class="col-sm-3 control-label">Email:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="email" value="${paziente.email}" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="provincia" class="col-sm-3 control-label">Provincia:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="provincia" value="${paziente.provincia}" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="medico" class="col-sm-3 control-label">Medico:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="medico" value="${medico.name} ${medico.surname}" class="form-control" readonly>
-                            </div>
-                        </div>
+                                
                         <div id="psw" style="display: none;">
                             <div class="form-group" id="divPswOld">
                                 <label for="currentPassword" class="col-sm-3 control-label">Password Corrente:</label>
                                 <div class="col-sm-9">
                                     <div class="input-icons">
                                         <div onclick="showPassword('currentPassword')"><i class="fa fa-eye-slash icon"></i></div>
-                                        <input type="password" id="currentPassword" class="form-control input-field" readonly>
+                                        <input type="password" id="currentPassword" name="oldPassword" class="form-control input-field" readonly>
                                         <p style="color: red; display: none;" id="msgCurrentPsw">Password errata</p>
                                     </div>                                
                                 </div>
@@ -209,7 +246,7 @@
                                 <div class="col-sm-9">
                                     <div class="input-icons">
                                         <div onclick="showPassword('newPassword')"><i class="fa fa-eye-slash icon"></i></div>
-                                        <input type="password" id="newPassword" class="form-control input-field" readonly>
+                                        <input type="password" id="newPassword" name="newPassword" class="form-control input-field" readonly>
                                     </div>
                                 </div>
                             </div>   
@@ -225,14 +262,9 @@
                             </div>  
                         </div>
                         <br>
-                        <button action="submit" style="display: none" id="btnSubmit" class="btnStandard">Conferma</button>
-
+                        <button action="submit" style="display: none" id="btnSubmit" class="btnStandard btnConferma">Conferma</button>
                     </form>                       
                 </div>
-
-
-
-
             </div>
             <div class="col-md-3"></div>
         </div>

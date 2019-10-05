@@ -13,6 +13,7 @@ import com.mycompany.issplite.persistence.dao.factories.DAOFactoryException;
 import com.mycompany.issplite.persistence.entities.Medico;
 import com.mycompany.issplite.persistence.entities.Paziente;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -48,43 +49,117 @@ public class AreaPersonalePazienteServlet extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Medico medico = new Medico();
-        
-        String cp = getServletContext().getContextPath();
-        if (!cp.endsWith("/")) {
-            cp += "/";
-        }     
-        
-        HttpSession session = ((HttpServletRequest)request).getSession(false);            
+        allOkay(request, response);
+        HttpSession session = ((HttpServletRequest)request).getSession(false);
         Paziente paziente = (Paziente) session.getAttribute("paziente");
-        
-        if (paziente.getIdPaziente() == null) {
-            response.sendRedirect(cp + "login.jsp");
-            return;
-        }
-        
+        Medico medico = new Medico();
+        ArrayList<Medico> mediciDisponibili = new ArrayList();    
         try {
-            medico = medicoDao.getById(paziente.getMedico());            
+            medico = medicoDao.getById(paziente.getMedico());
+            mediciDisponibili = (ArrayList<Medico>)medicoDao.getByProvincia(paziente.getProvincia());
         } catch (DAOException ex) {
             System.out.println(ex.getMessage());
         }
-        
-        System.out.println("Medico: " + medico.getName());
         request.setAttribute("medico", medico);
+        request.setAttribute("mediciDisponibili", mediciDisponibili);
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/pazienti/areaPersonale.html"));
         dispatcher.forward(request, response);
-
     }
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("SONO ENTRATO NELLA SERVLET s<sfdsd");
+        allOkay(request, response);
+        HttpSession session = ((HttpServletRequest)request).getSession(false);
+        Paziente paziente = (Paziente) session.getAttribute("paziente");
+        Medico medico = new Medico();
+        String newMedico = "";
+        String email = "";
+        String oldPassword = "";
+        String newPassword = "";
+        
+        newMedico = request.getParameterValues("newMedico")[0];
+        email = request.getParameterValues("email")[0];
+        oldPassword = request.getParameterValues("oldPassword")[0];
+        newPassword = request.getParameterValues("newPassword")[0];
+
+        
+        if(checkPassword(oldPassword, newPassword, paziente.getIdPaziente())){
+            try {
+                pazienteDao.changePassword(newPassword, paziente.getIdPaziente());
+                paziente = pazienteDao.getById(paziente.getIdPaziente());
+            } catch (DAOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        
+        if(checkEmail(email, paziente.getEmail())){
+             try {
+                pazienteDao.changeEmail(email, paziente.getIdPaziente());
+                paziente = pazienteDao.getById(paziente.getIdPaziente());
+            } catch (DAOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        
+        if(checkMedico(newMedico, paziente.getProvincia())){
+            try {
+                pazienteDao.changeMedico(newMedico, paziente.getIdPaziente());
+                paziente = pazienteDao.getById(paziente.getIdPaziente());
+                medico = medicoDao.getById(paziente.getMedico());
+            } catch (DAOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        
+        session.setAttribute("paziente", paziente);
+        request.setAttribute("medico", medico);
+        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/pazienti/areaPersonale.html"));
+        dispatcher.forward(request, response);
     }
 
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private boolean checkPassword(String oldPassword, String newPassword, String idPaziente) {       
+        try {
+            Paziente paziente = pazienteDao.getByIdAndPassword(idPaziente, oldPassword);
+            
+            return (paziente != null) && newPassword != "";
+        } catch (DAOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
+    
+    private boolean checkEmail(String newEmail, String oldEmail) {       
+        return (newEmail != "" && newEmail != null) && newEmail != oldEmail;
+    }
+    
+    private boolean checkMedico(String idMedico, String provincia) {       
+        try {
+            Medico medico = medicoDao.getByIdAndProvincia(idMedico, provincia);;
+            return (medico != null);
+        } catch (DAOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
+    
+    private void allOkay(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        String cp = getServletContext().getContextPath();
+        if (!cp.endsWith("/")) {
+            cp += "/";
+        }  
+        
+        HttpSession session = ((HttpServletRequest)request).getSession(false);            
+        Paziente paziente = (Paziente) session.getAttribute("paziente");
+        
+        if (paziente.getIdPaziente() == null) {
+            response.sendRedirect(cp + "login.jsp");
+        }
+    }
 
 }

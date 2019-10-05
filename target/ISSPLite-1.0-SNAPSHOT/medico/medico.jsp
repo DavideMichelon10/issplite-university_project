@@ -47,7 +47,7 @@
     </head>
     <body>
         <%@ include file="../common/navbar.jsp" %>
-
+        <br><br><br>
 
         <ul class="nav nav-tabs">
             <li><a href="#ricette-tab" class="tablinks" data-toggle="tab">Pazienti</a></li>

@@ -39,7 +39,8 @@ public class JDBCMedicoDAO extends JDBCDAO<Medico, String> implements MedicoDAO 
     private static final String INSERTEROGA = "insert into Eroga(medico_idmedico, paziente_idpaziente, visita_idvisita) values (?, ?, ?);";
     private static final String INSERTRISULTATO = "insert into risultato(resultdate, esame_idesame) values (?,?);";
     private static final String INSERTPRESCRIZIONE = "insert into Prescrizione(erogationdate, ticketpagato, visita_idvisita, risultato_idrisultato) values (?, 0, ?, ?);";
-    
+    private static final String GETMEDICIBYPROVINCIA = "SELECT * FROM MEDICO WHERE provincia = ?";
+    private static final String GETBYIDANDPROVINCIA = "SELECT * FROM medico WHERE idmedico = ? AND provincia = ?"; 
     public JDBCMedicoDAO(Connection con) {
         super(con);
     }
@@ -193,7 +194,40 @@ public class JDBCMedicoDAO extends JDBCDAO<Medico, String> implements MedicoDAO 
             throw new DAOException("Impossible to get the list of users", ex);
         }
     }    
+
+    @Override
+    public List<Medico> getByProvincia(String provinciaP) throws DAOException {
+        ArrayList<Medico> medici = new ArrayList<>();
+        if (provinciaP == null) {
+            throw new DAOException("provincia is mandatory field", new NullPointerException("provincia is null"));
+        }
+        
+        try (PreparedStatement stm = CON.prepareStatement(GETMEDICIBYPROVINCIA)) {
+            stm.setString(1, provinciaP);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while (rs.next()) {
+                    Medico medico = new Medico();
+                    medico.setIdMedico(rs.getString("idmedico"));
+                    medico.setProvincia(rs.getString("provincia"));
+                    medico.setName(rs.getString("name"));
+                    medico.setSurname(rs.getString("surname"));
+                    medico.setPassword(rs.getString("password"));
+                    medico.setEmail(rs.getString("email"));
+                    medico.setCity(rs.getString("city"));
+                    medico.setSurname(rs.getString("surname"));
+                    medici.add(medico);
+                    
+                }
+                return medici;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw new DAOException("Impossible to get the list of users", ex);            
+        }
+    }
     
+   
 
     @Override
     public List<FarmacoPrescritto> getFarmaciPrescritti(String idPaziente) throws DAOException {
@@ -315,6 +349,42 @@ public class JDBCMedicoDAO extends JDBCDAO<Medico, String> implements MedicoDAO 
             
         } catch (SQLException ex) {
             throw new DAOException("Impossible to insert visita", ex);
+        }
+    }
+    
+    @Override
+    public Medico getByIdAndProvincia(String id, String provincia) throws DAOException {
+        
+        if ((id == null) || (provincia == null)) {
+            throw new DAOException("id and password are mandatory fields", new NullPointerException("email or password are null"));
+        }
+
+        try (PreparedStatement stm = CON.prepareStatement(GETBYIDANDPROVINCIA)) {
+            stm.setString(1, id);
+            stm.setString(2, provincia);
+            try (ResultSet rs = stm.executeQuery()) {
+                int count = 0;
+                while (rs.next()) {
+                    count++;
+                    if (count > 1) {
+                        throw new DAOException("Unique constraint violated! There are more than one user with the same email! WHY???");
+                    }
+                    Medico medico = new Medico();
+                    medico.setIdMedico(rs.getString("idmedico"));
+                    medico.setName(rs.getString("name"));
+                    medico.setSurname(rs.getString("surname"));
+                    medico.setProvincia(rs.getString("provincia"));
+                    medico.setPassword(rs.getString("password"));
+                    medico.setEmail(rs.getString("email"));
+                    medico.setCity(rs.getString("city"));
+                    medico.setSurname(rs.getString("surname"));
+
+                    return medico;
+                }
+                return null;
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to get the list of users", ex);
         }
     }
     
