@@ -13,6 +13,7 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
@@ -35,8 +36,16 @@
                 <input name="femmine" type="checkbox" value="Femmine"><label>Femmine</label>
 
             </ul>
+            <div class="col-sm-9" id="sceltaEsame">                                    
+                <input id="sug" list="esame" name="esame" class="form-control" required>
+                <datalist id="esame">
+                    <c:forEach var="esame" items="${esami}">
+                        <option value="${esame.idEsame} - ${esame.name}">                                                
+                    </c:forEach>                                                
+                </datalist>                                   
+            </div>
             <br>
-              <input type="text" name="motivation" value="Motivazione">
+            <input type="text" name="motivation" value="Motivazione">
             <p>    
                 <button style="width: 250px;" class="btn btn-primary" id="but" type="submit">Crea richiamo</button>
             <p>
@@ -46,7 +55,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title"><b>Non hai selezionato i campi necessari</b></h5>
-                        
+
                     </div>
                     <div class="modal-body">
                         <p>Devi selezionare almeno un sesso da richiamare.</p>

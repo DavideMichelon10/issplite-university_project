@@ -3,6 +3,7 @@ com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAOFactory.class
 com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAOImpl.class
 com\mycompany\issplite\persistence\entities\Paziente.class
 com\mycompany\issplite\servlets\CreaVisitaServlet.class
+com\mycompany\issplite\servlets\CreaRichiamoServlet.class
 com\mycompany\issplite\servlets\SSPServlet.class
 com\mycompany\issplite\persistence\dao\SSPDAO.class
 com\mycompany\issplite\servlets\AreaPersonalePazienteServlet.class
