@@ -11,6 +11,6 @@ public interface SSPDAO extends DAO<SSP, String> {
     public SSP getByIdAndPassword(String id, String password) throws DAOException;
     public SSP getById(String id) throws DAOException;
     public List<RicetteErogatePerGiorno> getRicettePerDay(String provincia,String date) throws DAOException;
-    public void insertRichiamo(String motivation, int sex, String dateStart, String dateEnd, String idSsp) throws  DAOException;
+    public int insertRichiamo(String motivation, int sex, String dateStart, String dateEnd, String idSsp) throws  DAOException;
 
 }

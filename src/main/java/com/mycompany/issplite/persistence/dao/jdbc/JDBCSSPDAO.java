@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -140,7 +141,7 @@ public class JDBCSSPDAO extends JDBCDAO<SSP, String> implements SSPDAO {
                 stm.setString(1, provincia);
                 stm.setTimestamp(2, timestamp);
                 stm.setTimestamp(3, timestamp_);
-                System.out.println("DATE: " + date + "  DATEFINE: " + dateFine);
+
                 try ( ResultSet rs = stm.executeQuery()) {
 
                     while (rs.next()) {
@@ -169,35 +170,43 @@ public class JDBCSSPDAO extends JDBCDAO<SSP, String> implements SSPDAO {
     }
 
     @Override
-    public void insertRichiamo(String motivation, int sex, String dateStart, String dateEnd, String idSsp) {
+    public int insertRichiamo(String motivation, int sex, String dateStart, String dateEnd, String idSsp) throws DAOException {
         if ((motivation == null) || (dateEnd == null) || (dateStart == null) || (idSsp == null)) {
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-            Date parseDate = new Date();
-            Date parseDate_ = new Date();
-            try {
-                parseDate = dateFormat.parse(dateStart);
-                parseDate_ = dateFormat.parse(dateEnd);
-            } catch (ParseException ex) {
-                Logger.getLogger(JDBCSSPDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Timestamp timestampStart = new java.sql.Timestamp(parseDate.getTime());
-            Timestamp timestampEnd = new java.sql.Timestamp(parseDate_.getTime());
-
-            System.out.println("TIMEST: " + timestampStart + "  TIME END: " + timestampEnd);
-
-            try ( PreparedStatement stm = CON.prepareStatement(GETSSP)) {
-                stm.setString(1, motivation);
-                stm.setInt(2, sex);
-                stm.setTimestamp(3, timestampStart);
-                stm.setTimestamp(4, timestampEnd);
-                stm.setString(5, idSsp);
-
-                stm.executeUpdate();
-            } catch (SQLException ex) {
-                Logger.getLogger(JDBCSSPDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
+            throw new DAOException("Date mandatory fields", new NullPointerException("date is null"));
         }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date parseDate = new Date();
+        Date parseDate_ = new Date();
+        try {
+            parseDate = dateFormat.parse(dateStart);
+            parseDate_ = dateFormat.parse(dateEnd);
+        } catch (ParseException ex) {
+            Logger.getLogger(JDBCSSPDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Timestamp timestampStart = new java.sql.Timestamp(parseDate.getTime());
+        Timestamp timestampEnd = new java.sql.Timestamp(parseDate_.getTime());
+
+
+        try ( PreparedStatement stm = CON.prepareStatement(INSERTRICHIAMO , Statement.RETURN_GENERATED_KEYS)) {
+            stm.setString(1, motivation);
+            stm.setInt(2, sex);
+            stm.setTimestamp(3, timestampStart);
+            stm.setTimestamp(4, timestampEnd);
+            stm.setString(5, idSsp);
+
+            stm.executeUpdate();
+            
+            ResultSet keys = stm.getGeneratedKeys();
+            int lastKey = 1;
+            while (keys.next()) {
+              lastKey = keys.getInt(1);
+            }
+            return lastKey;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCSSPDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
     }
 }

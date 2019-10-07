@@ -25,5 +25,6 @@ public interface PazienteDAO extends DAO<Paziente, String> {
     public void changePassword(String password, String idPaziente) throws DAOException;
     public void changeEmail(String email, String idPaziente) throws DAOException;
     public void changeMedico(String medico, String idPaziente) throws DAOException;
-
+    public List<Paziente> getPazientiIdSelected(int sex, String dateStart, String dateEnd) throws DAOException;
+    public void insertInPrescrizioneRichiamo(String idPaziente, int idRichiamo, int idEsame) throws DAOException;
 }

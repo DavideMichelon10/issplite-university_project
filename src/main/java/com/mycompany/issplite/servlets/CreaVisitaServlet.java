@@ -104,7 +104,7 @@ private PazienteDAO pazienteDao;
                 medicoDao.insertPrescrizione(idEsame, idVisita);
                 Esame esame = esameDao.getById(idEsame);
                 Paziente paziente = pazienteDao.getById(idPaziente);
-                sendEmail(esame, paziente);
+                sendEmail(esame, paziente, "Prescrizione esame: ");
             }
             
            
@@ -124,7 +124,7 @@ private PazienteDAO pazienteDao;
         return medico.getIdMedico();
     }
 
-    private void sendEmail(Esame esame, Paziente paziente) {
+    protected void sendEmail(Esame esame, Paziente paziente, String soggetto) {
         final String host = "smtp.gmail.com";
         final String port = "465";
         final String username = "davidemichelon10@gmail.com";
@@ -151,7 +151,7 @@ private PazienteDAO pazienteDao;
             try {
                 msg.setFrom(new InternetAddress(username));
                 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(paziente.getEmail(), false));
-                msg.setSubject("Prescrizione esame "+esame.getName());
+                msg.setSubject(soggetto +" "+esame.getName());
                 msg.setText("Salve "+paziente.getName() +" "+paziente.getSurname()+" la informiamo che le è stato prescritto l' esame: "+esame.getName());
                 msg.setSentDate(new Date());
                 Transport.send(msg);
