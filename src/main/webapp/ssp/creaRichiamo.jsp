@@ -37,7 +37,7 @@
         <div id="form_create_richiamo">
             <form class="form-signin" action="${pageContext.request.contextPath}/sspi/richiami.html">
                 <div id="date">
-                    Seleziona le persone nate:
+                    <b>Seleziona le persone nate:</b>
                     <br>
                     <b>da:&nbsp;</b>
                     <input type="date" name="from"  pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}" required>

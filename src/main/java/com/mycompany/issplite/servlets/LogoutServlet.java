@@ -37,10 +37,10 @@ public class LogoutServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
         removeSession(session);
-        
+
         Cookie[] cookies = request.getCookies();
-        removeCookies(session,response, cookies);
-        
+        removeCookies(session, response, cookies);
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
@@ -66,45 +66,46 @@ public class LogoutServlet extends HttpServlet {
 
     private void removeSession(HttpSession session) {
         if (session != null) {
-            try{
+                Medico medico = (Medico) session.getAttribute("medico");
                 Paziente paziente = (Paziente) session.getAttribute("paziente");
-                removeSessionForParticularUser(session, paziente, "paziente");
-            }catch(NullPointerException e){
-                try{
-                    Medico medico = (Medico) session.getAttribute("medico");
+                SSP ssp = (SSP) session.getAttribute("ssp");
+                if (medico != null) {
                     removeSessionForParticularUser(session, medico, "medico");
-                }catch(NullPointerException ex){
-                    try{
-                        SSP ssp = (SSP) session.getAttribute("ssp");
-                        removeSessionForParticularUser(session, ssp, "ssp");
-                    }catch(NullPointerException exc){
-                    
-                    }
+
                 }
-            }
+                if (paziente != null) {
+                    removeSessionForParticularUser(session, paziente, "paziente");
+
+                }
+                if (ssp != null) {
+                    removeSessionForParticularUser(session, ssp, "ssp");
+
+                }
+                System.out.println("IN TRY");
+
             
+
         }
     }
-    
-    private void removeSessionForParticularUser(HttpSession session, Object user, String name){
+
+    private void removeSessionForParticularUser(HttpSession session, Object user, String name) {
         if (user != null) {
             session.setAttribute(name, null);
             session.invalidate();
             user = null;
-        } 
+        }
     }
 
     private void removeCookies(HttpSession session, HttpServletResponse response, Cookie[] cookies) {
-        Cookie [] localCookies = cookies;
-        if(cookies != null){             
-            for (Cookie cookie : localCookies) {                     
-                if(cookie.getName().equals("ISSPLiteId")){
+        Cookie[] localCookies = cookies;
+        if (cookies != null) {
+            for (Cookie cookie : localCookies) {
+                if (cookie.getName().equals("ISSPLiteId")) {
                     cookie.setMaxAge(0);
                     response.addCookie(cookie);
                 }
             }
         }
-        
-   
+
     }
 }
