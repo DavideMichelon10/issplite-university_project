@@ -61,6 +61,8 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
     private static final String CHANGEMEDICO = "UPDATE Paziente SET medico_idMedico = ? WHERE idPaziente = ?;";
     private static final String GETPAZIENTIIDSELECTEDBYRICHIAMO = "SELECT * FROM paziente WHERE sex = ? AND birthdate > ? AND birthdate < ?";
     private static final String INSERTINPRESCRIZIONERICHIAMO = "INSERT INTO prescrizionerichiamo(richiamo_idrichiamo, paziente_idpaziente, esame_idesame, erogationdate) VALUES (?,?,?,?);";
+    private static final String CHANGEPHOTOPATH = "UPDATE Paziente SET photopath = ? WHERE idPaziente = ?;";
+
 
     public JDBCPazienteDAO(Connection con) {
         super(con);
@@ -401,5 +403,19 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
         } catch (SQLException ex) {
             throw new DAOException("Impossible to insert visita", ex);
         }
+    }
+    
+    @Override
+    public void changePhotoPath(String name, String idPaziente) throws DAOException{
+        if(name == null || idPaziente == null){
+            throw new DAOException("Something went wrong");
+        }
+         try (PreparedStatement stm = CON.prepareStatement(CHANGEPHOTOPATH)) {
+             stm.setString(1, name);
+             stm.setString(2, idPaziente);
+             stm.executeUpdate();
+         } catch (SQLException ex) {
+            throw new DAOException("Error inside method changePhotoPath", ex);
+        }       
     }
 }

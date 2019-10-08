@@ -10,6 +10,11 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            response.setHeader("Cache-Control", "no-cache"); //HTTP 1.1 
+            response.setHeader("Pragma", "no-cache"); //HTTP 1.0 
+            response.setDateHeader("Expires", 0); //prevents caching at the proxy server  
+        %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="../css/commonStyle.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
@@ -17,8 +22,8 @@
 
         <style>
             .imgProfilo{
-                max-width: 150px;
-                max-height: 150px;
+                max-width: 250px;
+                max-height: 250px;
             }
 
             .cardProfilo{
@@ -61,25 +66,51 @@
                 padding-bottom: 0.5em;  
                 border-radius: 6px;
                 position: initial;
-            }
-            
+            }           
+
             .btnStandard:hover{
                 background: #bee8c8;
                 border: 1px solid #bee8c8;
                 transition: background-color 0.5s ease-out, border 0.5s ease-out;               
             }
-            
+
+            .inputStandart{
+                background: transparent;
+                color: black;
+                border: 1px solid #2d3036;
+                padding-left: 1em;
+                padding-right: 1em;
+                padding-top: 0.5em;
+                padding-bottom: 0.5em;  
+                border-radius: 6px;
+                position: initial;
+            }
+
+            .inputStandart:hover{
+                background: #bee8c8;
+                border: 1px solid #bee8c8;
+                transition: background-color 0.5s ease-out, border 0.5s ease-out;               
+            }
+
             .btnChange{
                 float: right;
             }
-            
+
             .btnModifica{
                 float: left;
             }
-            
+
             .btnConferma{
                 margin:0 auto;                
             }
+
+            .custom-file-upload {
+                border: 1px solid #ccc;
+                display: inline-block;
+                padding: 6px 12px;
+                cursor: pointer;
+            }
+
         </style>
 
         <script>
@@ -103,8 +134,8 @@
 
             function backFunction() {
                 document.getElementById("visualizzazioneMedico").style.display = "block";
-                document.getElementById("visualizzazioneMedico").value = "${medico.idMedico}";
-                document.getElementById("mediciSuggestionBox").value = "${medico.idMedico}";
+                document.getElementById("visualizzazioneMedico").value = "${paziente.medico}";
+                document.getElementById("mediciSuggestionBox").value = "${paziente.medico}";
                 document.getElementById("sceltaMedico").style.display = "none";
                 document.getElementById("email").readOnly = true;
                 document.getElementById("email").value = '${paziente.email}';
@@ -133,7 +164,7 @@
                 var oldPsw = '${paziente.password}';
                 var newPsw = document.getElementById("newPassword").value;
                 var checkPsw = document.getElementById("checkPassword").value;
-                if(document.getElementById("psw").style.display == "block"){
+                if (document.getElementById("psw").style.display == "block") {
                     if (currentPsw == oldPsw) {
                         if (newPsw == checkPsw && newPsw != '' && checkPsw != '') {
                             return true;
@@ -145,11 +176,11 @@
                         document.getElementById("msgCurrentPsw").style.display = "block";
                         return false;
                     }
-                }else{
+                } else {
                     document.getElementById("newPassword").value = null;
                     return true;
                 }
-                
+
             }
 
             function changePassword() {
@@ -168,8 +199,8 @@
                 }
 
             }
-            
-            
+
+
         </script>
 
     </head>
@@ -180,10 +211,23 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <div class="card cardProfilo">
-                    <img class="card-img-top imgProfilo" src="../images/anonProfile.png" alt="Card image cap">
-                </div>
-                <br><br>
+                <center>
+                    <div class="card">
+                        <img src="../privateImage/profile_picture_${paziente.idPaziente}.jpg" class="card-img-top imgProfilo">
+                        <br><br>
+                        <div class="card-body">
+                            <form action="aggiornaFoto.html" method="post" enctype="multipart/form-data" class="center">                                                                                 
+                                <label class="custom-file-upload">
+                                    <input type="file" name="file1" style="display: none;" onchange="this.form.submit()"/>
+                                    <i class="fa fa-cloud-upload"></i> Scegli file
+                                </label>        
+                            </form>                                    
+                        </div>
+                    </div>
+                </center>          
+
+
+                <!--COMANDI FORM-->
                 <div id="comandiBefore">
                     <button role="button" id="btnEdit" class="btnStandard btnModifica" onclick="editFunction()">Modifica</button>    
                 </div>
@@ -192,7 +236,11 @@
                 </div>
                 <button role="button" id="btnCambiaPsw" onclick="changePassword()" class="btnStandard btnChange">Cambia Password</button>
 
+
                 <br><br><br>
+
+
+                <!--FORM DATI-->
                 <div id="form">
                     <form class="form-horizontal" role="form"  onsubmit="return checkField()" action="areaPersonale.html" method="POST">
                         <div id="modifica" style="display: block;">
@@ -217,19 +265,19 @@
                             <div class="form-group">
                                 <label for="medico" class="col-sm-3 control-label">Medico:</label>
                                 <div class="col-sm-9" id="visualizzazioneMedico" style="display:block">
-                                    <input type="text" id="medico" value="${medico.idMedico}" class="form-control" readonly>
+                                    <input type="text" id="medico" value="${paziente.medico}" class="form-control" readonly>
                                 </div>
                                 <div class="col-sm-9" id="sceltaMedico" style="display:none">                                    
-                                    <input id="mediciSuggestionBox" list="medici" name="newMedico" class="form-control" value="${medico.idMedico}">
+                                    <input id="mediciSuggestionBox" list="medici" name="newMedico" class="form-control" value="${paziente.medico}">
                                     <datalist id="medici">
                                         <c:forEach var="mediciDisponibili" items="${mediciDisponibili}">
                                             <option value="${mediciDisponibili.idMedico}">                                                
-                                        </c:forEach>                                                
+                                            </c:forEach>                                                
                                     </datalist>                                   
                                 </div>
                             </div>
                         </div>
-                                
+
                         <div id="psw" style="display: none;">
                             <div class="form-group" id="divPswOld">
                                 <label for="currentPassword" class="col-sm-3 control-label">Password Corrente:</label>
@@ -261,13 +309,20 @@
                                 </div>
                             </div>  
                         </div>
-                        <br>
+
                         <button action="submit" style="display: none" id="btnSubmit" class="btnStandard btnConferma">Conferma</button>
                     </form>                       
                 </div>
             </div>
             <div class="col-md-3"></div>
         </div>
+        <footer>
+            <script>
+                if (window.history.replaceState) {
+                    window.history.replaceState(null, null, window.location.href);
+                }
+            </script>
+        </footer>
 
     </body>
 </html>

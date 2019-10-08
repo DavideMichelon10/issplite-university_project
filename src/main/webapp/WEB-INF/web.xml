@@ -103,7 +103,7 @@
         <servlet-name>SSPPage</servlet-name>
         <jsp-file>/ssp/ssp.jsp</jsp-file>
     </servlet>
-     <servlet>
+    <servlet>
         <servlet-name>CreRichiamoSSP</servlet-name>
         <jsp-file>/ssp/creaRichiamo.jsp</jsp-file>
     </servlet>
@@ -210,6 +210,23 @@
         <url-pattern>/paziente/areaPersonale.html</url-pattern>
     </servlet-mapping>
     <!--FINE AREA PERSONALE PAZIENTE SERVLET-->
+    <!--AGGIORNA FOTO SERVLET-->
+    <servlet>
+        <servlet-name>AggiornaFotoServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.AggiornaFotoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AggiornaFotoPage</servlet-name>
+        <jsp-file>/paziente/aggiornaFoto.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AggiornaFotoPage</servlet-name>
+        <url-pattern>/pazienti/aggiornaFoto.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AggiornaFotoServlet</servlet-name>
+        <url-pattern>/paziente/aggiornaFoto.html</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

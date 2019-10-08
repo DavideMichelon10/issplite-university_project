@@ -26,6 +26,7 @@ com\mycompany\issplite\persistence\dao\jdbc\JDBCPazienteDAO.class
 com\mycompany\issplite\persistence\dao\PazienteDAO.class
 com\mycompany\issplite\persistence\entities\PazienteUltimiEsamiFarmaci.class
 com\mycompany\issplite\persistence\entities\FarmacoPrescritto.class
+com\mycompany\issplite\servlets\AggiornaFotoServlet.class
 com\mycompany\issplite\persistence\dao\jdbc\JDBCSSPDAO.class
 com\mycompany\issplite\persistence\entities\Medico.class
 com\mycompany\issplite\persistence\entities\Esame.class

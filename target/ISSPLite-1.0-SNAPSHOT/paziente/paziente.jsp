@@ -2,7 +2,7 @@
     Document   : medico
     Created on : 5 set 2019, 17:19:19
     Author     : Davide
-    --%>
+--%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,7 +13,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <!-- DATATABLE-->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-        
+
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -40,6 +40,7 @@
                 border: 1px solid black !important;
             }
         </style>
+
     </head>
     <body>
         <%@ include file="../common/navbar.jsp" %>
@@ -47,7 +48,7 @@
             <div class="row no-gutters">
                 <div class="col-md-4">
                     <div>
-                        <img src="../images/anonProfile.png" class="card-img imgProfilo">
+                        <img src="../privateImage/profile_picture_${paziente.idPaziente}.jpg" class="card-img imgProfilo">
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -69,9 +70,9 @@
                 </div>
             </div>
         </div>
-                            
+
         <br><br>
-        
+
         <ul class="nav nav-tabs">
             <li><a href="#esami-tab" data-toggle="tab">Esami</a></li>
             <li><a href="#ricette-tab" data-toggle="tab">Ricette</a></li>
@@ -102,11 +103,11 @@
                                         <c:choose>
                                             <c:when test="${esame.pagato}">
                                                 <p>Effettuato    <img src='../images/Tick.png' class="imgPagamento"> </p> 
-                                            </c:when>
-                                            <c:otherwise>
+                                                </c:when>
+                                                <c:otherwise>
                                                 <p>Non pervenuto    <img src='../images/Cross.png' class="imgPagamento"> </p>
-                                            </c:otherwise>
-                                        </c:choose>
+                                                </c:otherwise>
+                                            </c:choose>
                                     </td>                                   
                                 </tr>
                             </c:forEach>
@@ -134,11 +135,11 @@
                                         <c:choose>
                                             <c:when test="${ricetta.ticketPagato}">
                                                 <p>Effettuato    <img src='../images/Tick.png' class="imgPagamento"> </p> 
-                                            </c:when>
-                                            <c:otherwise>
+                                                </c:when>
+                                                <c:otherwise>
                                                 <p>Non pervenuto    <img src='../images/Cross.png' class="imgPagamento"> </p>
-                                            </c:otherwise>
-                                        </c:choose>
+                                                </c:otherwise>
+                                            </c:choose>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -189,11 +190,11 @@
                                         <c:choose>
                                             <c:when test="${visita.ticketPagato}">
                                                 <p>Effettuato    <img src='../images/Tick.png' class="imgPagamento"> </p> 
-                                            </c:when>
-                                            <c:otherwise>
+                                                </c:when>
+                                                <c:otherwise>
                                                 <p>Non pervenuto    <img src='../images/Cross.png' class="imgPagamento"> </p>
-                                            </c:otherwise>
-                                        </c:choose>
+                                                </c:otherwise>
+                                            </c:choose>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -203,19 +204,19 @@
             </div>
         </div>
         <script type="text/javascript">
-            $(document).ready( function () {
+            $(document).ready(function () {
                 $('#tabellaEsami').DataTable();
             });
-            
-            $(document).ready( function () {
+
+            $(document).ready(function () {
                 $('#tabellaRicette').DataTable();
             });
-            
-            $(document).ready( function () {
-                $('#tabellaRichiami').DataTable();
+
+            $(document).ready(function () {
+                $('#tabellaRichiami').DataTable();                    
             });
-            
-            $(document).ready( function () {
+
+            $(document).ready(function () {
                 $('#tabellaVisite').DataTable();
             });
         </script>

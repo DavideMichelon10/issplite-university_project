@@ -50,6 +50,9 @@ public class AreaPersonalePazienteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         allOkay(request, response);
+        
+        
+
         HttpSession session = ((HttpServletRequest)request).getSession(false);
         Paziente paziente = (Paziente) session.getAttribute("paziente");
         Medico medico = new Medico();
