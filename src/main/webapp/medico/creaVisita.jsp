@@ -93,7 +93,6 @@
             $('.form-control').keyup(function submitClosure(ev) {
                 $('.checkbox-wrapper').each(function inputElementClosure(index, element) {
                     element = $(element);
-                    console.log("asd" + ev.target.value)
                     if (element.attr('id').indexOf(ev.target.value) > -1) {
                         element.show();
                     } else {

@@ -63,7 +63,7 @@
                             <a class="navbar-brand testoMenu" href="../medici/medici.html">iSSPLite</a>
                         <%}else if(session.getAttribute("ssp") != null){%>                    
                             <c:set var = "ssp" scope = "session" value = "${ssp}"/>
-                            <a class="navbar-brand testoMenu" href="../ssp/ssp.html">iSSPLite</a>
+                            <a class="navbar-brand testoMenu" href="../sspi/sspi.html">iSSPLite</a>
                         <%}else{%>                    
                         <a class="navbar-brand testoMenu" href="../index.html">iSSPLite</a>
                         <%}

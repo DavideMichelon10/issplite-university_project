@@ -1,4 +1,3 @@
-
 package com.mycompany.issplite.servlets;
 
 import com.mycompany.issplite.persistence.dao.MedicoDAO;
@@ -34,15 +33,13 @@ public class LoginServlet extends HttpServlet {
     private static HashMap<String, String> authenticatedUsers; // jsession + ID
 
     public LoginServlet() {
-        super();       
+        super();
         authenticatedUsers = new HashMap<>();
     }
-    
+
     public static String retrieveId(String jSessionId) {
         return authenticatedUsers.get(jSessionId);
     }
-
-
 
     @Override
     public void init() throws ServletException {
@@ -59,8 +56,7 @@ public class LoginServlet extends HttpServlet {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-   
-   
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("username");
@@ -71,42 +67,44 @@ public class LoginServlet extends HttpServlet {
             contextPath += "/";
         }
 
-            Paziente paziente;
-            Medico medico;
-            SSP ssp;
-            paziente = searchForPaziente(id, password);
-            if (paziente == null) {
-                medico = searchForMedico(id, password);
-                if(medico == null){
-                    ssp = searchForSSP(id, password);
-                    if(ssp == null){
-                        request.getSession().setAttribute("status", "not_found");
-                        HttpSession session = request.getSession(false);
-                        removeSession(session);
-                        response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp"));
-
-                    }else{
-                        addUserToCookie(ssp.getIdSSP(),request, response);
-                        HttpSession session = request.getSession(false);
-                        removeSession(session);
-                        request.getSession().setAttribute("ssp", ssp);
-                        response.sendRedirect(response.encodeRedirectURL(contextPath + "sspi/sspi.html"));
-                    }
-                }else{
-                    addUserToCookie(medico.getIdMedico(),request, response);
-                    request.getSession().setAttribute("medico", medico);
+        Paziente paziente;
+        Medico medico;
+        SSP ssp;
+        paziente = searchForPaziente(id, password);
+        if (paziente == null) {
+            medico = searchForMedico(id, password);
+            if (medico == null) {
+                ssp = searchForSSP(id, password);
+                if (ssp == null) {
+                    request.getSession().setAttribute("status", "not_found");
                     HttpSession session = request.getSession(false);
                     removeSession(session);
-                    response.sendRedirect("/medici/medici.html");
+                    response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp"));
 
+                } else {
+                    addUserToCookie(ssp.getIdSSP(), request, response);
+                    HttpSession session = request.getSession(false);
+                    removeSession(session);
+                    request.getSession().setAttribute("ssp", ssp);
+                    response.sendRedirect(response.encodeRedirectURL(contextPath + "sspi/sspi.html"));
                 }
             } else {
-                
-                addUserToCookie(paziente.getIdPaziente(),request, response);
-                request.getSession().setAttribute("paziente", paziente);
-                response.sendRedirect(response.encodeRedirectURL(contextPath + "pazienti/pazienti.html"));
+                addUserToCookie(medico.getIdMedico(), request, response);
+                HttpSession session = request.getSession(false);
+                removeSession(session);
+                request.getSession().setAttribute("medico", medico);
+                response.sendRedirect("/medici/medici.html");
+
             }
-        
+        } else {
+
+            addUserToCookie(paziente.getIdPaziente(), request, response);
+            HttpSession session = request.getSession(false);
+            removeSession(session);
+            request.getSession().setAttribute("paziente", paziente);
+            response.sendRedirect(response.encodeRedirectURL(contextPath + "pazienti/pazienti.html"));
+        }
+
     }
 
     private Medico searchForMedico(String id, String password) {
@@ -118,7 +116,6 @@ public class LoginServlet extends HttpServlet {
         return null;
     }
 
-    
     private SSP searchForSSP(String id, String password) {
         try {
             return sspDao.getByIdAndPassword(id, password);
@@ -127,8 +124,7 @@ public class LoginServlet extends HttpServlet {
         }
         return null;
     }
-    
-    
+
     private Paziente searchForPaziente(String id, String password) {
         try {
             return pazienteDao.getByIdAndPassword(id, password);
@@ -137,10 +133,10 @@ public class LoginServlet extends HttpServlet {
         }
         return null;
     }
-    
-    private void addUserToCookie(String username,HttpServletRequest request, HttpServletResponse response){
-        if(request.getParameter("rememberMe") !=  null){
-            
+
+    private void addUserToCookie(String username, HttpServletRequest request, HttpServletResponse response) {
+        if (request.getParameter("rememberMe") != null) {
+
             String jSessionId = Long.toHexString(Double.doubleToLongBits(Math.random()));
 
             authenticatedUsers.put(jSessionId, username);
@@ -149,33 +145,34 @@ public class LoginServlet extends HttpServlet {
             response.addCookie(cookie);
         }
     }
-    
+
     private void removeSession(HttpSession session) {
         if (session != null) {
-            try{
+            try {
                 Paziente paziente = (Paziente) session.getAttribute("paziente");
                 removeSessionForParticularUser(session, paziente, "paziente");
-            }catch(NullPointerException e){
-                try{
+            } catch (NullPointerException e) {
+                try {
                     Medico medico = (Medico) session.getAttribute("medico");
                     removeSessionForParticularUser(session, medico, "medico");
-                }catch(NullPointerException ex){
-                    try{
+                } catch (NullPointerException ex) {
+                    try {
                         SSP ssp = (SSP) session.getAttribute("ssp");
                         removeSessionForParticularUser(session, ssp, "ssp");
-                    }catch(NullPointerException exc){
-                    
+                    } catch (NullPointerException exc) {
+
                     }
                 }
             }
-            
+
         }
     }
-        private void removeSessionForParticularUser(HttpSession session, Object user, String name){
+
+    private void removeSessionForParticularUser(HttpSession session, Object user, String name) {
         if (user != null) {
             session.setAttribute(name, null);
             session.invalidate();
             user = null;
-        } 
+        }
     }
 }

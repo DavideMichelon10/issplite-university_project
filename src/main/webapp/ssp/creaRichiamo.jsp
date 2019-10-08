@@ -20,67 +20,90 @@
     </head>
     <body>
         <%@ include file="../common/navbar.jsp" %>
+        <style>
+            body { text-align: center; }
+            
 
+            #date{
+                align-content: center;
+            }
+            #mot{
+                
+            }
+            #mot_btn{
+                margin-bottom: 50px;
+            }
+        </style>
+        <div id="form_create_richiamo">
+            <form class="form-signin" action="${pageContext.request.contextPath}/sspi/richiami.html">
+                <div id="date">
+                    Seleziona le persone nate:
+                    <br>
+                    <b>da:&nbsp;</b>
+                    <input type="date" name="from"  pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}" required>
+                    <br>
+                    <br>
+                    <b>a: &nbsp; </b>
+                    <input type="date" name="to"  pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}" required>
+                    <br>
+                    <br>
 
-        <form class="form_search" action="${pageContext.request.contextPath}/sspi/richiami.html">
-            Seleziona le persone nate:
-            <br>
-            <b>da:</b>
-            <input type="date" name="from"  pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}" required>
-            <br>
-            <b>a</b>
-            <input type="date" name="to"  pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}" required>
-            <ul>
-                <input name="maschi" type="checkbox" value="Maschi"><label>Maschi</label>
-                <br>
-                <input name="femmine" type="checkbox" value="Femmine"><label>Femmine</label>
+                    <ul style="margin: 0; padding: 0;" class="list-ul">
+                        <input name="maschi" type="checkbox" value="Maschi"><label>Maschi</label>
+                        <br>
+                        <input name="femmine" type="checkbox" value="Femmine"><label>Femmine</label>
+                    </ul>
+                </div>
+                <div id="mot_btn">
+                    <div class="col-sm-9" style=" width: 90%; margin-left: 5%;" id="sceltaEsame">                                    
+                        <input id="sug" list="esame" name="esame" placeholder="Seleziona l'esame da prescrivere" class="form-control" required>
+                        <datalist id="esame">
+                            <c:forEach var="esame" items="${esami}">
+                                <option value="${esame.idEsame} - ${esame.name}">                                                
+                                </c:forEach>                                                
+                        </datalist> 
+                        <br>
+                        <div  id="text_mot">
+                            <input type="text" id="mot" name="motivation" placeholder="Scrivi la motivazione" class="form-control" required>
+                            <button style="margin-top: 1%; width: 350px;" class="btn btn-primary" id="but" type="submit">Crea richiamo</button>
 
-            </ul>
-            <div class="col-sm-9" id="sceltaEsame">                                    
-                <input id="sug" list="esame" name="esame" class="form-control" required>
-                <datalist id="esame">
-                    <c:forEach var="esame" items="${esami}">
-                        <option value="${esame.idEsame} - ${esame.name}">                                                
-                    </c:forEach>                                                
-                </datalist>                                   
-            </div>
-            <br>
-            <input type="text" name="motivation" value="Motivazione">
-            <p>    
-                <button style="width: 250px;" class="btn btn-primary" id="but" type="submit">Crea richiamo</button>
-            <p>
-        </form>
-        <div class="modal" tabindex="-1" id="alert_danger" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><b>Non hai selezionato i campi necessari</b></h5>
-
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <p>Devi selezionare almeno un sesso da richiamare.</p>
-                    </div>
+                </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="closeMod()" data-dismiss="modal">Chiudi</button>
+
+            </form>
+            <div class="modal" tabindex="-1" id="alert_danger" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"><b>Non hai selezionato i campi necessari</b></h5>
+
+                        </div>
+                        <div class="modal-body">
+                            <p>Devi selezionare almeno un sesso da richiamare.</p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="closeMod()" data-dismiss="modal">Chiudi</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <script>
-            $('#but').click(function () {
-                checked = $("input[type=checkbox]:checked").length;
+            <script>
+                $('#but').click(function () {
+                    checked = $("input[type=checkbox]:checked").length;
 
-                if (!checked) {
-                    $('#alert_danger').show();
-                    return false;
+                    if (!checked) {
+                        $('#alert_danger').show();
+                        return false;
+                    }
+
+                });
+
+                function closeMod() {
+                    $('#alert_danger').modal('toggle');
                 }
-
-            });
-
-            function closeMod() {
-                $('#alert_danger').modal('toggle');
-            }
-        </script>
+            </script>
     </body>
 </html>
