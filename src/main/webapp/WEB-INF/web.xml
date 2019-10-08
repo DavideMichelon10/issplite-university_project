@@ -227,6 +227,26 @@
         <servlet-name>AggiornaFotoServlet</servlet-name>
         <url-pattern>/paziente/aggiornaFoto.html</url-pattern>
     </servlet-mapping>
+    <!--FINE AGGIORNA FOTO SERVLET-->
+    <!--DOWNLOAD RICETTA SERVLET-->
+    <servlet>
+        <servlet-name>DownloadRicettaServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.DownloadRicettaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DownloadRicettaPage</servlet-name>
+        <jsp-file>/paziente/downloadRicetta.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DownloadRicettaPage</servlet-name>
+        <url-pattern>/paziente/downloadRicetta.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DownloadRicettaServlet</servlet-name>
+        <url-pattern>/pazienti/downloadRicetta.html</url-pattern>
+    </servlet-mapping>
+    
+    
     <session-config>
         <session-timeout>
             30

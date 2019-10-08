@@ -11,11 +11,13 @@
         <link rel="stylesheet" type="text/css" href="../css/commonStyle.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
         <!-- DATATABLE-->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Lista prescrizioni</title>
         <style>
@@ -124,6 +126,7 @@
                                 <th>Nome farmaco</th>
                                 <th>Data prescrizione ricetta</th>
                                 <th>Stato pagamento</th>
+                                <th>Download</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -140,6 +143,9 @@
                                                 <p>Non pervenuto    <img src='../images/Cross.png' class="imgPagamento"> </p>
                                                 </c:otherwise>
                                             </c:choose>
+                                    </td>
+                                    <td>
+                                        <a href="downloadRicetta.html?idPrescrizione=${ricetta.idPrescrizione}&dataPrescrizione=${ricetta.dataPrescrizione}&nomeFarmaco=${ricetta.nomeFarmaco}"><i class="fa fa-download"></i> Scarica</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -213,7 +219,7 @@
             });
 
             $(document).ready(function () {
-                $('#tabellaRichiami').DataTable();                    
+                $('#tabellaRichiami').DataTable();
             });
 
             $(document).ready(function () {

@@ -38,7 +38,7 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
             + "INNER JOIN Risultato R ON (Pr.Risultato_idRisultato = R.idRisultato)\n"
             + "INNER JOIN Esame Es ON (R.esame_idEsame = Es.idEsame))\n"
             + "WHERE idPaziente = ?";
-    private static final String GETDRUGBYIDPAZIENTE = "SELECT V.visitdate, Pr.erogationdate, Pr.ticketpagato, F.name\n"
+    private static final String GETDRUGBYIDPAZIENTE = "SELECT V.visitdate, Pr.erogationdate, Pr.ticketpagato, F.name, Pr.idPrescrizione\n"
             + "FROM Paziente P\n"
             + "INNER JOIN Eroga E ON (P.idpaziente = E.paziente_idpaziente)\n"
             + "INNER JOIN Visita V ON (E.visita_idvisita = V.idvisita)\n"
@@ -203,6 +203,7 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
                 
                 while (rs.next()) {
                     RicettePrescrittePaziente result = new RicettePrescrittePaziente();
+                    result.setIdPrescrizione(rs.getString("idPrescrizione"));
                     result.setDataVisita(rs.getString("visitdate"));
                     result.setDataPrescrizione(rs.getString("erogationDate"));
                     result.setTicketPagato(rs.getBoolean("ticketpagato"));

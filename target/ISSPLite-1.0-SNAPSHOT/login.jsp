@@ -299,8 +299,6 @@
             </style>
         </head>
         <body>        
-            <%@ include file="../common/navbar.jsp" %>
-
             <div class="wrapper fadeInDown">
                 <div id="formContent">
                     <div class="text-center mb-4">

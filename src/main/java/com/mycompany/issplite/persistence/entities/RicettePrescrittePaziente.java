@@ -10,12 +10,20 @@ package com.mycompany.issplite.persistence.entities;
  * @author Aster
  */
 public class RicettePrescrittePaziente {
-    
+    private String idPrescrizione;
     private String dataVisita;
     private String dataPrescrizione;
     private boolean ticketPagato;
     private String nomeFarmaco;
 
+    public String getIdPrescrizione() {
+        return idPrescrizione;
+    }
+
+    public void setIdPrescrizione(String idRicetta) {
+        this.idPrescrizione = idRicetta;
+    }
+    
     public String getDataVisita() {
         return dataVisita;
     }

@@ -25,6 +25,7 @@ C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\my
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\dao\jdbc\JDBCEsameDAO.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\filters\AuthenticationFilter.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\entities\EsamiSostenutiPaziente.java
+C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\servlets\DownloadRicettaServlet.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\listeners\WebContextListener.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\entities\RicetteErogatePerGiorno.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\entities\FarmacoPrescritto.java

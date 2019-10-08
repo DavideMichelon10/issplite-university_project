@@ -23,6 +23,7 @@ com\mycompany\issplite\persistence\dao\factories\DAOFactoryException.class
 com\mycompany\issplite\persistence\dao\jdbc\JDBCEsameDAO.class
 com\mycompany\issplite\filters\MediciFilter.class
 com\mycompany\issplite\persistence\dao\jdbc\JDBCPazienteDAO.class
+com\mycompany\issplite\servlets\DownloadRicettaServlet.class
 com\mycompany\issplite\persistence\dao\PazienteDAO.class
 com\mycompany\issplite\persistence\entities\PazienteUltimiEsamiFarmaci.class
 com\mycompany\issplite\persistence\entities\FarmacoPrescritto.class
