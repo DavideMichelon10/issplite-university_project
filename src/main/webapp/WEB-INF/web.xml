@@ -65,6 +65,10 @@
         <servlet-name>DownloadRisultato</servlet-name>
         <servlet-class>com.mycompany.issplite.servlets.DownloadRisultatoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ErogaEsameServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.ErogaEsameServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login.handler</url-pattern>
@@ -285,6 +289,23 @@
         <servlet-name>DownloadRisultatoServlet</servlet-name>
         <url-pattern>/pazienti/downloadRisultato.html</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ErogaEsameServlet</servlet-name>
+        <url-pattern>/sspi/erogaesami.html</url-pattern>
+    </servlet-mapping>
+    
+    <!-- EROGA ESAME -->
+    <servlet>
+        <servlet-name>ErogaEsamePage</servlet-name>
+        <jsp-file>/ssp/erogaEsame.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ErogaEsamePage</servlet-name>
+        <url-pattern>/sspi/erogaesame.html</url-pattern>
+    </servlet-mapping>
+
+
     <session-config>
         <session-timeout>
             30

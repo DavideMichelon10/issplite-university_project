@@ -73,8 +73,9 @@
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-
+                    <a class="navbar-text testoMenu tastoLogout creaRichiamo" style="text-decoration:none" href="${pageContext.request.contextPath}/sspi/sspi.html">Stampa report</a>
                     <a class="navbar-text testoMenu tastoLogout creaRichiamo" style="text-decoration:none" href="${pageContext.request.contextPath}/sspi/richiami.html">Crea richiamo</a>
+                    <a class="navbar-text testoMenu tastoLogout creaRichiamo" style="text-decoration:none" href="${pageContext.request.contextPath}/sspi/erogaesami.html">Eroga esame</a>
 
                     <ul class="nav navbar-nav navbar-right">
                         <%
