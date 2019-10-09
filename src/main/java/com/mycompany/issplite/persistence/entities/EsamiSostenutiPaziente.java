@@ -15,6 +15,17 @@ public class EsamiSostenutiPaziente {
     private String nomeEsame;
     private boolean pagato;
     private String dataRisultato;
+    private String idRisultato;
+
+    public String getIdRisultato() {
+        return idRisultato;
+    }
+
+    public void setIdRisultato(String idRisultato) {
+        this.idRisultato = idRisultato;
+    }
+    
+    
 
     public String getDataVisita() {
         return dataVisita;

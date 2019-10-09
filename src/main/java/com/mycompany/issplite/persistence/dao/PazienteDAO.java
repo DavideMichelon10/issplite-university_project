@@ -6,6 +6,7 @@ import com.mycompany.issplite.persistence.entities.EsamiSostenutiPaziente;
 import com.mycompany.issplite.persistence.entities.Paziente;
 import com.mycompany.issplite.persistence.entities.RicettePrescrittePaziente;
 import com.mycompany.issplite.persistence.entities.RichiamiPrescrittiPaziente;
+import com.mycompany.issplite.persistence.entities.TicketPagati;
 import com.mycompany.issplite.persistence.entities.Visita;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public interface PazienteDAO extends DAO<Paziente, String> {
     public List<RichiamiPrescrittiPaziente> getAllRecallByIdPaziente(String id) throws DAOException;
     public List<Visita> getAllVisitByIdPaziente(String id) throws DAOException;
     public List<Paziente> getPazientiForMedico(String idMedico) throws DAOException;
+    public List<TicketPagati> getAllTicketPagati(String idPaziente) throws DAOException;
     public void changePassword(String password, String idPaziente) throws DAOException;
     public void changeEmail(String email, String idPaziente) throws DAOException;
     public void changeMedico(String medico, String idPaziente) throws DAOException;

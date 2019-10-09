@@ -7,6 +7,7 @@ import com.mycompany.issplite.persistence.entities.EsamiSostenutiPaziente;
 import com.mycompany.issplite.persistence.entities.Paziente;
 import com.mycompany.issplite.persistence.entities.RicettePrescrittePaziente;
 import com.mycompany.issplite.persistence.entities.RichiamiPrescrittiPaziente;
+import com.mycompany.issplite.persistence.entities.TicketPagati;
 import com.mycompany.issplite.persistence.entities.Visita;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,11 +27,11 @@ import java.util.logging.Logger;
  * @author Davide
  */
 public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements PazienteDAO {
-    
+
     private static final String GETPAZIENTE = "SELECT * FROM paziente WHERE idpaziente = ? AND password = ?";
     private static final String GETPAZIENTEBYID = "SELECT * FROM paziente WHERE idpaziente = ? ";
     private static final String GETPAZIENTEFORMEDICO = "SELECT * FROM paziente WHERE medico_idmedico = ?;";
-    private static final String GETESAMIBYIDPAZIENTE = "SELECT V.visitdate, Pr.erogationdate, Es.name, Pr.ticketPagato, R.resultdate\n"
+    private static final String GETESAMIBYIDPAZIENTE = "SELECT V.visitdate, Pr.erogationdate, Es.name, Pr.ticketPagato, R.resultdate, R.idRisultato\n"
             + "FROM (Paziente P\n"
             + "INNER JOIN Eroga E ON (P.idPaziente = E.Paziente_idPaziente)\n"
             + "INNER JOIN Visita V ON (E.Visita_idVisita = V.idVisita)\n"
@@ -62,38 +63,57 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
     private static final String GETPAZIENTIIDSELECTEDBYRICHIAMO = "SELECT * FROM paziente WHERE sex = ? AND birthdate > ? AND birthdate < ?";
     private static final String INSERTINPRESCRIZIONERICHIAMO = "INSERT INTO prescrizionerichiamo(richiamo_idrichiamo, paziente_idpaziente, esame_idesame, erogationdate) VALUES (?,?,?,?);";
     private static final String CHANGEPHOTOPATH = "UPDATE Paziente SET photopath = ? WHERE idPaziente = ?;";
-
+    private static final String GETALLPAIDVISITBYIDPAZIENTE = "SELECT V.visitdate, V.ticket\n"
+            + "FROM (Paziente P\n"
+            + "INNER JOIN Eroga E ON (P.idPaziente = E.Paziente_idPaziente)\n"
+            + "INNER JOIN Visita V ON (E.Visita_idVisita = V.idVisita))\n"
+            + "WHERE P.idpaziente = ? AND V.ticketPagato = 1";
+    private static final String GETALLPAIDRECIPE = "SELECT Pr.erogationDate, F.name, F.price\n"
+            + "FROM (Paziente P\n"
+            + "INNER JOIN Eroga E ON (P.idPaziente = E.Paziente_idPaziente)\n"
+            + "INNER JOIN Visita V ON (E.Visita_idVisita = V.idVisita)\n"
+            + "INNER JOIN Prescrizione Pr ON (Pr.Visita_idVisita = V.idVisita)\n"
+            + "INNER JOIN FARMACO F ON (Pr.Farmaco_idFarmaco = F.idFarmaco))\n"
+            + "WHERE P.idpaziente = ? AND Pr.ticketPagato = 1";
+    private static final String GETALLPAIDEXAMES = "SELECT Pr.erogationdate, Es.name, Es.costo\n"
+            + "FROM (Paziente P\n"
+            + "INNER JOIN Eroga E ON (P.idPaziente = E.Paziente_idPaziente)\n"
+            + "INNER JOIN Visita V ON (E.Visita_idVisita = V.idVisita)\n"
+            + "INNER JOIN Prescrizione Pr ON (V.idVisita = PR.visita_idVisita)\n"
+            + "INNER JOIN Risultato R ON (Pr.Risultato_idRisultato = R.idRisultato)\n"
+            + "INNER JOIN Esame Es ON (R.esame_idEsame = Es.idEsame))\n"
+            + "WHERE idPaziente = ? AND Pr.ticketPagato = 1";
 
     public JDBCPazienteDAO(Connection con) {
         super(con);
     }
-    
+
     @Override
     public Long getCount() throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public List<Paziente> getAll() throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public Paziente getByPrimaryKey(String arg0) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public Paziente getByIdAndPassword(String id, String password) throws DAOException {
         if ((id == null) || (password == null)) {
             throw new DAOException("Email and password are mandatory fields", new NullPointerException("email or password are null"));
         }
-        
+
         try ( PreparedStatement stm = CON.prepareStatement(GETPAZIENTE)) {
             stm.setString(1, id);
             stm.setString(2, password);
             try ( ResultSet rs = stm.executeQuery()) {
-                
+
                 int count = 0;
                 while (rs.next()) {
                     count++;
@@ -113,7 +133,7 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
                     paziente.setSex(rs.getBoolean("sex"));
                     paziente.setMedico(rs.getString("medico_idmedico"));
                     paziente.setSsn(rs.getString("ssn"));
-                    
+
                     return paziente;
                 }
                 return null;
@@ -122,17 +142,17 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
             throw new DAOException("Impossible to get the list of users", ex);
         }
     }
-    
+
     @Override
     public Paziente getById(String id) throws DAOException {
         if (id == null) {
             throw new DAOException("Email and password are mandatory fields", new NullPointerException("email or password are null"));
         }
-        
+
         try ( PreparedStatement stm = CON.prepareStatement(GETPAZIENTEBYID)) {
             stm.setString(1, id);
             try ( ResultSet rs = stm.executeQuery()) {
-                
+
                 int count = 0;
                 while (rs.next()) {
                     count++;
@@ -152,7 +172,7 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
                     paziente.setSex(rs.getBoolean("sex"));
                     paziente.setMedico(rs.getString("medico_idmedico"));
                     paziente.setSsn(rs.getString("ssn"));
-                    
+
                     return paziente;
                 }
                 return null;
@@ -161,18 +181,18 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
             throw new DAOException("Impossible to get the list of users", ex);
         }
     }
-    
+
     @Override
     public List<EsamiSostenutiPaziente> getAllExamByIdPaziente(String id) throws DAOException {
         if (id == null) {
             throw new DAOException("Something went wrong");
         }
-        
+
         try ( PreparedStatement stm = CON.prepareStatement(GETESAMIBYIDPAZIENTE)) {
             stm.setString(1, id);
             try ( ResultSet rs = stm.executeQuery()) {
                 List<EsamiSostenutiPaziente> esamiSostenuti = new ArrayList<>();
-                
+
                 while (rs.next()) {
                     EsamiSostenutiPaziente result = new EsamiSostenutiPaziente();
                     result.setDataVisita(rs.getString("visitdate"));
@@ -180,6 +200,7 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
                     result.setNomeEsame(rs.getString("name"));
                     result.setPagato(rs.getBoolean("ticketpagato"));
                     result.setDataRisultato(rs.getString("resultdate"));
+                    result.setIdRisultato("" + rs.getInt("idRisultato"));
                     esamiSostenuti.add(result);
                 }
                 return esamiSostenuti;
@@ -189,18 +210,18 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
             throw new DAOException("Error inside method getAllExamByIdPaziente", ex);
         }
     }
-    
+
     @Override
     public List<RicettePrescrittePaziente> getAllDrugByIdPaziente(String id) throws DAOException {
         if (id == null) {
             throw new DAOException("Email and password are mandatory fields", new NullPointerException("email or password are null"));
         }
-        
+
         try ( PreparedStatement stm = CON.prepareStatement(GETDRUGBYIDPAZIENTE)) {
             stm.setString(1, id);
             try ( ResultSet rs = stm.executeQuery()) {
                 List<RicettePrescrittePaziente> ricettePrescritte = new ArrayList<>();
-                
+
                 while (rs.next()) {
                     RicettePrescrittePaziente result = new RicettePrescrittePaziente();
                     result.setIdPrescrizione(rs.getString("idPrescrizione"));
@@ -217,18 +238,18 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
             throw new DAOException("Error inside method getAllDrugByIdPaziente", ex);
         }
     }
-    
+
     @Override
     public List<RichiamiPrescrittiPaziente> getAllRecallByIdPaziente(String id) throws DAOException {
         if (id == null) {
             throw new DAOException("Something went wrong");
         }
-        
+
         try ( PreparedStatement stm = CON.prepareStatement(GETRECALLBYIDPAZIENTE)) {
             stm.setString(1, id);
             try ( ResultSet rs = stm.executeQuery()) {
                 List<RichiamiPrescrittiPaziente> richiamiPrescritti = new ArrayList<>();
-                
+
                 while (rs.next()) {
                     RichiamiPrescrittiPaziente result = new RichiamiPrescrittiPaziente();
                     result.setDataPrescrizione(rs.getString("erogationdate"));
@@ -243,18 +264,18 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
             throw new DAOException("Error inside method RichiamoPrescrittoPaziente", ex);
         }
     }
-    
+
     @Override
     public List<Visita> getAllVisitByIdPaziente(String id) throws DAOException {
         if (id == null) {
             throw new DAOException("Something went wrong");
         }
-        
+
         try ( PreparedStatement stm = CON.prepareStatement(GETVISITBYPAZIENTE)) {
             stm.setString(1, id);
             try ( ResultSet rs = stm.executeQuery()) {
                 List<Visita> visitePaziente = new ArrayList<>();
-                
+
                 while (rs.next()) {
                     Visita result = new Visita();
                     result.setDataVisita(rs.getString("visitDate"));
@@ -268,18 +289,18 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
             throw new DAOException("Error inside method RichiamoPrescrittoPaziente", ex);
         }
     }
-    
+
     @Override
     public List<Paziente> getPazientiForMedico(String idMedico) throws DAOException {
         if (idMedico == null) {
             throw new DAOException("Something went wrong");
         }
-        
+
         try ( PreparedStatement stm = CON.prepareStatement(GETPAZIENTEFORMEDICO)) {
             stm.setString(1, idMedico);
             try ( ResultSet rs = stm.executeQuery()) {
                 List<Paziente> pazienti = new ArrayList<>();
-                
+
                 while (rs.next()) {
                     Paziente paziente = new Paziente();
                     paziente.setSsn(rs.getString("ssn"));
@@ -298,7 +319,7 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
             throw new DAOException("Error inside method getPazientiForMedico", ex);
         }
     }
-    
+
     @Override
     public void changePassword(String password, String idPaziente) throws DAOException {
         if (password == null || idPaziente == null) {
@@ -310,9 +331,9 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
             stm.executeUpdate();
         } catch (SQLException ex) {
             throw new DAOException("Error inside method changePassword", ex);
-        }        
+        }
     }
-    
+
     @Override
     public void changeEmail(String email, String idPaziente) throws DAOException {
         if (email == null || idPaziente == null) {
@@ -324,9 +345,9 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
             stm.executeUpdate();
         } catch (SQLException ex) {
             throw new DAOException("Error inside method changeEmail", ex);
-        }        
+        }
     }
-    
+
     public void changeMedico(String medico, String idPaziente) throws DAOException {
         if (medico == null || idPaziente == null) {
             throw new DAOException("Something went wrong");
@@ -337,15 +358,15 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
             stm.executeUpdate();
         } catch (SQLException ex) {
             throw new DAOException("Error inside method changeMedico", ex);
-        }        
+        }
     }
-    
+
     @Override
     public List<Paziente> getPazientiIdSelected(int sex, String dateStart, String dateEnd) throws DAOException {
         if ((dateStart == null) || (dateEnd == null)) {
             throw new DAOException("Something went wrong");
         }
-        
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date parseDate = new Date();
         Date parseDate_ = new Date();
@@ -357,15 +378,15 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
         }
         Timestamp timestampStart = new java.sql.Timestamp(parseDate.getTime());
         Timestamp timestampEnd = new java.sql.Timestamp(parseDate_.getTime());
-        
+
         try ( PreparedStatement stm = CON.prepareStatement(GETPAZIENTIIDSELECTEDBYRICHIAMO)) {
             stm.setInt(1, sex);
             stm.setTimestamp(2, timestampStart);
             stm.setTimestamp(3, timestampEnd);
-            
+
             try ( ResultSet rs = stm.executeQuery()) {
                 List<Paziente> pazienti = new ArrayList<>();
-                
+
                 while (rs.next()) {
                     Paziente paziente = new Paziente();
                     paziente.setSsn(rs.getString("ssn"));
@@ -389,34 +410,88 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
     //richiamo_idrichiamo, paziente_idpaziente, esame_idesame, erogationdate
     @Override
     public void insertInPrescrizioneRichiamo(String idPaziente, int idRichiamo, int idEsame) throws DAOException {
-        
+
         Timestamp erogationDate = new Timestamp(System.currentTimeMillis());
-        
+
         try ( PreparedStatement stm = CON.prepareStatement(INSERTINPRESCRIZIONERICHIAMO)) {
-            
+
             stm.setInt(1, idRichiamo);
             stm.setString(2, idPaziente);
             stm.setInt(3, idEsame);
             stm.setTimestamp(4, erogationDate);
-            
+
             stm.executeUpdate();
-            
+
         } catch (SQLException ex) {
             throw new DAOException("Impossible to insert visita", ex);
         }
     }
-    
+
     @Override
-    public void changePhotoPath(String name, String idPaziente) throws DAOException{
-        if(name == null || idPaziente == null){
+    public void changePhotoPath(String name, String idPaziente) throws DAOException {
+        if (name == null || idPaziente == null) {
             throw new DAOException("Something went wrong");
         }
-         try (PreparedStatement stm = CON.prepareStatement(CHANGEPHOTOPATH)) {
-             stm.setString(1, name);
-             stm.setString(2, idPaziente);
-             stm.executeUpdate();
-         } catch (SQLException ex) {
+        try ( PreparedStatement stm = CON.prepareStatement(CHANGEPHOTOPATH)) {
+            stm.setString(1, name);
+            stm.setString(2, idPaziente);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
             throw new DAOException("Error inside method changePhotoPath", ex);
-        }       
+        }
+    }
+
+    @Override
+    public List<TicketPagati> getAllTicketPagati(String idPaziente) throws DAOException {
+        if (idPaziente == null) {
+            throw new DAOException("Something went wrong");
+        }
+        List<TicketPagati> ticketPagati = new ArrayList<>();
+        try ( PreparedStatement stm = CON.prepareStatement(GETALLPAIDVISITBYIDPAZIENTE)) {
+            stm.setString(1, idPaziente);
+            try ( ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    TicketPagati result = new TicketPagati();
+                    result.setMotivazione("Visita");
+                    result.setCosto(rs.getInt("ticket"));
+                    result.setDataPagamento(rs.getString("visitDate"));
+                    ticketPagati.add(result);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error inside method getAllTicketPagati", ex);
+        }
+
+        try ( PreparedStatement stm = CON.prepareStatement(GETALLPAIDRECIPE)) {
+            stm.setString(1, idPaziente);
+            try ( ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    TicketPagati result = new TicketPagati();
+                    result.setMotivazione(rs.getString("name"));
+                    result.setCosto(rs.getInt("price"));
+                    result.setDataPagamento(rs.getString("erogationDate"));
+                    ticketPagati.add(result);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error inside method getAllTicketPagati", ex);
+        }
+
+        try ( PreparedStatement stm = CON.prepareStatement(GETALLPAIDEXAMES)) {
+            stm.setString(1, idPaziente);
+            try ( ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    TicketPagati result = new TicketPagati();
+                    result.setMotivazione(rs.getString("name"));
+                    result.setCosto(rs.getInt("costo"));
+                    result.setDataPagamento(rs.getString("erogationDate"));
+                    ticketPagati.add(result);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error inside method getAllTicketPagati", ex);
+        }
+        
+        return ticketPagati;
     }
 }

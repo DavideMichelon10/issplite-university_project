@@ -13,6 +13,7 @@ import com.mycompany.issplite.persistence.entities.EsamiSostenutiPaziente;
 import com.mycompany.issplite.persistence.entities.Paziente;
 import com.mycompany.issplite.persistence.entities.RicettePrescrittePaziente;
 import com.mycompany.issplite.persistence.entities.RichiamiPrescrittiPaziente;
+import com.mycompany.issplite.persistence.entities.TicketPagati;
 import com.mycompany.issplite.persistence.entities.Visita;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,17 +67,18 @@ public class PazientiServlet extends HttpServlet {
         List<RicettePrescrittePaziente> ricettePrescritte = new ArrayList<>();
         List<RichiamiPrescrittiPaziente> richiamiPrescritti = new ArrayList<>();
         List<Visita> visitePaziente = new ArrayList<>();
-        
+        List<TicketPagati> ticketPagati = new ArrayList<>();
         try {
             esamiSostenuti = pazienteDao.getAllExamByIdPaziente(idPaziente);
             ricettePrescritte = pazienteDao.getAllDrugByIdPaziente(idPaziente);
             richiamiPrescritti = pazienteDao.getAllRecallByIdPaziente(idPaziente);
             visitePaziente = pazienteDao.getAllVisitByIdPaziente(idPaziente);
+            ticketPagati = pazienteDao.getAllTicketPagati(idPaziente);
         } catch (DAOException ex) {
             response.sendError(500, ex.getMessage());
             return;
         }
-        
+        request.setAttribute("ticketPagati", ticketPagati);        
         request.setAttribute("esamiSostenuti", esamiSostenuti);
         request.setAttribute("ricettePrescritte", ricettePrescritte);
         request.setAttribute("richiamiPrescritti", richiamiPrescritti);
@@ -92,3 +94,6 @@ public class PazientiServlet extends HttpServlet {
         
     }
 }
+
+
+//‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽

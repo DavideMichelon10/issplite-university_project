@@ -5,42 +5,35 @@
  */
 package com.mycompany.issplite.servlets;
 
-import com.itextpdf.io.image.ImageData;
-import com.itextpdf.io.image.ImageDataFactory;
+import com.mycompany.issplite.persistence.dao.RisultatoDAO;
+import com.mycompany.issplite.persistence.dao.factories.DAOException;
+import com.mycompany.issplite.persistence.entities.Risultato;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.mycompany.issplite.persistence.dao.PazienteDAO;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactory;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactoryException;
 import com.mycompany.issplite.persistence.entities.Paziente;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.mail.Session;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import net.glxn.qrgen.QRCode;
-import net.glxn.qrgen.image.ImageType;
 
 /**
  *
- * @author Aster
+ * @author lollo
  */
-public class DownloadRicettaServlet extends HttpServlet {
-
-    private PazienteDAO pazienteDao;
+public class DownloadRisultatoServlet extends HttpServlet {
+    private RisultatoDAO risultatoDao;
 
     @Override
     public void init() throws ServletException {
@@ -49,7 +42,7 @@ public class DownloadRicettaServlet extends HttpServlet {
             throw new ServletException("Impossible to get dao factory for user storage system");
         }
         try {
-            pazienteDao = daoFactory.getDAO(PazienteDAO.class);
+            risultatoDao = daoFactory.getDAO(RisultatoDAO.class);
         } catch (DAOFactoryException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -58,36 +51,26 @@ public class DownloadRicettaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         allOkay(request, response);
-        
         HttpSession session = ((HttpServletRequest) request).getSession(false);
         Paziente paziente = (Paziente) session.getAttribute("paziente");
-        
-        String idPrescrizione = request.getParameter("idPrescrizione");
-        String nomeFarmaco = request.getParameter("nomeFarmaco");
-        String dataPrescrizione = request.getParameter("dataPrescrizione");
-        
-        String qrText = "ID MEDICO: "+paziente.getMedico() + "\n" +
-                        "ID UNIVOCO DELLA PRESCRIZIONE: " + idPrescrizione + "\n" +
-                        "CODICE FISCALE PAZIENTE: " + paziente.getSsn() + "\n" +
-                        "NOME FARMACO: " + nomeFarmaco + "\n" +
-                        "DATA PRESCRIZIONE: " + dataPrescrizione;
-        final byte[] qrCode = QRCode.from(qrText).to(ImageType.JPG).to(ImageType.PNG).withSize(500, 500).stream().toByteArray();;
-        
-        ImageData qrCodeData = ImageDataFactory.create(qrCode);
-        Image qrCodeImage = new Image(qrCodeData); 
-        
 
-        //__________________________FINE QR CODE________________________
+        String idRisultato = request.getParameter("idRisultato");
+        String esame = request.getParameter("esame");
+        String dataVisita = request.getParameter("dataVisita");
         
+        Risultato risultato = null;
+        try {
+            risultato = risultatoDao.getRisultatoById(idRisultato);
+        } catch (DAOException ex) {
+            Logger.getLogger(DownloadRisultatoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(baos));
-        Document doc = new Document(pdfDoc);        
-        doc.add(new Paragraph("ID MEDICO: " + paziente.getMedico()));
-        doc.add(new Paragraph("ID UNIVOCO DELLA PRESCRIZIONE: " + idPrescrizione));
-        doc.add(new Paragraph("CODICE FISCALE PAZIENTE: " + paziente.getSsn()));
-        doc.add(new Paragraph("NOME FARMACO: " + nomeFarmaco));
-        doc.add(new Paragraph("DATA PRESCRIZIONE: " + dataPrescrizione));
-        doc.add(qrCodeImage);
+        Document doc = new Document(pdfDoc);
+        doc.add(new Paragraph(risultato.getResultDate()));
+        doc.add(new Paragraph(""));
+        doc.add(new Paragraph("Gentile " + paziente.getName() + " " + paziente.getSurname() + ",\n l'esame " + esame + " da lei sostenuto in data " + dataVisita + " ha avuto il seguente esito: \n " + risultato.getDescription()));
         doc.close();
 
         // setting some response headers
@@ -103,10 +86,8 @@ public class DownloadRicettaServlet extends HttpServlet {
         baos.writeTo(os);
         os.flush();
         os.close();
-        
-        
+          
         response.sendRedirect("/pazienti/pazienti.html");
-
     }
 
     @Override

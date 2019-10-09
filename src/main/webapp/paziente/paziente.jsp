@@ -33,6 +33,8 @@
             .imgProfilo{
                 max-width: 150px;
                 max-height: 150px;
+                margin-left: 10%;
+                margin-top: 10%;
             }
             .tabella{
                 margin-right: 5%;
@@ -53,17 +55,13 @@
                         <img src="../privateImage/profile_picture_${paziente.idPaziente}.jpg" class="card-img imgProfilo">
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8" >
                     <div class="card-body">
                         <c:set var = "paziente" scope = "session" value = "${datiPaziente}"/>
                         <h3 class="card-title">Ciao ${paziente.name} ${paziente.surname}.</h3>
                         <h5>Benvenuto nella tua area privata</h5>
                         <div class="row no-gutters">
-                            <div class="col-md-6">
-                                <form action="${pageContext.request.contextPath}/logout.handler" method="post">
-                                    <button class="btn btn-sm btn-primary btn-block" type="submit">Sign out</button>                            
-                                </form>
-                            </div>
+        
                             <div class="col-md-6">
                                 <a href="../paziente/areaPersonale.html" class="btn btn-sm btn-primary btn-block" role="button"><img src="../images/setting.ico" class="imgSetting"> Area Personale</a>
                             </div>
@@ -80,6 +78,7 @@
             <li><a href="#ricette-tab" data-toggle="tab">Ricette</a></li>
             <li><a href="#richiami-tab" data-toggle="tab">Richiami</a></li>
             <li><a href="#all-tab" data-toggle="tab">Visite</a></li>
+            <li><a href="#ticket-tab" data-toggle="tab">Ticket pagati</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="esami-tab">
@@ -100,7 +99,7 @@
                                 <tr>
                                     <td>${esame.nomeEsame}</td>
                                     <td>${esame.dataVisita}</td>
-                                    <td>${esame.dataRisultato}</td>
+                                    <td><a href="downloadRisultato.html?idRisultato=${esame.idRisultato}&esame=${esame.nomeEsame}&dataVisita=${esame.dataVisita}"><i class="fa fa-download"></i> ${esame.dataRisultato}</a></td>
                                     <td>
                                         <c:choose>
                                             <c:when test="${esame.pagato}">
@@ -208,6 +207,33 @@
                     </table>
                 </div>
             </div>
+            <div class="tab-pane" id="ticket-tab">
+                <br>
+                <div class="tabella">
+                    <table class="table table-striped" id="tabellaTicket">
+                        <thead>
+                            <tr>
+                                <th>Motivazione</th>
+                                <th>Costo</th>
+                                <th>Data Pagamento</th>
+                                <th>Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="ticket" items="${ticketPagati}">
+                                <tr>
+                                    <td>${ticket.motivazione}</td>
+                                    <td>${ticket.costo}</td>
+                                    <td>${ticket.dataPagamento}</td>
+                                    <td>
+                                        <a href="downloadTicket.html?motivazione=${ticket.motivazione}&costo=${ticket.costo}&dataPagamento=${ticket.dataPagamento}"><i class="fa fa-download"></i> Scarica</a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <script type="text/javascript">
             $(document).ready(function () {
@@ -225,6 +251,11 @@
             $(document).ready(function () {
                 $('#tabellaVisite').DataTable();
             });
+            
+            $(document).ready(function () {
+                $('#tabellaTicket').DataTable();
+            });
+            
         </script>
     </body>
 </html>
