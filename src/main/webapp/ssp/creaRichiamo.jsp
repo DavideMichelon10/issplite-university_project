@@ -19,7 +19,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%@ include file="../common/navbar.jsp" %>
+        <%@ include file="../common/navbarssp.jsp" %>
         <style>
             body { text-align: center; }
             

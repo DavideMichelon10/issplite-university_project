@@ -26,7 +26,6 @@
         <title>Lista prescrizioni</title>
     </head>
     <body>
-               <a  style="float: right;" class="btn btn-primary" href="${pageContext.request.contextPath}/sspi/richiami.html">Crea richiamo</a>
 
         <style>
             #div_tab{
@@ -42,7 +41,7 @@
                 margin-right: 5%;
             }
         </style>
-        <%@ include file="../common/navbar.jsp" %>
+        <%@ include file="../common/navbarssp.jsp" %>
 
         <br>
         <br>

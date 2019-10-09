@@ -20,13 +20,13 @@
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
-  
+
         <style>
             .navbar-default {
                 background-color: #087a9c;  
                 display: block;
             }
-            
+
             .testoMenu{
                 color: whitesmoke !important;
             }
@@ -37,14 +37,14 @@
                 font-weight: bold;
             }
         </style>
-        
+
         <%
             String userType = "";
-            if(session.getAttribute("medico") != null){
+            if (session.getAttribute("medico") != null) {
                 userType = "medico";
-            }else if(session.getAttribute("paziente") != null){
+            } else if (session.getAttribute("paziente") != null) {
                 userType = "paziente";
-            }else if(session.getAttribute("ssp") != null){
+            } else if (session.getAttribute("ssp") != null) {
                 userType = "ssp";
             }
         %>
