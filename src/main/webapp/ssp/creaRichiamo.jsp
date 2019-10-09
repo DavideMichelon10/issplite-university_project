@@ -16,26 +16,35 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Crea richiamo</title>
     </head>
     <body>
         <%@ include file="../common/navbarssp.jsp" %>
         <style>
             body { text-align: center; }
-            
+
 
             #date{
                 align-content: center;
             }
             #mot{
-                
+
             }
             #mot_btn{
                 margin-bottom: 50px;
             }
+            
+            h3{
+                text-align: center;
+            }
         </style>
         <div id="form_create_richiamo">
             <form class="form-signin" action="${pageContext.request.contextPath}/sspi/richiami.html">
+                <div id="title">
+                    <h3> Crea un nuovo <b>richiamo</b></h3>
+                    <p>Seleziona le persone che vuoi richiamare ad un particolare esame. Ad ogni paziente richiamo verrà inviata una mail.</p>
+                </div>
+                <br>
                 <div id="date">
                     <b>Seleziona le persone nate:</b>
                     <br>
@@ -49,11 +58,12 @@
                     <br>
 
                     <ul style="margin: 0; padding: 0;" class="list-ul">
-                        <input name="maschi" type="checkbox" value="Maschi"><label>Maschi</label>
+                        <input name="maschi" type="checkbox" value="Maschi"><label>&nbsp; &nbsp;Maschi</label>
                         <br>
-                        <input name="femmine" type="checkbox" value="Femmine"><label>Femmine</label>
+                        <input name="femmine" type="checkbox" value="Femmine"><label>&nbsp; &nbsp;Femmine</label>
                     </ul>
                 </div>
+                <br>
                 <div id="mot_btn">
                     <div class="col-sm-9" style=" width: 90%; margin-left: 5%;" id="sceltaEsame">                                    
                         <input id="sug" list="esame" name="esame" placeholder="Seleziona l'esame da prescrivere" class="form-control" required>

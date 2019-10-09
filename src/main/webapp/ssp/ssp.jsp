@@ -23,7 +23,7 @@
 
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Lista prescrizioni</title>
+        <title>Report giornalieri</title>
     </head>
     <body>
 
@@ -32,18 +32,23 @@
                 margin-left: 5%;
                 margin-right: 5%;
             }
-           
-            
+
+
             .form_search{
                 text-align: center ;
 
                 margin-left: 5%;
                 margin-right: 5%;
             }
+            
+            h3{
+                text-align: center;
+            }
         </style>
         <%@ include file="../common/navbarssp.jsp" %>
-
-        <br>
+        <div id="title">
+            <h3> Stampa il <b>report giornaliero</b></h3>
+        </div>
         <br>
         <form class="form_search" action="${pageContext.request.contextPath}/sspi/sspi.html">
             <b>Selezione di quale giorno scaricare il report:</b>
@@ -87,7 +92,7 @@
         <script type="text/javascript">
 
             $(document).ready(function () {
-                
+
                 $('#tabellaEsami').DataTable({
                     dom: 'Bfrtip',
                     buttons: [{
@@ -108,7 +113,7 @@
                     ]
                 });
             });
-               
+
         </script>
     </body>
 </html>
