@@ -61,9 +61,7 @@ public class MediciServlet extends HttpServlet {
         
         try {
             allPazienti = pazienteDao.getPazientiForMedico(idMedico);
-            for(Paziente p : allPazienti){
-                System.out.println(p.toString());
-            }
+
             pazienti = medicoDao.getLastEsameFarmacoDate(idMedico);
         } catch (DAOException ex) {
             response.sendError(500, ex.getMessage());

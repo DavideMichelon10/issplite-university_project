@@ -98,6 +98,7 @@ private PazienteDAO pazienteDao;
         
         
         try {
+            System.out.println("ID PAZ: "+idPaziente);
             int idVisita = medicoDao.insertVisita(isPagato);
             medicoDao.insertEroga(getIdMedico(request), idPaziente, idVisita);
             for(int idEsame : idEsamiPrescritti){

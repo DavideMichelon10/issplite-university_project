@@ -15,7 +15,16 @@ public class RisultatoNonEseguito {
     private String examName;
     private String pazienteName;    
     private String pazienteSurname;
+    private String ssn;
 
+    public String getSsn() {
+        return ssn;
+    }
+
+    public void setSsn(String ssn) {
+        this.ssn = ssn;
+    }
+    
     public int getIdRisultato() {
         return idRisultato;
     }

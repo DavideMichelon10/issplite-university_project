@@ -8,6 +8,7 @@ C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistenc
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\entities\SSP.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\filters\PazientiFilter.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\jdbc\JDBCRisultatoDAO.java
+C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\servlets\ErogaEsameServlet.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\entities\FarmacoPrescritto.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\jdbc\JDBCEsameDAO.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\servlets\MediciPrescrizioniServlet.java
@@ -38,6 +39,7 @@ C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\filters\SS
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\servlets\LoginServlet.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\servlets\AggiornaFotoServlet.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\SSPDAO.java
+C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\servlets\ErogaEsameDettaglioServlet.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\factories\DAOFactory.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\entities\EsamiSostenutiPaziente.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\factories\DAOException.java
@@ -45,6 +47,7 @@ C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\filters\Me
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAO.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\servlets\PazientiprescrizioniServlet.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\entities\RicetteErogatePerGiorno.java
+C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\entities\RisultatoNonEseguito.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\RisultatoDAO.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\entities\Farmaco.java
 C:\Users\Davide\Desktop\issplite\src\main\java\com\mycompany\issplite\persistence\dao\factories\DAOFactoryException.java

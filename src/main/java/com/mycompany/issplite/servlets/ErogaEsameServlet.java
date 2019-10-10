@@ -9,7 +9,6 @@ import com.mycompany.issplite.persistence.dao.SSPDAO;
 import com.mycompany.issplite.persistence.dao.factories.DAOException;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactory;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactoryException;
-import com.mycompany.issplite.persistence.entities.EsamePrescritto;
 import com.mycompany.issplite.persistence.entities.RisultatoNonEseguito;
 import com.mycompany.issplite.persistence.entities.SSP;
 import java.io.IOException;
@@ -64,7 +63,7 @@ public class ErogaEsameServlet extends HttpServlet {
             Logger.getLogger(ErogaEsameServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        request.setAttribute("pazienti", esamiPrescritti);
+        request.setAttribute("esami", esamiPrescritti);
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/sspi/erogaesame.html"));
         dispatcher.forward(request, response);
     }
