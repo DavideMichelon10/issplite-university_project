@@ -3,7 +3,9 @@ package com.mycompany.issplite.persistence.dao.jdbc;
 import com.mycompany.issplite.persistence.dao.SSPDAO;
 import com.mycompany.issplite.persistence.dao.factories.DAOException;
 import com.mycompany.issplite.persistence.dao.factories.jdbc.JDBCDAO;
+import com.mycompany.issplite.persistence.entities.EsamePrescritto;
 import com.mycompany.issplite.persistence.entities.RicetteErogatePerGiorno;
+import com.mycompany.issplite.persistence.entities.RisultatoNonEseguito;
 import com.mycompany.issplite.persistence.entities.SSP;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,7 +38,15 @@ public class JDBCSSPDAO extends JDBCDAO<SSP, String> implements SSPDAO {
             + "	WHERE M.Provincia = ? AND P.erogationdate > ? AND P.erogationdate < ?;";
 
     private static final String INSERTRICHIAMO = "INSERT INTO Richiamo(motivation, targetsex, targetdatestart, targetdateend, ssp_idssp) VALUES (?,?,?,?,?);";
-
+    private static final String GETESAMIWITHOUTRESULT = "SELECT R.idRisultato, Pr.erogationdate, Es.name, P.name as pazientename, P.surname\n" +
+"            FROM (Paziente P\n" +
+"            INNER JOIN Eroga E ON (P.idPaziente = E.Paziente_idPaziente)\n" +
+"            INNER JOIN Visita V ON (E.Visita_idVisita = V.idVisita)\n" +
+"            INNER JOIN Prescrizione Pr ON (V.idVisita = PR.visita_idVisita)\n" +
+"            INNER JOIN Risultato R ON (Pr.Risultato_idRisultato = R.idRisultato)\n" +
+"            INNER JOIN Esame Es ON (R.esame_idEsame = Es.idEsame))\n" +
+"			WHERE P.provincia = ? AND Pr.ticketpagato = 0;";
+    
     public JDBCSSPDAO(Connection con) {
         super(con);
     }
@@ -208,5 +218,35 @@ public class JDBCSSPDAO extends JDBCDAO<SSP, String> implements SSPDAO {
             Logger.getLogger(JDBCSSPDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
+    }
+
+    @Override
+    public List<RisultatoNonEseguito> getEsamiWithoutResults(String provincia) throws DAOException {
+        if (provincia == null) {
+            throw new DAOException("provincia mandatory fields", new NullPointerException("provincia is null"));
+        }
+        List<RisultatoNonEseguito> risultati = new ArrayList<>();
+
+        try ( PreparedStatement stm = CON.prepareStatement(GETESAMIWITHOUTRESULT)) {
+            stm.setString(1, provincia);
+            try ( ResultSet rs = stm.executeQuery()) {
+
+                while (rs.next()) {
+
+                    RisultatoNonEseguito r = new RisultatoNonEseguito();
+                    r.setIdRisultato(rs.getInt("idrisultato"));
+                    r.setErogationDateVisit(rs.getString("erogationdate"));
+                    r.setExamName(rs.getString("name"));
+                    r.setPazienteName(rs.getString("pazientename"));
+                    r.setPazienteSurname(rs.getString("surname"));
+                    risultati.add(r);
+                }
+                
+                
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to get the list of exams", ex);
+        }
+        return risultati;
     }
 }
