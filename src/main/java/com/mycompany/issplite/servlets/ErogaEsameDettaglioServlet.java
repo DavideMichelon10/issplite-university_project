@@ -79,7 +79,7 @@ public class ErogaEsameDettaglioServlet extends HttpServlet {
                 request.getSession().setAttribute("status", "200");
 
             } catch (DAOException e){
-                Logger.getLogger(ErogaEsameServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ErogaEsameServlet.class.getName()).log(Level.SEVERE, null, e);
             }catch(NumberFormatException e) {
             }
 

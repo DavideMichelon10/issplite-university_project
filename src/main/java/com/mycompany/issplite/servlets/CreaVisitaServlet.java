@@ -82,7 +82,6 @@ private PazienteDAO pazienteDao;
         List<String> parameterNamesList = Collections.list(request.getParameterNames());
         List<Integer> idEsamiPrescritti = new ArrayList<>();
         String idPaziente = request.getParameter("idPaziente");
-
         boolean isPagato = false;
         
         for(String s : parameterNamesList){
@@ -97,14 +96,14 @@ private PazienteDAO pazienteDao;
         
         
         
-        try {
-            System.out.println("ID PAZ: "+idPaziente);
+        try {        
             int idVisita = medicoDao.insertVisita(isPagato);
             medicoDao.insertEroga(getIdMedico(request), idPaziente, idVisita);
             for(int idEsame : idEsamiPrescritti){
                 medicoDao.insertPrescrizione(idEsame, idVisita);
                 Esame esame = esameDao.getById(idEsame);
                 Paziente paziente = pazienteDao.getById(idPaziente);
+                System.out.println("IN SEND EMAIL");
                 sendEmail(esame, paziente, "Prescrizione esame: ");
             }
             
@@ -126,6 +125,7 @@ private PazienteDAO pazienteDao;
     }
 
     protected void sendEmail(Esame esame, Paziente paziente, String soggetto) {
+        System.out.println("IN SEND EMAIL");
         final String host = "smtp.gmail.com";
         final String port = "465";
         final String username = "davidemichelon10@gmail.com";

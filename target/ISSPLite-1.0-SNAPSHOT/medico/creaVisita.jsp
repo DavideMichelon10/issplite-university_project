@@ -61,16 +61,18 @@
             <div class="cerca_esami">
                 <form class="form-signin" action="${pageContext.request.contextPath}/medici/visita.html" method="POST">
                     <input type='text' class="form-control"placeholder='Cerca gli esami da prescrivere'><br>
-
+                    <input type="hidden" name="idPaziente" value="${param.idPaziente}">
                     <ul  style="height: 150px;" class="list-ul">
 
                         <c:forEach var="esame" items="${esami}">
 
                             <span class="checkbox-wrapper" id="${esame.name}">
-                                <input type="checkbox" id="W${esame.idEsame}" value="${esame.name} ${esame.costo}€">${esame.name}
-                            </span><br>
-
+                                <input type="checkbox" name="${esame.idEsame}">  ${esame.name} ${esame.costo}€ 
+                            </span>
+                            <br>
                         </c:forEach> 
+
+
                     </ul>
 
 
