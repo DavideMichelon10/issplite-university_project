@@ -29,13 +29,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Eroga esame</title>
         <style>
+#div_tab{
+                margin-left: 5%;
+                margin-right: 5%;
+            }
 
-           
             #date{
                 align-content: center;
             }
-            
-          
+
+
             body {
                 text-align: center;
             }
@@ -44,22 +47,38 @@
     <body>
         <%@ include file="../common/navbarssp.jsp" %>
 
-        
+
         <form class="form-signin form_search_asd" method="POST" action="${pageContext.request.contextPath}/sspi/erogaesamedettagli.html?idRisultato=${risultato.idRisultato}">
             <div id="title">
                 <h3> Eroga il <b> risultato&nbsp; </b>dell'esame</h3>
                 <p>Inserisci il risultato dell'esame e conferma.</p>
             </div>
             <br>
-            <div id="dati_risultato">
-            <b>idRisultato: </b> <c:out value="${risultato.idRisultato}"/><br>
-            <b>Data erogazione visita:</b> <c:out value="${risultato.erogationDateVisit}"/><br>
-            <b>Esame: </b> <c:out value="${risultato.examName}"/><br>
-            <b>Paziente: </b> <c:out value="${risultato.ssn} - ${risultato.pazienteName} ${risultato.pazienteSurname}"/><br>
-        </div>
-            <br>
+            <div class="tabella" id="div_tab">
+                <table class="table table-striped table-bordered"  id="tabellaEsami">
+                    <thead>
+                        <tr>
+                            <th>idRisultato:</th>
+                            <th>Data erogazione visita:</th>
+                            <th>Esame:</th>
+                            <th>SSN:</th>
+                            <th>Paziente:</th>
 
-            <br>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> <c:out value="${risultato.idRisultato}"/></td>
+                            <td> <c:out value="${risultato.erogationDateVisit}"/></td>
+                            <td><c:out value="${risultato.examName}"/></td>
+                            <td><c:out value="${risultato.ssn}"/><br></td>
+                            <td><c:out value="${risultato.pazienteName} ${risultato.pazienteSurname}"/></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
             <div id="mot_btn">
                 <div class="col-sm-9" style=" width: 90%; margin-left: 5%;" id="sceltaEsame">                                     
                     <div  id="text_mot">
@@ -72,5 +91,6 @@
 
 
         </form>
+
     </body>
 </html>
