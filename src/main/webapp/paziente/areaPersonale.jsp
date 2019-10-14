@@ -10,14 +10,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%
-            response.setHeader("Cache-Control", "no-cache"); //HTTP 1.1 
-            response.setHeader("Pragma", "no-cache"); //HTTP 1.0 
-            response.setDateHeader("Expires", 0); //prevents caching at the proxy server  
-        %>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="../css/commonStyle.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">        
+        <!--JQUERY-->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
         <title>Area Personale</title>
 
         <style>
@@ -35,7 +42,7 @@
             } 
 
             .input-icons { 
-                width: 100%; 
+                width: 93%; 
                 margin-bottom: 10px;
                 text-align: right;
 
@@ -47,6 +54,11 @@
             } 
 
             .input-field { 
+                width: 100%; 
+                padding: 10px; 
+            } 
+
+            .input-field-password { 
                 width: 100%; 
                 padding: 10px; 
             } 
@@ -205,16 +217,17 @@
 
     </head>
     <body>    
+        <header>
+            <%@ include file="../common/navbar.jsp" %>
+        </header>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <center style="margin-top:20px;">
 
-        <br><br>
-        <%@ include file="../common/navbar.jsp" %>
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-                <center>
-                    <div class="card">
-                        <img src="../privateImage/profile_picture_${paziente.idPaziente}.jpg" class="card-img-top imgProfilo">
-                        <br><br>
+                        <img src="../privateImage/${paziente.photoPath}" class="card-img-top imgProfilo">
+
                         <div class="card-body">
                             <form action="aggiornaFoto.html" method="post" enctype="multipart/form-data" class="center">                                                                                 
                                 <label class="custom-file-upload">
@@ -223,98 +236,98 @@
                                 </label>        
                             </form>                                    
                         </div>
+                    </center>          
+
+
+                    <!--COMANDI FORM-->
+                    <div id="comandiBefore">
+                        <button role="button" id="btnEdit" class="btnStandard btnModifica" onclick="editFunction()">Modifica</button>    
                     </div>
-                </center>          
+                    <div id="comandiAfter" style="display:none">
+                        <button role="button" id="btnBack" class="btnStandard btnModifica" onclick="backFunction()">Annulla</button>
+                    </div>
+                    <button role="button" id="btnCambiaPsw" onclick="changePassword()" class="btnStandard btnChange">Cambia Password</button>
 
 
-                <!--COMANDI FORM-->
-                <div id="comandiBefore">
-                    <button role="button" id="btnEdit" class="btnStandard btnModifica" onclick="editFunction()">Modifica</button>    
-                </div>
-                <div id="comandiAfter" style="display:none">
-                    <button role="button" id="btnBack" class="btnStandard btnModifica" onclick="backFunction()">Annulla</button>
-                </div>
-                <button role="button" id="btnCambiaPsw" onclick="changePassword()" class="btnStandard btnChange">Cambia Password</button>
+                    <br><br><br>
 
 
-                <br><br><br>
-
-
-                <!--FORM DATI-->
-                <div id="form">
-                    <form class="form-horizontal" role="form"  onsubmit="return checkField()" action="areaPersonale.html" method="POST">
-                        <div id="modifica" style="display: block;">
-                            <div class="form-group">
-                                <label for="nome" class="col-sm-3 control-label">Nome e Cognome:</label>
-                                <div class="col-sm-9">
-                                    <input type="text" name="nome" id="nome" value="${paziente.name} ${paziente.surname}" class="form-control" readonly>
-                                </div>
-                            </div>                        
-                            <div class="form-group">
-                                <label for="email" class="col-sm-3 control-label">Email:</label>
-                                <div class="col-sm-9">
-                                    <input type="email" name="email" id="email" value="${paziente.email}" class="form-control" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="provincia" class="col-sm-3 control-label">Provincia:</label>
-                                <div class="col-sm-9">
-                                    <input type="text" name="provincia" id="provincia" value="${paziente.provincia}" class="form-control" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="medico" class="col-sm-3 control-label">Medico:</label>
-                                <div class="col-sm-9" id="visualizzazioneMedico" style="display:block">
-                                    <input type="text" id="medico" value="${paziente.medico}" class="form-control" readonly>
-                                </div>
-                                <div class="col-sm-9" id="sceltaMedico" style="display:none">                                    
-                                    <input id="mediciSuggestionBox" list="medici" name="newMedico" class="form-control" value="${paziente.medico}">
-                                    <datalist id="medici">
-                                        <c:forEach var="mediciDisponibili" items="${mediciDisponibili}">
-                                            <option value="${mediciDisponibili.idMedico}">                                                
-                                            </c:forEach>                                                
-                                    </datalist>                                   
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="psw" style="display: none;">
-                            <div class="form-group" id="divPswOld">
-                                <label for="currentPassword" class="col-sm-3 control-label">Password Corrente:</label>
-                                <div class="col-sm-9">
-                                    <div class="input-icons">
-                                        <div onclick="showPassword('currentPassword')"><i class="fa fa-eye-slash icon"></i></div>
-                                        <input type="password" id="currentPassword" name="oldPassword" class="form-control input-field" readonly>
-                                        <p style="color: red; display: none;" id="msgCurrentPsw">Password errata</p>
-                                    </div>                                
-                                </div>
-                            </div>   
-                            <div class="form-group" id="divPswNew">
-                                <label for="newPassword" class="col-sm-3 control-label">Nuova Password</label>
-                                <div class="col-sm-9">
-                                    <div class="input-icons">
-                                        <div onclick="showPassword('newPassword')"><i class="fa fa-eye-slash icon"></i></div>
-                                        <input type="password" id="newPassword" name="newPassword" class="form-control input-field" readonly>
+                    <!--FORM DATI-->
+                    <div id="form">
+                        <form class="form-horizontal" role="form"  onsubmit="return checkField()" action="areaPersonale.html" method="POST">
+                            <div id="modifica" style="display: block;">
+                                <div class="form-group row">
+                                    <label for="nome" class="col-sm-3 control-label">Nome e Cognome:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="nome" id="nome" value="${paziente.name} ${paziente.surname}" class="form-control" readonly>
+                                    </div>
+                                </div>                        
+                                <div class="form-group row">
+                                    <label for="email" class="col-sm-3 control-label">Email:</label>
+                                    <div class="col-sm-9">
+                                        <input type="email" name="email" id="email" value="${paziente.email}" class="form-control" readonly>
                                     </div>
                                 </div>
-                            </div>   
-                            <div class="form-group" id="divPswCheck">
-                                <label for="checkPassword" class="col-sm-3 control-label">Conferma Password:</label>
-                                <div class="col-sm-9">
-                                    <div class="input-icons">
-                                        <div onclick="showPassword('checkPassword')"><i class="fa fa-eye-slash icon"></i></div>
-                                        <input type="password" id="checkPassword" class="form-control input-field" readonly>
-                                        <p style="color: red; display: none;" id="msgCheckPsw">Le due password non corrispondono</p>
+                                <div class="form-group row">
+                                    <label for="provincia" class="col-sm-3 control-label">Provincia:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="provincia" id="provincia" value="${paziente.provincia}" class="form-control" readonly>
                                     </div>
                                 </div>
-                            </div>  
-                        </div>
+                                <div class="form-group row">
+                                    <label for="medico" class="col-sm-3 control-label">Medico:</label>
+                                    <div class="col-sm-9" id="visualizzazioneMedico" style="display:block">
+                                        <input type="text" id="medico" value="${paziente.medico}" class="form-control" readonly>
+                                    </div>
+                                    <div class="col-sm-9" id="sceltaMedico" style="display:none">                                    
+                                        <input id="mediciSuggestionBox" list="medici" name="newMedico" class="form-control" value="${paziente.medico}">
+                                        <datalist id="medici">
+                                            <c:forEach var="mediciDisponibili" items="${mediciDisponibili}">
+                                                <option value="${mediciDisponibili.idMedico}">                                                
+                                                </c:forEach>                                                
+                                        </datalist>                                   
+                                    </div>
+                                </div>
+                            </div>
 
-                        <button action="submit" style="display: none" id="btnSubmit" class="btnStandard btnConferma">Conferma</button>
-                    </form>                       
+                            <div id="psw" style="display: none;">
+                                <div class="form-group row"id="divPswOld">
+                                    <label for="currentPassword" class="col-sm-3 control-label">Password Corrente:</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-icons">
+                                            <div onclick="showPassword('currentPassword')"><i class="fa fa-eye-slash icon"></i></div>
+                                            <input type="password" id="currentPassword" name="oldPassword" class="form-control input-field-password" readonly>
+                                            <p style="color: red; display: none;" id="msgCurrentPsw">Password errata</p>
+                                        </div>                                
+                                    </div>
+                                </div>   
+                                <div class="form-group row" id="divPswNew">
+                                    <label for="newPassword" class="col-sm-3 control-label">Nuova Password</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-icons">
+                                            <div onclick="showPassword('newPassword')"><i class="fa fa-eye-slash icon"></i></div>
+                                            <input type="password" id="newPassword" name="newPassword" class="form-control input-field-password" readonly>
+                                        </div>
+                                    </div>
+                                </div>   
+                                <div class="form-group row" id="divPswCheck">
+                                    <label for="checkPassword" class="col-sm-3 control-label">Conferma Password:</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-icons">
+                                            <div onclick="showPassword('checkPassword')"><i class="fa fa-eye-slash icon"></i></div>
+                                            <input type="password" id="checkPassword" class="form-control input-field-password" readonly>
+                                            <p style="color: red; display: none;" id="msgCheckPsw">Le due password non corrispondono</p>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>
+
+                            <button action="submit" style="display: none" id="btnSubmit" class="btnStandard btnConferma">Conferma</button>
+                        </form>                       
+                    </div>
                 </div>
+                <div class="col-md-3"></div>
             </div>
-            <div class="col-md-3"></div>
         </div>
         <footer>
             <script>
