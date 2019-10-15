@@ -41,6 +41,10 @@
                 max-height: 20px;
                 max-width: 20px;
             }
+            
+            table {
+                border: 1px solid #ddd;
+            }
 
             a.active{
                 background-color: #087a9c !important;
@@ -228,7 +232,7 @@
                                         <c:forEach var="ticket" items="${ticketPagati}">
                                             <tr>
                                                 <td>${ticket.motivazione}</td>
-                                                <td>${ticket.costo}</td>
+                                                <td>${ticket.costo} €</td>
                                                 <td>${ticket.dataPagamento}</td>
                                                 <td>
                                                     <a href="downloadTicket.html?motivazione=${ticket.motivazione}&costo=${ticket.costo}&dataPagamento=${ticket.dataPagamento}"><i class="fa fa-download"></i> Scarica</a>
