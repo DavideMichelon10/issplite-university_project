@@ -6,11 +6,13 @@
 package com.mycompany.issplite.servlets;
 
 import com.mycompany.issplite.persistence.dao.MedicoDAO;
+import com.mycompany.issplite.persistence.dao.PazienteDAO;
 import com.mycompany.issplite.persistence.dao.factories.DAOException;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactory;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactoryException;
 import com.mycompany.issplite.persistence.entities.EsamePrescritto;
 import com.mycompany.issplite.persistence.entities.FarmacoPrescritto;
+import com.mycompany.issplite.persistence.entities.Paziente;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 public class MediciPrescrizioniServlet extends HttpServlet {
 
     private MedicoDAO medicoDao;
+    private PazienteDAO pazienteDao;
 
     @Override
     public void init() throws ServletException {
@@ -36,6 +39,7 @@ public class MediciPrescrizioniServlet extends HttpServlet {
         }
         try {
             medicoDao = daoFactory.getDAO(MedicoDAO.class);
+            pazienteDao = daoFactory.getDAO(PazienteDAO.class);
         } catch (DAOFactoryException ex) {
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
@@ -49,7 +53,7 @@ public class MediciPrescrizioniServlet extends HttpServlet {
         if (!cp.endsWith("/")) {
             cp += "/";
         }
-
+        Paziente paziente = new Paziente();
         List<EsamePrescritto> esamiPrescritti = new ArrayList<>();
         List<FarmacoPrescritto> farmaciPrescritti = new ArrayList<>();
         
@@ -61,7 +65,7 @@ public class MediciPrescrizioniServlet extends HttpServlet {
             return;
         }
         try {
-            
+            paziente = pazienteDao.getById(idPaziente);
             farmaciPrescritti = medicoDao.getFarmaciPrescritti(idPaziente);
             esamiPrescritti = medicoDao.getEsamiPrescritti(idPaziente);
             
@@ -69,7 +73,7 @@ public class MediciPrescrizioniServlet extends HttpServlet {
             response.sendError(500, ex.getMessage());
             return;
         }
-        
+        request.setAttribute("paziente", paziente);
         request.setAttribute("farmaciPrescritti", farmaciPrescritti);
         request.setAttribute("esamiPrescritti", esamiPrescritti);
         
