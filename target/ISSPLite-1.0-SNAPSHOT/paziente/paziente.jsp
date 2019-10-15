@@ -41,7 +41,7 @@
                 max-height: 20px;
                 max-width: 20px;
             }
-            
+
             table {
                 border: 1px solid #ddd;
             }
@@ -108,7 +108,14 @@
                                             <tr>
                                                 <td>${esame.nomeEsame}</td>
                                                 <td>${esame.dataVisita}</td>
-                                                <td><a href="downloadRisultato.html?idRisultato=${esame.idRisultato}&esame=${esame.nomeEsame}&dataVisita=${esame.dataVisita}"><i class="fa fa-download"></i> ${esame.dataRisultato}</a></td>
+                                                <td>
+                                                    <c:if test="${empty esame.dataRisultato}">
+                                                        <p>Risultato non disponibile</p>
+                                                    </c:if>
+                                                    <c:if test="${not empty esame.dataRisultato}">
+                                                        <a href="downloadRisultato.html?idRisultato=${esame.idRisultato}&esame=${esame.nomeEsame}&dataVisita=${esame.dataVisita}"><i class="fa fa-download"></i> ${esame.dataRisultato}</a>
+                                                    </c:if>
+                                                </td>
                                                 <td>
                                                     <c:choose>
                                                         <c:when test="${esame.pagato}">
