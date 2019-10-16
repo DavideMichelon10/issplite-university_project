@@ -206,7 +206,7 @@
                                         <c:forEach var="visita" items="${visitePrescritte}">
                                             <tr>
                                                 <td>${visita.dataVisita}</td>
-                                                <td>${visita.costoVisita}</td>
+                                                <td>${visita.costoVisita} €</td>
                                                 <td>
                                                     <c:choose>
                                                         <c:when test="${visita.ticketPagato}">

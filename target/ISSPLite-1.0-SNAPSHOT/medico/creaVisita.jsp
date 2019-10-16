@@ -48,6 +48,11 @@
                 margin-top: 20px;
                 margin-bottom: 10px; /* Added */
             }
+
+            .btn{
+                background-color: #087a9c !important;
+                color: whitesmoke !important;
+            }
             .dati_utente{
                 margin-top: 2%;
                 margin-bottom: 2%;

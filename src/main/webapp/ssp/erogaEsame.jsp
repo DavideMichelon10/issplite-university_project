@@ -8,9 +8,21 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">        
+        <!--JQUERY-->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 
         <link rel="stylesheet" type="text/css" href="../css/commonStyle.css">
-        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
         <script src="https://cdn.datatables.net/buttons/1.6.0/js/dataTables.buttons.min.js"></script>
@@ -24,9 +36,7 @@
 
         <!-- DATATABLE-->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
++
         <title>Eroga esame</title><style>
             #div_tab{
                 margin-left: 5%;
@@ -51,7 +61,7 @@
                 margin-bottom: 50px;
             }
 
-           
+
 
         </style>
     </head>
@@ -76,16 +86,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="r" items="${esami}">
-                        <tr>
-                            <td>${r.idRisultato}</td>
-                            <td>${r.erogationDateVisit}</td>
-                            <td>${r.examName}</td>
-                            <td>${r.pazienteName} ${r.pazienteSurname}</td>
-                            <td><a href="<c:url value="/sspi/erogaesamedettagli.html?idRisultato=${r.idRisultato}"/>">eroga</a></td>
+                <c:forEach var="r" items="${esami}">
+                    <tr>
+                        <td>${r.idRisultato}</td>
+                        <td>${r.erogationDateVisit}</td>
+                        <td>${r.examName}</td>
+                        <td>${r.pazienteName} ${r.pazienteSurname}</td>
+                        <td><a href="<c:url value="/sspi/erogaesamedettagli.html?idRisultato=${r.idRisultato}"/>">eroga</a></td>
 
-                        </tr>
-                    </c:forEach>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
