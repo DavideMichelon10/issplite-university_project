@@ -32,7 +32,6 @@ public class JDBCMedicoDAO extends JDBCDAO<Medico, String> implements MedicoDAO 
 
     private static final String GETMEDICO = "SELECT * FROM medico M WHERE idmedico = ? AND password = ? ORDER BY M.name";
     private static final String GETMEDICOBYID = "SELECT * FROM medico M WHERE idmedico = ? ORDER BY M.name"; 
-    private static final String GETLASTESAMEFARMACODATE = "select FA.idpaziente, FA.ssn, FA.name AS farmaconame, FA.erogationdate AS erogationdatefarmaco, ES.name AS esamename, ES.erogationdate AS erogationdateesame from (select idPaziente, ssn, PR.erogationDate, F.name, E.medico_idmedico as medico from paziente P, eroga E, visita V, prescrizione PR, farmaco F where P.idpaziente = E.paziente_idpaziente  AND E.visita_idVisita = V.idVisita AND PR.Visita_idVisita = V.idVisita AND F.idFarmaco = PR.Farmaco_idFarmaco order by erogationdate DESC limit 1) AS FA, (select  P.idPaziente, PR.erogationDate, ES.name, E.medico_idmedico as medico_ from paziente P, eroga E, visita V, prescrizione PR, Risultato R, Esame ES where P.idpaziente = E.paziente_idpaziente  AND E.visita_idVisita = V.idVisita AND PR.Visita_idVisita = V.idVisita AND PR.risultato_idRisultato = R.idRisultato AND R.esame_idEsame = ES.idEsame order by erogationdate DESC limit 1) AS ES where FA.idPaziente = ES.idPaziente AND FA.medico = ES.medico_ AND FA.medico = ? ORDER BY FA.name;";
     private static final String GETESAMIPRESCRITTI = "select ES.idEsame, ES.name, R.description, PR.erogationdate, R.ResultDate, V.ticketPagato from paziente P, Eroga E, Visita V, Prescrizione PR, Risultato R, Esame ES where P.idPaziente = ? AND E.Paziente_IdPaziente = P.IdPaziente AND V.idVisita = E.Visita_idVisita AND PR.Visita_idVisita = V.idVisita AND R.idRisultato = PR.Risultato_idRisultato AND R.esame_idEsame = ES.idEsame ORDER BY ES.name;";
     private static final String GETFARMACIPRESCRITTI = "select  F.idFarmaco, F.name, F.description, PR.erogationdate, V.ticketPagato from paziente P, Eroga E, Visita V, Prescrizione PR, Farmaco F where P.idPaziente = ? AND E.Paziente_IdPaziente = P.IdPaziente AND V.idVisita = E.Visita_idVisita AND PR.Visita_idVisita = V.idVisita AND F.idFarmaco = PR.Farmaco_idFarmaco ORDER BY F.name;";
     private static final String INSERTVISITA = "INSERT INTO visita(visitdate, ticket, ticketpagato) VALUES(?,11, ?);";
@@ -41,6 +40,28 @@ public class JDBCMedicoDAO extends JDBCDAO<Medico, String> implements MedicoDAO 
     private static final String INSERTPRESCRIZIONE = "insert into Prescrizione(erogationdate, ticketpagato, visita_idvisita, risultato_idrisultato) values (?, 0, ?, ?);";
     private static final String GETMEDICIBYPROVINCIA = "SELECT * FROM MEDICO WHERE provincia = ?";
     private static final String GETBYIDANDPROVINCIA = "SELECT * FROM medico WHERE idmedico = ? AND provincia = ?"; 
+    private static final String GETLASTESAMEFARMACODATE = "WITH LastEsame AS(SELECT DISTINCT ON (P.idPaziente) P.idPaziente, P.ssn, Pr.erogationDate, Es.name\n" +
+                                            "FROM MEDICO M\n" +
+                                            "INNER JOIN EROGA E ON (M.idMedico = E.Medico_idMedico)\n" +
+                                            "INNER JOIN PAZIENTE P ON(E.Paziente_idPaziente = P.idPaziente)\n" +
+                                            "INNER JOIN VISITA V ON (V.idVisita = E.visita_idVisita)\n" +
+                                            "INNER JOIN PRESCRIZIONE Pr ON(Pr.visita_idVisita = V.idVisita)\n" +
+                                            "INNER JOIN RISULTATO R ON(R.idRisultato = Pr.Risultato_idRisultato)\n" +
+                                            "INNER JOIN ESAME Es ON (R.Esame_idEsame = Es.idEsame)\n" +
+                                            "WHERE M.idMedico = ?\n" +
+                                            "ORDER  BY P.idPaziente, Pr.erogationDate DESC),\n" +
+                                            "LastFarmaco AS(SELECT DISTINCT ON (P.idPaziente) P.idPaziente, P.ssn, Pr.erogationDate, F.name\n" +
+                                            "FROM MEDICO M\n" +
+                                            "INNER JOIN EROGA E ON (M.idMedico = E.Medico_idMedico)\n" +
+                                            "INNER JOIN PAZIENTE P ON(E.Paziente_idPaziente = P.idPaziente)\n" +
+                                            "INNER JOIN VISITA V ON (V.idVisita = E.visita_idVisita)\n" +
+                                            "INNER JOIN PRESCRIZIONE Pr ON(Pr.visita_idVisita = V.idVisita)\n" +
+                                            "INNER JOIN FARMACO F ON(Pr.Farmaco_idFarmaco = F.idFarmaco)\n" +
+                                            "WHERE M.idMedico = ?\n" +
+                                            "ORDER  BY P.idPaziente, Pr.erogationDate DESC)\n" +
+                                            "SELECT E.idPaziente, E.ssn, E.erogationDate AS esameDate, E.name AS esameName, F.erogationDate AS farmacoDate, F.name farmacoName\n" +
+                                            "FROM LastFarmaco F\n" +
+                                            "INNER JOIN LastEsame E ON (F.idPaziente = E.idPaziente)";
     public JDBCMedicoDAO(Connection con) {
         super(con);
     }
@@ -142,22 +163,25 @@ public class JDBCMedicoDAO extends JDBCDAO<Medico, String> implements MedicoDAO 
         List<PazienteUltimiEsamiFarmaci> lastEsamiFarmaci = new ArrayList<>();
         try (PreparedStatement stm = CON.prepareStatement(GETLASTESAMEFARMACODATE)) {
             stm.setString(1, idMedico);
+            stm.setString(2, idMedico);
             try (ResultSet rs = stm.executeQuery()) {
 
                 while (rs.next()) {
                     PazienteUltimiEsamiFarmaci pazienteUltimiEsamiFarmaci = new PazienteUltimiEsamiFarmaci();
                     pazienteUltimiEsamiFarmaci.setIdpaziente(rs.getString("idpaziente"));
-                    pazienteUltimiEsamiFarmaci.setNameEsame(rs.getString("esamename"));
+                    pazienteUltimiEsamiFarmaci.setNameEsame(rs.getString("esameName"));
                     pazienteUltimiEsamiFarmaci.setSsn(rs.getString("ssn"));
                     pazienteUltimiEsamiFarmaci.setNameFarmaco(rs.getString("farmaconame"));
-                    pazienteUltimiEsamiFarmaci.setErogationDateEsame(rs.getString("erogationdateesame"));
-                    pazienteUltimiEsamiFarmaci.setErogationDateFarmaco(rs.getString("erogationdatefarmaco"));
+                    pazienteUltimiEsamiFarmaci.setErogationDateEsame(rs.getString("esameDate"));
+                    pazienteUltimiEsamiFarmaci.setErogationDateFarmaco(rs.getString("farmacoDate"));
                     lastEsamiFarmaci.add(pazienteUltimiEsamiFarmaci);
                 }
                 return lastEsamiFarmaci;
             }
         } catch (SQLException ex) {
-            throw new DAOException("Impossible to get the list of users", ex);
+            System.out.println(ex.getMessage());
+            throw new DAOException("Error inside getLastEsameFarmacoDate", ex);
+            
         }
     }
 
