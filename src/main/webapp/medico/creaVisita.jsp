@@ -100,6 +100,13 @@
                     </ul>
 
 
+                    <input id="sug" list="farmaco" name="farmaco" placeholder="Seleziona il farmaco da prescrivere" class="form-control">
+                    <datalist id="farmaco">
+                        <c:forEach var="farmaco" items="${farmaci}">
+                            <option value="${farmaco.idFarmaco} - ${farmaco.name}">                                                
+                            </c:forEach>                                                
+                    </datalist> 
+                    
                     <hr>
                     <div class="container-fluid">
 
