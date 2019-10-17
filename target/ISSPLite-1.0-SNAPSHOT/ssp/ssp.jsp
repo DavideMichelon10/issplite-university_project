@@ -132,7 +132,6 @@
                                     <td>${r.pazienteSSN}</td>
                                     <td>${r.ticket}</td>
                                     <td>${r.date}</td>
-
                                 </tr>
                             </c:forEach>
                         </tbody>

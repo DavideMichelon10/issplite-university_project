@@ -4,6 +4,7 @@
     Author     : Davide
 --%>
 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -36,68 +37,57 @@
 
         <!-- DATATABLE-->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-+
-        <title>Eroga esame</title><style>
-            #div_tab{
-                margin-left: 5%;
-                margin-right: 5%;
+
+        <title>Eroga esame</title>
+        <style>
+            @media 
+            only screen and (max-width: 760px),
+            (min-device-width: 768px) and (max-device-width: 1024px) { 
+                main{
+                    overflow: scroll;
+                }
             }
-
-
-            .form_search{
-                text-align: center ;
-
-                margin-left: 5%;
-                margin-right: 5%;
-            }
-            #title { text-align: center; }
-
-
-            #date{
-                align-content: center;
-            }
-
-            #mot_btn{
-                margin-bottom: 50px;
-            }
-
-
-
         </style>
     </head>
     <body>
-        <%@ include file="../common/navbarssp.jsp" %>
-        <div id="title">
-            <h3> Seleziona su quale esame vuoi inserire <b>l'esito </b></h3>
-            <p>Seleziona la visita per poter inserire l'esito dell'esame effettuato in passato.</p>
-        </div>
-        <br>
+        <header>
+            <%@ include file="../common/navbarssp.jsp" %>
+        </header>
+        <div class="container-fluid">
+            <center>
+                <br>
+                <h3> Seleziona su quale esame vuoi inserire <b>l'esito</b></h3>
+                <p>Seleziona la visita per poter inserire l'esito dell'esame effettuato in passato.</p>
+                <br>
 
-        <div class="tabella" id="div_tab">
-            <table class="table table-striped table-bordered"  id="tabellaEsami">
-                <thead>
-                    <tr>
-                        <th>Identificativo risultato</th>
-                        <th>Data prescrizione esame</th>
-                        <th>Nome esame</th>
-                        <th>Paziente</th>
-                        <th>Eroga visita</th>
+                <div class="tabella" id="div_tab">
+                    <main>
+                        <table class="table table-striped table-bordered"  id="tabellaEsami">
+                            <thead>
+                                <tr>
+                                    <th>Identificativo risultato</th>
+                                    <th>Data prescrizione esame</th>
+                                    <th>Nome esame</th>
+                                    <th>Paziente</th>
+                                    <th>Eroga visita</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="r" items="${esami}">
-                    <tr>
-                        <td>${r.idRisultato}</td>
-                        <td>${r.erogationDateVisit}</td>
-                        <td>${r.examName}</td>
-                        <td>${r.pazienteName} ${r.pazienteSurname}</td>
-                        <td><a href="<c:url value="/sspi/erogaesamedettagli.html?idRisultato=${r.idRisultato}"/>">eroga</a></td>
-
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="r" items="${esami}">
+                                    <tr>
+                                        <td>${r.idRisultato}</td>
+                                        <td>${r.erogationDateVisit}</td>
+                                        <td>${r.examName}</td>
+                                        <td>${r.pazienteName} ${r.pazienteSurname}</td>
+                                        <td><a href="<c:url value="/sspi/erogaesamedettagli.html?idRisultato=${r.idRisultato}"/>">eroga</a></td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </main>
+                </div>
+            </center>
         </div>
 
 

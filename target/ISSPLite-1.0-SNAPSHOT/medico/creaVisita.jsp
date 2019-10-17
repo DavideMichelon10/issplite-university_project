@@ -35,19 +35,6 @@
                 overflow-y:scroll;
             }
 
-            .body_div{
-                margin-left: 5%;
-                margin-right: 5%;
-            }
-            .card {
-                background: rgba(255,255,255,0.5); 
-
-                border: none;
-                margin: 0 auto; /* Added */
-                float: none; /* Added */
-                margin-top: 20px;
-                margin-bottom: 10px; /* Added */
-            }
 
             .btn{
                 background-color: #087a9c !important;
@@ -57,41 +44,59 @@
                 margin-top: 2%;
                 margin-bottom: 2%;
             }
-            body {
 
-                font-family: "Poppins", sans-serif;
-                height: 100vh;
+            .card-horizontal {
+                display: flex;
+                flex: 1 1 auto;
             }
+
+
+            .immagine{
+                margin-left: 5%;
+                max-height: 180px;
+                max-width: 180px;
+            }
+
+            @media 
+            only screen and (max-width: 760px),
+            (min-device-width: 768px) and (max-device-width: 1024px) { 
+                main{
+                    overflow: scroll;
+                }
+            } 
         </style>
         <title>Crea visita</title>
     </head>
     <body>
         <%@ include file="../common/navbar.jsp" %>
-        <div class="body_div">
-            <div class="dati_utente">
-
-                <b>Nome:</b> <c:out value="${paziente.name}"/><br>
-                <b>Cognome:</b> <c:out value="${paziente.surname}"/><br>
-                <b>email:</b> <c:out value="${paziente.email}"/><br>
-                <b>CF:</b> <c:out value="${paziente.ssn}"/><br>
+        <div class ="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-sm-9">
+                    <div class="row justify-content-center">
+                        <img src="../privateImage/${paziente.photoPath}" class="immagine">
+                    </div>
+                    <br>
+                    <div class="row justify-content-center">                            
+                        <p>Nome: ${paziente.name}</p>
+                        <p>Cognome: ${paziente.surname}</p>
+                        <p>Email: ${paziente.email}</p>
+                        <p>CF: ${paziente.ssn}</p>
+                    </div>
+                </div>
             </div>
-
+            <br>
 
             <div class="cerca_esami">
                 <form class="form-signin" action="${pageContext.request.contextPath}/medici/visita.html" method="POST">
                     <input type='text' class="form-control"placeholder='Cerca gli esami da prescrivere'><br>
                     <input type="hidden" name="idPaziente" value="${param.idPaziente}">
-                    <ul  style="height: 150px;" class="list-ul">
-
+                    <ul style="height: 150px;" class="list-ul">
                         <c:forEach var="esame" items="${esami}">
-
                             <span class="checkbox-wrapper" id="${esame.name}">
                                 <input type="checkbox" name="${esame.idEsame}">  ${esame.name} ${esame.costo}€ 
                             </span>
                             <br>
                         </c:forEach> 
-
-
                     </ul>
 
 
@@ -107,6 +112,7 @@
 
                 </form>
             </div>
+
         </div>
 
 
