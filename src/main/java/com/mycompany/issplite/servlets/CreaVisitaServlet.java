@@ -92,8 +92,6 @@ public class CreaVisitaServlet extends HttpServlet {
         String idPaziente = request.getParameter("idPaziente");
 
         String farmaco = request.getParameter("farmaco");
-        
-        
 
         boolean isPagato = false;
 
@@ -107,28 +105,29 @@ public class CreaVisitaServlet extends HttpServlet {
             }
         }
 
-
         try {
             int idVisita = medicoDao.insertVisita(isPagato);
+            Paziente paziente = pazienteDao.getById(idPaziente);
+
             medicoDao.insertEroga(getIdMedico(request), idPaziente, idVisita);
             for (int idEsame : idEsamiPrescritti) {
                 medicoDao.insertPrescrizione(idEsame, idVisita);
                 Esame esame = esameDao.getById(idEsame);
-                Paziente paziente = pazienteDao.getById(idPaziente);
-                //sendEmail(esame, paziente, "Prescrizione esame: ");
+                sendEmail(esame, paziente, "Prescrizione esame: ");
             }
             if (farmaco != null && !farmaco.equals("")) {
-            String[] arrOfStr = farmaco.split(" - ");
-            int idFarmaco = Integer.parseInt(arrOfStr[0]);
-            Farmaco farmacoPrescitto = new Farmaco();
-            try {
-                farmacoPrescitto = farmacoDao.getById(idFarmaco);
-                medicoDao.insertPrescrizioneFarmaco(idFarmaco, idVisita);
-            } catch (DAOException ex) {
-                Logger.getLogger(CreaVisitaServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                String[] arrOfStr = farmaco.split(" - ");
+                int idFarmaco = Integer.parseInt(arrOfStr[0]);
+                Farmaco farmacoPrescitto = new Farmaco();
+                try {
+                    farmacoPrescitto = farmacoDao.getById(idFarmaco);
+                    medicoDao.insertPrescrizioneFarmaco(idFarmaco, idVisita);
+                    sendEmailFarmaco(farmacoPrescitto, paziente, "Prescrizione farmaco: ");
+                } catch (DAOException ex) {
+                    Logger.getLogger(CreaVisitaServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
-        }
+            }
 
         } catch (DAOException ex) {
             Logger.getLogger(CreaVisitaServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -145,11 +144,12 @@ public class CreaVisitaServlet extends HttpServlet {
     }
 
     protected void sendEmail(Esame esame, Paziente paziente, String soggetto) {
-        final String host = "smtp.gmail.com";
-        final String port = "465";
+
         final String username = "davidemichelon10@gmail.com";
         final String password = "xnsgbdlntfywfamw";
 
+        final String host = "smtp.gmail.com";
+        final String port = "465";
         Properties props = System.getProperties();
 
         props.setProperty("mail.smtp.host", host);
@@ -173,6 +173,43 @@ public class CreaVisitaServlet extends HttpServlet {
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(paziente.getEmail(), false));
             msg.setSubject(soggetto + " " + esame.getName());
             msg.setText("Salve " + paziente.getName() + " " + paziente.getSurname() + " la informiamo che le è stato prescritto l' esame: " + esame.getName());
+            msg.setSentDate(new Date());
+            Transport.send(msg);
+        } catch (MessagingException me) {
+            me.printStackTrace(System.err);
+        }
+    }
+
+    protected void sendEmailFarmaco(Farmaco farmaco, Paziente paziente, String soggetto) {
+
+        final String username = "davidemichelon10@gmail.com";
+        final String password = "xnsgbdlntfywfamw";
+
+        final String host = "smtp.gmail.com";
+        final String port = "465";
+        Properties props = System.getProperties();
+
+        props.setProperty("mail.smtp.host", host);
+        props.setProperty("mail.smtp.port", port);
+        props.setProperty("mail.smtp.socketFactory.port", port);
+        props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.setProperty("mail.smtp.auth", "true");
+        props.setProperty("mail.smtp.starttls.enable", "true");
+        props.setProperty("mail.debug", "true");
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+
+        Message msg = new MimeMessage(session);
+        try {
+            msg.setFrom(new InternetAddress(username));
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(paziente.getEmail(), false));
+            msg.setSubject(soggetto + " " + farmaco.getName());
+            msg.setText("Salve " + paziente.getName() + " " + paziente.getSurname() + " la informiamo che le è stato prescritto l' esame: " + farmaco.getName());
             msg.setSentDate(new Date());
             Transport.send(msg);
         } catch (MessagingException me) {
