@@ -51,7 +51,7 @@
     </head>
     <body>
         <header>
-            <%@ include file="../common/navbarssp.jsp" %>
+            <%@ include file="../common/navbarmedico.jsp" %>
         </header>
         <div class="container-fluid">
             <center>
@@ -80,7 +80,7 @@
                                         <td>${r.erogationDateVisit}</td>
                                         <td>${r.examName}</td>
                                         <td>${r.pazienteName} ${r.pazienteSurname}</td>
-                                        <td><a href="<c:url value="/sspi/erogaesamedettagli.html?idRisultato=${r.idRisultato}"/>">eroga</a></td>
+                                        <td><a href="<c:url value="/medici/erogaesamedettagli.html?idRisultato=${r.idRisultato}"/>">eroga</a></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

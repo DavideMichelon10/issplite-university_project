@@ -297,29 +297,29 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ErogaEsameServlet</servlet-name>
-        <url-pattern>/sspi/erogaesami.html</url-pattern>
+        <url-pattern>/medici/erogaesami.html</url-pattern>
     </servlet-mapping>
     <!-- EROGA ESAME -->
     <servlet>
         <servlet-name>ErogaEsamePage</servlet-name>
-        <jsp-file>/ssp/erogaEsame.jsp</jsp-file>
+        <jsp-file>/medico/erogaEsame.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>ErogaEsamePage</servlet-name>
-        <url-pattern>/sspi/erogaesame.html</url-pattern>
+        <url-pattern>/medici/erogaesame.html</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>ErogaEsameSingoloPage</servlet-name>
-        <jsp-file>/ssp/erogaEsameSingolo.jsp</jsp-file>
+        <jsp-file>/medico/erogaEsameSingolo.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>ErogaEsameSingoloPage</servlet-name>
-        <url-pattern>/sspi/erogaesamedettaglio.html</url-pattern>
+        <url-pattern>/medici/erogaesamedettaglio.html</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>
         <servlet-name>ErogaEsameDettaglioServlet</servlet-name>
-        <url-pattern>/sspi/erogaesamedettagli.html</url-pattern>
+        <url-pattern>/medici/erogaesamedettagli.html</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

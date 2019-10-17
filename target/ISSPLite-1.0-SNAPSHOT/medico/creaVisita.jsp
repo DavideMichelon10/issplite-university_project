@@ -68,7 +68,7 @@
         <title>Crea visita</title>
     </head>
     <body>
-        <%@ include file="../common/navbar.jsp" %>
+        <%@ include file="../common/navbarmedico.jsp" %>
         <div class ="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-sm-9">

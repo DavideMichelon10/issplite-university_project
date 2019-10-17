@@ -50,12 +50,12 @@
     </head>
     <body>
         <header>
-            <%@ include file="../common/navbarssp.jsp" %>
+            <%@ include file="../common/navbarmedico.jsp" %>
         </header>
         <div class="container-fluid">
             <center>
                 <div class="container-fluid">
-                    <form class="form-signin form_search_asd" method="POST" action="${pageContext.request.contextPath}/sspi/erogaesamedettagli.html?idRisultato=${risultato.idRisultato}">
+                    <form class="form-signin form_search_asd" method="POST" action="${pageContext.request.contextPath}/medici/erogaesamedettagli.html?idRisultato=${risultato.idRisultato}">
                         <br>   
                         <h3> Eroga il <b> risultato&nbsp; </b>dell'esame</h3>
                         <p>Inserisci il risultato dell'esame e conferma.</p>

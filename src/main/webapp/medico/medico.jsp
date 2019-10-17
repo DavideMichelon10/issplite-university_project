@@ -66,7 +66,7 @@
         <title>Lista pazienti</title>
     </head>
     <body>
-        <%@ include file="../common/navbar.jsp" %>
+        <%@ include file="../common/navbarmedico.jsp" %>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 mt-3">

@@ -58,7 +58,7 @@ public class ErogaEsameDettaglioServlet extends HttpServlet {
             request.setAttribute("risultato", risultato);
 
         }
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/sspi/erogaesamedettaglio.html"));
+        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/medici/erogaesamedettaglio.html"));
         dispatcher.forward(request, response);
 
     }
@@ -67,6 +67,7 @@ public class ErogaEsameDettaglioServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        System.out.println("IN POST");
         String idRisultatoStr = request.getParameter("idRisultato");
         String description = request.getParameter("description");
 
@@ -86,7 +87,7 @@ public class ErogaEsameDettaglioServlet extends HttpServlet {
         }
         request.getSession().setAttribute("status", "400");
 
-        response.sendRedirect("/sspi/sspi.html");
+        response.sendRedirect("/medici/medici.html");
 
     }
 

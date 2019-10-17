@@ -79,7 +79,7 @@
         </style>
     </head>
     <body>
-        <%@ include file="../common/navbar.jsp" %>
+        <%@ include file="../common/navbarmedico.jsp" %>
 
         <div class="container-fluid">
             <center>

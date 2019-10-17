@@ -9,8 +9,8 @@ import com.mycompany.issplite.persistence.dao.SSPDAO;
 import com.mycompany.issplite.persistence.dao.factories.DAOException;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactory;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactoryException;
+import com.mycompany.issplite.persistence.entities.Medico;
 import com.mycompany.issplite.persistence.entities.RisultatoNonEseguito;
-import com.mycompany.issplite.persistence.entities.SSP;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +49,9 @@ public class ErogaEsameServlet extends HttpServlet {
             throws ServletException, IOException {
         
         HttpSession session = ((HttpServletRequest)request).getSession(false);            
-        SSP ssp = (SSP) session.getAttribute("ssp");
+        Medico medico = (Medico) session.getAttribute("medico");
         
-        String provincia = ssp.getProvincia();
+        String provincia = medico.getProvincia();
         
         List<RisultatoNonEseguito> esamiPrescritti = new ArrayList<>();
         
@@ -64,7 +64,7 @@ public class ErogaEsameServlet extends HttpServlet {
         }
         
         request.setAttribute("esami", esamiPrescritti);
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/sspi/erogaesame.html"));
+        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/medici/erogaesame.html"));
         dispatcher.forward(request, response);
     }
 
