@@ -44,7 +44,7 @@ public class JDBCSSPDAO extends JDBCDAO<SSP, String> implements SSPDAO {
             + "            INNER JOIN Prescrizione Pr ON (V.idVisita = PR.visita_idVisita)\n"
             + "            INNER JOIN Risultato R ON (Pr.Risultato_idRisultato = R.idRisultato)\n"
             + "            INNER JOIN Esame Es ON (R.esame_idEsame = Es.idEsame))\n"
-            + "			WHERE P.provincia = ? AND Pr.resuldtDate IS NULL;";
+            + "			WHERE P.provincia = ? AND R.resultDate IS NULL;";
 
     private static final String GETRESULTBYID = "SELECT R.idRisultato, Pr.erogationdate, Es.name,P.ssn, P.name as pazientename, P.surname FROM risultato R\n"
             + "	JOIN esame Es ON Es.idEsame = R.esame_idesame\n"

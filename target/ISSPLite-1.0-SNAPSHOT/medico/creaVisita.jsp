@@ -52,9 +52,16 @@
 
 
             .immagine{
-                margin-left: 5%;
+                margin-top: 1em;
                 max-height: 180px;
                 max-width: 180px;
+            }
+            
+
+            .infoPaziente {
+                display: inline-block;
+                text-align: left;
+                margin-left: 0px !important;
             }
 
             @media 
@@ -70,20 +77,18 @@
     <body>
         <%@ include file="../common/navbarmedico.jsp" %>
         <div class ="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-sm-9">
-                    <div class="row justify-content-center">
-                        <img src="../privateImage/${paziente.photoPath}" class="immagine">
-                    </div>
-                    <br>
-                    <div class="row justify-content-center">                            
-                        <p>Nome: ${paziente.name}</p>
-                        <p>Cognome: ${paziente.surname}</p>
-                        <p>Email: ${paziente.email}</p>
-                        <p>CF: ${paziente.ssn}</p>
-                    </div>
-                </div>
-            </div>
+            <center>
+
+                <img src="../privateImage/${paziente.photoPath}" class="immagine">            
+                <br>
+                <br>
+
+                <ul class="infoPaziente" style="list-style-type: none; margin-left: 2em;">
+                    <li><b>Nome:</b> ${paziente.name} ${paziente.surname}</li>
+                    <li><b>Email:</b> ${paziente.email}</li>
+                    <li><b>CF:</b> ${paziente.ssn}</li>
+                </ul>
+            </center>
             <br>
 
             <div class="cerca_esami">

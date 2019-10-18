@@ -70,7 +70,6 @@
                                             <th>Esame:</th>
                                             <th>SSN:</th>
                                             <th>Paziente:</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>

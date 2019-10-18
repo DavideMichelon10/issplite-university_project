@@ -121,19 +121,24 @@
                                             <tr>
                                                 <td>${esame.name}</td>
                                                 <td>${esame.erogationDate}</td>
-                                                <td>${esame.risultato}</td>
-                                                <td>
-                                                    <c:choose>
-                                                        <c:when test="${esame.isPagato}">
-                                                            <p>Effettuato    <img src='../images/Tick.png' class="imgPagamento"> </p> 
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                            <p>Non pervenuto    <img src='../images/Cross.png' class="imgPagamento"> </p>
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
+                                                <c:if test="${empty esame.risultato}">
+                                                    <td><b>Risultato non disponibile</b></td>
+                                                </c:if>
+                                                <c:if test="${not empty esame.risultato}">
+                                                    <td>${esame.risultato}</td>
+                                                </c:if>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${esame.isPagato}">
+                                                    <p>Effettuato    <img src='../images/Tick.png' class="imgPagamento"> </p> 
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                    <p>Non pervenuto    <img src='../images/Cross.png' class="imgPagamento"> </p>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                        </td>
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </main>
