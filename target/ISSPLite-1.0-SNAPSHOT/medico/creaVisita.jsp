@@ -56,7 +56,7 @@
                 max-height: 180px;
                 max-width: 180px;
             }
-            
+
 
             .infoPaziente {
                 display: inline-block;
@@ -90,46 +90,47 @@
                 </ul>
             </center>
             <br>
+            <div class="container">
+                <div class="cerca_esami">
+                    <form class="form-signin" action="${pageContext.request.contextPath}/medici/visita.html" method="POST">
+                        <input type='text' class="form-control" id="formEsami" placeholder='Cerca gli esami da prescrivere'><br>
+                        <input type="hidden" name="idPaziente" value="${param.idPaziente}">
+                        <ul style="height: 150px;" class="list-ul">
+                            <c:forEach var="esame" items="${esami}">
+                                <span class="checkbox-wrapper" id="${esame.name}">
+                                    <input type="checkbox" name="${esame.idEsame}">  ${esame.name} ${esame.costo}€ 
+                                </span>
+                                <br>
+                            </c:forEach> 
+                        </ul>
 
-            <div class="cerca_esami">
-                <form class="form-signin" action="${pageContext.request.contextPath}/medici/visita.html" method="POST">
-                    <input type='text' class="form-control"placeholder='Cerca gli esami da prescrivere'><br>
-                    <input type="hidden" name="idPaziente" value="${param.idPaziente}">
-                    <ul style="height: 150px;" class="list-ul">
-                        <c:forEach var="esame" items="${esami}">
-                            <span class="checkbox-wrapper" id="${esame.name}">
-                                <input type="checkbox" name="${esame.idEsame}">  ${esame.name} ${esame.costo}€ 
-                            </span>
-                            <br>
-                        </c:forEach> 
-                    </ul>
+
+                        <input id="sug" list="farmaco" name="farmaco" placeholder="Seleziona il farmaco da prescrivere" class="form-control">
+                        <datalist id="farmaco">
+                            <c:forEach var="farmaco" items="${farmaci}">
+                                <option value="${farmaco.idFarmaco} - ${farmaco.name}">                                                
+                                </c:forEach>                                                
+                        </datalist> 
 
 
-                    <input id="sug" list="farmaco" name="farmaco" placeholder="Seleziona il farmaco da prescrivere" class="form-control">
-                    <datalist id="farmaco">
-                        <c:forEach var="farmaco" items="${farmaci}">
-                            <option value="${farmaco.idFarmaco} - ${farmaco.name}">                                                
-                            </c:forEach>                                                
-                    </datalist> 
-                    
-                    <hr>
-                    <div class="container-fluid">
+                        <div class="container-fluid">
 
-                        <label>
-                            <input type="checkbox" name="pagato" value="true">Pagato
-                        </label>
-                    </div>
+                            <label>
+                                <input type="checkbox" name="pagato" value="true">Pagato
+                            </label>
+                        </div>
 
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Crea visita</button>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Crea visita</button>
 
-                </form>
+                    </form>
+                </div>
             </div>
 
         </div>
 
 
         <script>
-            $('.form-control').keyup(function submitClosure(ev) {
+            $('#formEsami').keyup(function submitClosure(ev) {
                 $('.checkbox-wrapper').each(function inputElementClosure(index, element) {
                     element = $(element);
                     if (element.attr('id').indexOf(ev.target.value) > -1) {

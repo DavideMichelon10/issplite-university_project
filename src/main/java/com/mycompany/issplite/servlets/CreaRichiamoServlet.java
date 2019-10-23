@@ -126,20 +126,25 @@ public class CreaRichiamoServlet extends CreaVisitaServlet {
                 try {
                     pazientiMaschi.addAll(pazienteDao.getPazientiIdSelected(1, dateStart, dateEnd));
                     for (Paziente s : pazientiMaschi) {
-                        pazienteDao.insertInPrescrizioneRichiamo(s.getIdPaziente(), idMaschioRichiamo, idEsame);
-                        sendEmail(esamePrescrivibile, s, "Prescrizione esame da richiamo: ");
+                        if (idMaschioRichiamo != -1) {
+                            pazienteDao.insertInPrescrizioneRichiamo(s.getIdPaziente(), idMaschioRichiamo, idEsame);
+                            sendEmail(esamePrescrivibile, s, "Prescrizione esame da richiamo: ");
+                        }
+
                     }
                 } catch (DAOException ex) {
                     Logger.getLogger(CreaRichiamoServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
+
             if (femmina) {
                 try {
                     pazientiFemmine.addAll(pazienteDao.getPazientiIdSelected(0, dateStart, dateEnd));
                     for (Paziente s : pazientiFemmine) {
-                        pazienteDao.insertInPrescrizioneRichiamo(s.getIdPaziente(), idFemminaRichiamo, idEsame);
-                        sendEmail(esamePrescrivibile, s, "Prescrizione esame da richiamo: ");
+                        if (idFemminaRichiamo != -1) {
+                            pazienteDao.insertInPrescrizioneRichiamo(s.getIdPaziente(), idFemminaRichiamo, idEsame);
+                            sendEmail(esamePrescrivibile, s, "Prescrizione esame da richiamo: ");
+                        }
 
                     }
                 } catch (DAOException ex) {
@@ -147,7 +152,7 @@ public class CreaRichiamoServlet extends CreaVisitaServlet {
                 }
 
             }
-            
+
             success = true;
         }
 

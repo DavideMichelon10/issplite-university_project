@@ -113,6 +113,7 @@ public class CreaVisitaServlet extends HttpServlet {
             for (int idEsame : idEsamiPrescritti) {
                 medicoDao.insertPrescrizione(idEsame, idVisita);
                 Esame esame = esameDao.getById(idEsame);
+                System.out.println("SEND ESAME");
                 sendEmail(esame, paziente, "Prescrizione esame: ");
             }
             if (farmaco != null && !farmaco.equals("")) {

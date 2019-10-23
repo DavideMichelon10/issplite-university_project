@@ -97,7 +97,11 @@ public class AggiornaFotoServlet extends HttpServlet {
         }
         
         session.setAttribute("paziente", paziente);
-        
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(AggiornaFotoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/pazienti/areaPersonale.html"));
         dispatcher.forward(request, response);
     }

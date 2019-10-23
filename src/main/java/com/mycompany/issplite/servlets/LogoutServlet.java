@@ -71,7 +71,6 @@ public class LogoutServlet extends HttpServlet {
                 SSP ssp = (SSP) session.getAttribute("ssp");
                 if (medico != null) {
                     removeSessionForParticularUser(session, medico, "medico");
-
                 }
                 if (paziente != null) {
                     removeSessionForParticularUser(session, paziente, "paziente");
@@ -82,9 +81,6 @@ public class LogoutServlet extends HttpServlet {
 
                 }
                 System.out.println("IN TRY");
-
-            
-
         }
     }
 
