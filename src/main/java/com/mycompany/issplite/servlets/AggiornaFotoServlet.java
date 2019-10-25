@@ -51,8 +51,7 @@ public class AggiornaFotoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         allOkay(request, response);
         
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/pazienti/areaPersonale.html"));
-        dispatcher.forward(request, response);
+        response.sendRedirect("/pazienti/areaPersonale.html");
     }
 
     @Override
@@ -76,20 +75,17 @@ public class AggiornaFotoServlet extends HttpServlet {
                             item.write(new File(UPLOAD_DIRECTORY + File.separator + name));
                         }
                     }
-                }
-                
+                }                
                 //File uploaded successfully
                 request.setAttribute("message", "File Uploaded Successfully");
             } catch (Exception ex) {
                 request.setAttribute("message", "File Upload Failed due to " + ex);
             }
-
         } else {
             request.setAttribute("message",
                     "Sorry this Servlet only handles file upload request");
         }
-        
-        
+ 
         try {
             paziente = pazienteDao.getById(paziente.getIdPaziente());
         } catch (DAOException ex) {
@@ -102,8 +98,8 @@ public class AggiornaFotoServlet extends HttpServlet {
         } catch (InterruptedException ex) {
             Logger.getLogger(AggiornaFotoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/pazienti/areaPersonale.html"));
-        dispatcher.forward(request, response);
+        
+        response.sendRedirect("/pazienti/areaPersonale.html");
     }
 
     @Override

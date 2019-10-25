@@ -198,13 +198,14 @@
         <jsp-file>/paziente/paziente.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>PazientiServlet</servlet-name>
-        <url-pattern>/pazienti/pazienti.html</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>PazientiPage</servlet-name>
         <url-pattern>/pazienti/paziente.html</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PazientiServlet</servlet-name>
+        <url-pattern>/pazienti/pazienti.html</url-pattern>
+    </servlet-mapping>
+
     <!--FINE PAZIENTE SERVLET-->
     <!--AREA PERSONALE PAZIENTE-->
     <servlet>
@@ -217,11 +218,11 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>AreaPersonalePazientePage</servlet-name>
-        <url-pattern>/pazienti/areaPersonale.html</url-pattern>
+        <url-pattern>/pazienti/areePersonali.html</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AreaPersonalePazienteServlet</servlet-name>
-        <url-pattern>/paziente/areaPersonale.html</url-pattern>
+        <url-pattern>/pazienti/areaPersonale.html</url-pattern>
     </servlet-mapping>
     <!--FINE AREA PERSONALE PAZIENTE SERVLET-->
     <!--AGGIORNA FOTO SERVLET-->
@@ -229,17 +230,10 @@
         <servlet-name>AggiornaFotoServlet</servlet-name>
         <servlet-class>com.mycompany.issplite.servlets.AggiornaFotoServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>AggiornaFotoPage</servlet-name>
-        <jsp-file>/paziente/aggiornaFoto.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AggiornaFotoPage</servlet-name>
-        <url-pattern>/pazienti/aggiornaFoto.html</url-pattern>
-    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>AggiornaFotoServlet</servlet-name>
-        <url-pattern>/paziente/aggiornaFoto.html</url-pattern>
+        <url-pattern>/pazienti/aggiornaFoto.html</url-pattern>
     </servlet-mapping>
     <!--FINE AGGIORNA FOTO SERVLET-->
     <!--DOWNLOAD RICETTA SERVLET-->

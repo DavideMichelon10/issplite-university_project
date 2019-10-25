@@ -122,7 +122,6 @@
                 padding: 6px 12px;
                 cursor: pointer;
             }
-
         </style>
 
         <script>
@@ -229,7 +228,7 @@
                         <img src="../privateImage/${paziente.photoPath}" class="card-img-top imgProfilo">
 
                         <div class="card-body">
-                            <form action="aggiornaFoto.html" method="post" enctype="multipart/form-data" class="center">                                                                                 
+                            <form action="${pageContext.request.contextPath}/pazienti/aggiornaFoto.html"  method="post" enctype="multipart/form-data" class="center">                                                                                 
                                 <label class="custom-file-upload">
                                     <input type="file" name="file1" style="display: none;" onchange="this.form.submit()"/>
                                     <i class="fa fa-cloud-upload"></i> Scegli file

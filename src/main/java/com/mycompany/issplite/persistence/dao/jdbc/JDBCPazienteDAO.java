@@ -419,10 +419,7 @@ public class JDBCPazienteDAO extends JDBCDAO<Paziente, String> implements Pazien
             stm.setString(2, idPaziente);
             stm.setInt(3, idEsame);
             stm.setTimestamp(4, erogationDate);
-            
-            System.out.println("ID Richiamo" + idRichiamo);
 
-            System.out.println("ID PAZIENTE" + idPaziente);
             stm.executeUpdate();
 
         } catch (SQLException ex) {

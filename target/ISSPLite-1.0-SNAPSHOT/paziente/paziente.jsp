@@ -13,7 +13,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">        
         <!--JQUERY-->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <!-- Optional JavaScript -->
@@ -61,6 +60,7 @@
 
     </head>
     <body>
+
         <header>
             <%@ include file="../common/navbar.jsp" %>
         </header>
@@ -71,7 +71,7 @@
                 <div class="col-sm-9">
                     <div class="row justify-content-center">
                         <img src="../privateImage/${paziente.photoPath}" class="imgProfilo">
-                        <a href="../paziente/areaPersonale.html" class="mt-auto" style="color: black; text-decoration: none;">&nbsp&nbsp<i class="fas fa-cog fa-2x"></i></a>
+                        <a href="../pazienti/areaPersonale.html" class="mt-auto" style="color: black; text-decoration: none;">&nbsp&nbsp<i class="fas fa-cog fa-2x"></i></a>
                     </div>
                     <br>
                     <div class="row justify-content-center">                            

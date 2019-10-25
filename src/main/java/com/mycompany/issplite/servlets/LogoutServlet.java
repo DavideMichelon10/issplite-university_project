@@ -66,29 +66,33 @@ public class LogoutServlet extends HttpServlet {
 
     private void removeSession(HttpSession session) {
         if (session != null) {
-                Medico medico = (Medico) session.getAttribute("medico");
-                Paziente paziente = (Paziente) session.getAttribute("paziente");
-                SSP ssp = (SSP) session.getAttribute("ssp");
-                if (medico != null) {
-                    removeSessionForParticularUser(session, medico, "medico");
-                }
-                if (paziente != null) {
-                    removeSessionForParticularUser(session, paziente, "paziente");
+            Medico medico = (Medico) session.getAttribute("medico");
+            Paziente paziente = (Paziente) session.getAttribute("paziente");
+            SSP ssp = (SSP) session.getAttribute("ssp");
+            if (medico != null) {
+                removeSessionForParticularUser(session, medico, "medico");
+            }
+            if (paziente != null) {
+                removeSessionForParticularUser(session, paziente, "paziente");
 
-                }
-                if (ssp != null) {
-                    removeSessionForParticularUser(session, ssp, "ssp");
+            }
+            if (ssp != null) {
+                removeSessionForParticularUser(session, ssp, "ssp");
 
-                }
-                System.out.println("IN TRY");
+            }
         }
     }
 
     private void removeSessionForParticularUser(HttpSession session, Object user, String name) {
         if (user != null) {
-            session.setAttribute(name, null);
-            session.invalidate();
-            user = null;
+            try {
+                session.setAttribute(name, null);
+                session.invalidate();
+                user = null;
+            } catch (IllegalStateException e) {
+                System.out.println("SESSION ALREADY INVALIDATED");
+            }
+
         }
     }
 

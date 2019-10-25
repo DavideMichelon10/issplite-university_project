@@ -418,7 +418,6 @@ public class JDBCMedicoDAO extends JDBCDAO<Medico, String> implements MedicoDAO 
         try (PreparedStatement stmt = CON.prepareStatement(INSERTPRESCRIZIONEFARMACO)) {
             Date date = new Date();
             Timestamp ts = new Timestamp(date.getTime());
-            System.out.println(idVisita +"  "+idFarmaco + " "+ ts);
             stmt.setTimestamp(1, ts);
             stmt.setInt(2, idVisita);
             stmt.setInt(3, idFarmaco);

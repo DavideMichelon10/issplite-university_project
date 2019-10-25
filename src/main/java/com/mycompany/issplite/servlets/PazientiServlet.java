@@ -94,6 +94,3 @@ public class PazientiServlet extends HttpServlet {
         
     }
 }
-
-
-//‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽‽

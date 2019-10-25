@@ -67,7 +67,6 @@ public class ErogaEsameDettaglioServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        System.out.println("IN POST");
         String idRisultatoStr = request.getParameter("idRisultato");
         String description = request.getParameter("description");
 
