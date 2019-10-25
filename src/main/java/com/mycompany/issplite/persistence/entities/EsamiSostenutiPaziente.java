@@ -23,9 +23,7 @@ public class EsamiSostenutiPaziente {
 
     public void setIdRisultato(String idRisultato) {
         this.idRisultato = idRisultato;
-    }
-    
-    
+    }    
 
     public String getDataVisita() {
         return dataVisita;

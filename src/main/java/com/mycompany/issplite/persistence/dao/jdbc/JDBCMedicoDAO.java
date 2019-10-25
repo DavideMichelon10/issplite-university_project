@@ -348,7 +348,7 @@ public class JDBCMedicoDAO extends JDBCDAO<Medico, String> implements MedicoDAO 
             Date date = new Date();
             Timestamp ts = new Timestamp(date.getTime());
 
-            stm.setTimestamp(1, ts);
+            stm.setTimestamp(1, null);
             stm.setInt(2, idEsame);
 
             stm.executeUpdate();

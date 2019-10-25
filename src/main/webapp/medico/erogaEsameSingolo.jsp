@@ -39,6 +39,12 @@
 
         <title>Eroga esame</title>
         <style>
+            
+            .btn{
+                background-color: #087a9c !important;
+                color: whitesmoke !important;
+            }
+            
             @media 
             only screen and (max-width: 760px),
             (min-device-width: 768px) and (max-device-width: 1024px) { 
@@ -46,6 +52,8 @@
                     overflow: scroll;
                 }
             }
+            
+            
         </style>
     </head>
     <body>
