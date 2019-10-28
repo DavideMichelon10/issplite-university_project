@@ -40,6 +40,8 @@
                 margin-top: 5px;
                 max-height: 200px;
                 max-width: 200px;
+                margin-left: auto;
+                margin-right: auto;
             }
 
 

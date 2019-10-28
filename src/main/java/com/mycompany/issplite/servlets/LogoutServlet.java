@@ -36,7 +36,7 @@ public class LogoutServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         HttpSession session = request.getSession(false);
-        removeSession(session);
+        removeSession(session, request);
 
         Cookie[] cookies = request.getCookies();
         removeCookies(session, response, cookies);
@@ -64,21 +64,32 @@ public class LogoutServlet extends HttpServlet {
         processRequest(request, response);
     }
 
-    private void removeSession(HttpSession session) {
+    private void removeSession(HttpSession session, HttpServletRequest request) {
+        String user = request.getParameter("user");
+        System.out.println("USER: " + user);
         if (session != null) {
-            Medico medico = (Medico) session.getAttribute("medico");
-            Paziente paziente = (Paziente) session.getAttribute("paziente");
-            SSP ssp = (SSP) session.getAttribute("ssp");
-            if (medico != null) {
-                removeSessionForParticularUser(session, medico, "medico");
-            }
-            if (paziente != null) {
-                removeSessionForParticularUser(session, paziente, "paziente");
-
-            }
-            if (ssp != null) {
-                removeSessionForParticularUser(session, ssp, "ssp");
-
+            switch (user.charAt(0)) {
+                case 'P':
+                    Paziente paziente = (Paziente) session.getAttribute("paziente");
+                    if (paziente != null) {
+                        removeSessionForParticularUser(session, paziente, "paziente");
+                    }
+                    break;
+                case 'M':
+                    Medico medico = (Medico) session.getAttribute("medico");
+                    if (medico != null) {
+                        removeSessionForParticularUser(session, medico, "medico");
+                    }
+                    break;
+                case 'S':
+                    SSP ssp = (SSP) session.getAttribute("ssp");
+                    if (ssp != null) {
+                        removeSessionForParticularUser(session, ssp, "ssp");
+                    }
+                    break;
+                default:
+                    System.out.println("ERRORE DURANTE IL LOGOUT");
+                    break;
             }
         }
     }
@@ -87,7 +98,7 @@ public class LogoutServlet extends HttpServlet {
         if (user != null) {
             try {
                 session.setAttribute(name, null);
-                session.invalidate();
+                //session.invalidate();
                 user = null;
             } catch (IllegalStateException e) {
                 System.out.println("SESSION ALREADY INVALIDATED");

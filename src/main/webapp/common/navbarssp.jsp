@@ -31,7 +31,7 @@
         <ul class="navbar-nav ml-auto">  
             <c:set var = "ssp" scope = "session" value = "${ssp}"/>
             <li class="nav-item"><a class="navbar-text testoMenu">Benvenuto <b><c:out value="${ssp.provincia}"/></b></a></li>
-            <li class="nav-item"><a href="${pageContext.request.contextPath}/logout.handler" class="nav-link testoMenu">Log out</a></li>
+            <li class="nav-item"><a href="${pageContext.request.contextPath}/logout.handler?user=${ssp.idSSP}" class="nav-link testoMenu">Log out</a></li>
         </ul>
     </div>
 </nav>

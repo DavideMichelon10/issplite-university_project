@@ -65,14 +65,10 @@ public class AuthenticationFilter implements Filter {
                     session = ((HttpServletRequest) request).getSession(false);
                 } else {
                     ((HttpServletResponse) response).sendRedirect(((HttpServletResponse) response).encodeRedirectURL(contextPath + "login.jsp"));
-
                 }
             }
-
             if (session != null) {
                 chain.doFilter(request, response);
-            } else {
-                ((HttpServletResponse) response).sendRedirect(((HttpServletResponse) response).encodeRedirectURL(contextPath + "login.jsp"));
             }
         }
     }
@@ -100,8 +96,7 @@ public class AuthenticationFilter implements Filter {
             ((HttpServletRequest) request).getSession().setAttribute("paziente", user);
 
         } catch (ClassCastException e) {
-            System.out.println("EXC P");
-
+            System.out.println("EXC P " + e.getMessage());
         }
         try {
             m = (Medico) user;

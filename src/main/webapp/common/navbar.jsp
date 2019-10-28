@@ -34,19 +34,8 @@
                         if (session.getAttribute("paziente") != null) {%>                    
             <c:set var = "paziente" scope = "session" value = "${paziente}"/>
             <li class="nav-item"><a class="nav-link testoMenu">Benvenuto <b><c:out value="${paziente.name}"/> <c:out value="${paziente.surname}"/></b></a></li>
-            <li class="nav-item"><a href="${pageContext.request.contextPath}/logout.handler" class="nav-link testoMenu">Log out</a></li>
-                <%} else if (session.getAttribute("medico") != null) {%>                    
-            <c:set var = "medico" scope = "session" value = "${medico}"/>
-            <li class="nav-item"><a class="navbar-text testoMenu">Benvenuto <b><c:out value="${medico.name}"/> <c:out value="${medico.surname}"/></b></a></li>
-            <li class="nav-item"><a href="${pageContext.request.contextPath}/logout.handler" class="nav-link testoMenu">Log out</a></li>
-                <%} else if (session.getAttribute("ssp") != null) {%>                    
-            <c:set var = "ssp" scope = "session" value = "${ssp}"/>
-            <li class="nav-item"><a class="navbar-text testoMenu">Benvenuto <b><c:out value="${ssp.provincia}"/></b></a></li>
-            <li class="nav-item"><a href="${pageContext.request.contextPath}/logout.handler" class="nav-link testoMenu">Log out</a></li>
-                <%} else {%>                    
-            <li class="nav-item"><a class="navbar-text testoMenu">Benvenuto su <b>iSSPLite</b></a></li>
-                <%}
-                %>
+            <li class="nav-item"><a href="${pageContext.request.contextPath}/logout.handler?user=${paziente.idPaziente}" class="nav-link testoMenu">Log out</a></li>
+                <%} %>
         </ul>
     </div>
 </nav>

@@ -66,6 +66,11 @@
                 max-height: 180px;
                 max-width: 180px;
             }
+            
+            button{
+                background-color: #087a9c !important;
+                color: whitesmoke !important;
+            }
         </style>
     </head>
     <body>
@@ -105,7 +110,7 @@
             <form class="form_search" action="${pageContext.request.contextPath}/sspi/sspi.html">
                 <p>Selezione il <b>giorno</b> di cui si vuole il report:
                     <input type="date" name="date_selected"  pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}" required="true"></p>
-                <br>
+                
                 <button style="width: 8em;" class="btn btn-primary" type="submit">Cerca</button>
             </form>
             <br>
@@ -130,7 +135,7 @@
                                     <td>${r.medicoSurname}</td>
                                     <td>${r.farmacoName}</td>
                                     <td>${r.pazienteSSN}</td>
-                                    <td>${r.ticket}</td>
+                                    <td>${r.ticket} €</td>
                                     <td>${r.date}</td>
                                 </tr>
                             </c:forEach>
