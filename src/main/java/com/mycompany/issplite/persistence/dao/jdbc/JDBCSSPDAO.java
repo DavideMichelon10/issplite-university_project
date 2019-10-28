@@ -55,7 +55,8 @@ public class JDBCSSPDAO extends JDBCDAO<SSP, String> implements SSPDAO {
             + "	WHERE R.idrisultato = ?;\n"
             + "	";
     private static final String UPDATERESULT = "UPDATE Risultato\n"
-            + "	SET description = ?\n"
+            + "	SET description = ?,\n"
+            + "	resultdate = ?\n"
             + "	WHERE idrisultato = ?;";
 
     public JDBCSSPDAO(Connection con) {
@@ -300,10 +301,13 @@ public class JDBCSSPDAO extends JDBCDAO<SSP, String> implements SSPDAO {
         if (description == null) {
             throw new DAOException("Date mandatory fields", new NullPointerException("date is null"));
         }
+        Date date = new Date();
+        Timestamp ts = new Timestamp(date.getTime());
 
         try (PreparedStatement stm = CON.prepareStatement(UPDATERESULT)) {
             stm.setString(1, description);
-            stm.setInt(2, idRisultato);
+            stm.setTimestamp(2,ts);
+            stm.setInt(3, idRisultato);
 
             stm.executeUpdate();
 

@@ -89,7 +89,7 @@
                     <li><b>CF:</b> ${paziente.ssn}</li>
                 </ul>
             </center>
-            <br>
+            
             <div class="container">
                 <div class="cerca_esami">
                     <form class="form-signin" action="${pageContext.request.contextPath}/medici/visita.html" method="POST">
