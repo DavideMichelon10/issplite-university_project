@@ -15,7 +15,7 @@
         <ul class="navbar-nav">
             <li class="nav-item active">
                 <%
-                            if (session.getAttribute("paziente") != null) {%>                    
+                if (session.getAttribute("paziente") != null) {%>                    
             <c:set var = "paziente" scope = "session" value = "${paziente}"/>
             <a class="navbar-brand" href="../pazienti/pazienti.html">iSSPLite</a>
             <%} else if (session.getAttribute("medico") != null) {%>                    
@@ -35,7 +35,10 @@
             <c:set var = "paziente" scope = "session" value = "${paziente}"/>
             <li class="nav-item"><a class="nav-link testoMenu">Benvenuto <b><c:out value="${paziente.name}"/> <c:out value="${paziente.surname}"/></b></a></li>
             <li class="nav-item"><a href="${pageContext.request.contextPath}/logout.handler?user=${paziente.idPaziente}" class="nav-link testoMenu">Log out</a></li>
-                <%} %>
+                <%}else{ %>
+            <li class="nav-item"><a class="nav-link testoMenu">Benvenuto su <b>iSSPLite</b></a></li>
+            <%}%>
+            
         </ul>
     </div>
 </nav>

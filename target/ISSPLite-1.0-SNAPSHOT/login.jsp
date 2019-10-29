@@ -7,10 +7,13 @@
             <title>Login</title>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-             <link rel="stylesheet" type="text/css" href="../css/commonStyle.css">
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+            <link rel="stylesheet" type="text/css" href="../css/commonStyle.css">
 
+            <!-- Bootstrap 4.1.1 -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
+
+            <!-- cookiealert styles -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.css">
             <style>
 
                 /* BASIC */
@@ -297,7 +300,13 @@
                     width:60%;
                 }
 
+                .alertCookieClass{
+                    display: none;
+                }
+
             </style>
+
+
         </head>
         <body>        
             <div class="wrapper fadeInDown">
@@ -333,6 +342,33 @@
                 </div>
             </div>
 
+
+
+            <!-- START Bootstrap-Cookie-Alert -->
+            <div class="alert alert-dismissible text-center cookiealert" role="alert" id="alertCookie">
+                <div class="cookiealert-container">
+                    &#x1F36A Questo sito usa i <b>cookies</b> per garantirti un'esperienza d'uso migliore <a href="informativaPrivacy.jsp" target="_blank">Maggiori informazioni</a>
+
+                    <button type="button" class="btn btn-primary btn-sm" onclick="hideCookieAlert()" aria-label="Close">
+                        Accetto
+                    </button>
+                </div>
+            </div>
+            <!-- END Bootstrap-Cookie-Alert -->
+
+            <!-- JAVASCRIPT -->
+
+            <script>
+                function hideCookieAlert() {
+                    var element = document.getElementById("alertCookie");
+                    element.classList.add("alertCookieClass");
+                }
+            </script>
+
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.0/js.cookie.min.js"></script>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.css">
+            <script src="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.js"></script>
         </body>
-       </html>
+    </html>
 </c:catch>
