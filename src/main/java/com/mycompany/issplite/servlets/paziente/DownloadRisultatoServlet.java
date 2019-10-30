@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.issplite.servlets;
+package com.mycompany.issplite.servlets.paziente;
 
 import com.mycompany.issplite.persistence.dao.RisultatoDAO;
 import com.mycompany.issplite.persistence.dao.factories.DAOException;
@@ -12,10 +12,10 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
-import com.mycompany.issplite.persistence.dao.PazienteDAO;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactory;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactoryException;
 import com.mycompany.issplite.persistence.entities.Paziente;
+import com.mycompany.issplite.servlets.LoginServlet;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;

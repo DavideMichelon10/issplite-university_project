@@ -26,6 +26,13 @@
         <link rel="stylesheet" type="text/css" href="../css/commonStyle.css">
         <title>Crea richiamo</title>
 
+        <style>
+            button{
+                background-color: #087a9c !important;
+                color: whitesmoke !important;
+            }
+        </style>
+
 
     </head>
     <body>
@@ -35,6 +42,18 @@
         <div class="container-fluid">
             <center>
                 <div id="title">
+                    <br>
+                    <c:if test="${not empty sessionScope.status}">
+                    <c:choose>
+                        <c:when test="${sessionScope.status eq 'create'}">
+                            <div class="alert alert-success alert-dismissible " role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                Richiamo eseguito correttamente!
+                            </div>
+                        </c:when>
+                    </c:choose>
+                    <c:remove var="status" scope="session" />
+                </c:if>
                     <br>
                     <h3> Crea un nuovo <b>richiamo</b></h3>
                     <p>Seleziona le persone che vuoi richiamare ad un particolare esame. Ad ogni paziente richiamo verrà inviata una mail.</p>

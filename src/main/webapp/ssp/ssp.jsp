@@ -66,7 +66,7 @@
                 max-height: 180px;
                 max-width: 180px;
             }
-            
+
             button{
                 background-color: #087a9c !important;
                 color: whitesmoke !important;
@@ -104,13 +104,14 @@
             </div>
             <br>
             <div style="text-align: center;">
+                
                 <h3> Stampa il <b>report giornaliero</b></h3>
             </div>
             <br>
             <form class="form_search" action="${pageContext.request.contextPath}/sspi/sspi.html">
                 <p>Selezione il <b>giorno</b> di cui si vuole il report:
                     <input type="date" name="date_selected"  pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}" required="true"></p>
-                
+
                 <button style="width: 8em;" class="btn btn-primary" type="submit">Cerca</button>
             </form>
             <br>
@@ -150,21 +151,8 @@
 
                 $('#tabellaEsami').DataTable({
                     dom: 'Bfrtip',
-                    buttons: [{
-                            extend: 'excel',
-                            text: 'XLS',
-                            exportOptions: {
-                                modifier: {
-                                    page: 'current'
-                                }
-                            }
-                        }, {
-                            extend: 'csv',
-
-                        }, {
-                            extend: 'pdf',
-
-                        }
+                    buttons: [
+                        'csv', 'pdf', 'print'
                     ]
                 });
             });

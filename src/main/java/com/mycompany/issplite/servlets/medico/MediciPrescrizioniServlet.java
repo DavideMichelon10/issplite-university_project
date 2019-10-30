@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.issplite.servlets;
+package com.mycompany.issplite.servlets.medico;
 
 import com.mycompany.issplite.persistence.dao.MedicoDAO;
 import com.mycompany.issplite.persistence.dao.PazienteDAO;

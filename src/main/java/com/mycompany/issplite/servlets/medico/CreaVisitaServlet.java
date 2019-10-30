@@ -1,4 +1,4 @@
-package com.mycompany.issplite.servlets;
+package com.mycompany.issplite.servlets.medico;
 
 import com.mycompany.issplite.persistence.dao.EsameDAO;
 import com.mycompany.issplite.persistence.dao.FarmacoDAO;
@@ -209,7 +209,7 @@ public class CreaVisitaServlet extends HttpServlet {
             msg.setFrom(new InternetAddress(username));
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(paziente.getEmail(), false));
             msg.setSubject(soggetto + " " + farmaco.getName());
-            msg.setText("Salve " + paziente.getName() + " " + paziente.getSurname() + " la informiamo che le è stato prescritto l' esame: " + farmaco.getName());
+            msg.setText("Salve " + paziente.getName() + " " + paziente.getSurname() + " la informiamo che le è stato prescritto il farmaco: " + farmaco.getName());
             msg.setSentDate(new Date());
             Transport.send(msg);
         } catch (MessagingException me) {

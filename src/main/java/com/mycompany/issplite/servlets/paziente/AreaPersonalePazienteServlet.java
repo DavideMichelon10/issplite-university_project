@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.issplite.servlets;
+package com.mycompany.issplite.servlets.paziente;
 
 import com.mycompany.issplite.persistence.dao.MedicoDAO;
 import com.mycompany.issplite.persistence.dao.PazienteDAO;
@@ -12,6 +12,7 @@ import com.mycompany.issplite.persistence.dao.factories.DAOFactory;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactoryException;
 import com.mycompany.issplite.persistence.entities.Medico;
 import com.mycompany.issplite.persistence.entities.Paziente;
+import com.mycompany.issplite.servlets.LoginServlet;
 import com.mycompany.issplite.utilities.HashGenerator;
 import java.io.IOException;
 import java.util.ArrayList;

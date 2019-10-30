@@ -1,5 +1,6 @@
-package com.mycompany.issplite.servlets;
+package com.mycompany.issplite.servlets.ssp;
 
+import com.mycompany.issplite.servlets.medico.CreaVisitaServlet;
 import com.mycompany.issplite.persistence.dao.EsameDAO;
 import com.mycompany.issplite.persistence.dao.PazienteDAO;
 import com.mycompany.issplite.persistence.dao.SSPDAO;
@@ -151,6 +152,10 @@ public class CreaRichiamoServlet extends CreaVisitaServlet {
             success = true;
         }
 
+        if (success) {
+            request.getSession().setAttribute("status", "create");
+
+        }
         request.setAttribute("success", success);
         request.setAttribute("esami", esami);
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/sspi/richiamo.html"));

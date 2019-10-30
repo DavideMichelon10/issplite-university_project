@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.issplite.servlets;
+package com.mycompany.issplite.servlets.paziente;
 
 import com.mycompany.issplite.persistence.dao.HashDAO;
 import com.mycompany.issplite.persistence.dao.MedicoDAO;
@@ -14,6 +14,7 @@ import com.mycompany.issplite.persistence.dao.factories.DAOFactoryException;
 import com.mycompany.issplite.persistence.entities.Hash;
 import com.mycompany.issplite.persistence.entities.Medico;
 import com.mycompany.issplite.persistence.entities.Paziente;
+import com.mycompany.issplite.servlets.LoginServlet;
 import com.mycompany.issplite.utilities.HashGenerator;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,7 +61,6 @@ public class AggiornaPasswordServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Sono nella servlet");
         allOkay(request, response);
         HttpSession session = ((HttpServletRequest) request).getSession(false);
         Paziente paziente = (Paziente) session.getAttribute("paziente");
@@ -73,6 +73,7 @@ public class AggiornaPasswordServlet extends HttpServlet {
             newPassword = getSecurePassword(newPassword, paziente);
             try {
                 pazienteDao.changePassword(newPassword, paziente.getIdPaziente());
+                request.getSession().setAttribute("status", "found");
             } catch (DAOException ex) {
                 Logger.getLogger(AggiornaPasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
             }

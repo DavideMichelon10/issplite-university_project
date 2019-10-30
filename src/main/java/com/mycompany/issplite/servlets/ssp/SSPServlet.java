@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.issplite.servlets;
+package com.mycompany.issplite.servlets.ssp;
 
 import com.mycompany.issplite.persistence.dao.SSPDAO;
 import com.mycompany.issplite.persistence.dao.factories.DAOException;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactory;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactoryException;
-import com.mycompany.issplite.persistence.entities.Medico;
-import com.mycompany.issplite.persistence.entities.RisultatoNonEseguito;
+import com.mycompany.issplite.persistence.entities.RicetteErogatePerGiorno;
+import com.mycompany.issplite.persistence.entities.SSP;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Davide
  */
-public class ErogaEsameServlet extends HttpServlet {
+public class SSPServlet extends HttpServlet {
 
     private SSPDAO sspDao;
 
@@ -43,31 +43,46 @@ public class ErogaEsameServlet extends HttpServlet {
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
     }
-
+   
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        HttpSession session = ((HttpServletRequest)request).getSession(false);            
-        Medico medico = (Medico) session.getAttribute("medico");
+        String cp = getServletContext().getContextPath();
+        if (!cp.endsWith("/")) {
+            cp += "/";
+        }       
         
-        String provincia = medico.getProvincia();
-        
-        List<RisultatoNonEseguito> esamiPrescritti = new ArrayList<>();
-        
-        
-        
-        try {
-            esamiPrescritti = sspDao.getEsamiWithoutResults(provincia);
-        } catch (DAOException ex) {
-            Logger.getLogger(ErogaEsameServlet.class.getName()).log(Level.SEVERE, null, ex);
+        String date = request.getParameter("date_selected");
+        HttpSession session = ((HttpServletRequest) request).getSession(false);
+        SSP ssp = (SSP) session.getAttribute("ssp");
+
+        String provincia = ssp.getProvincia();
+        List<RicetteErogatePerGiorno> ricette = new ArrayList<>();
+        if (date != null) {
+            try {
+               ricette = sspDao.getRicettePerDay(provincia, date);
+            } catch (DAOException ex) {
+                Logger.getLogger(SSPServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }        
+        String idSsp = ssp.getIdSSP();
+
+        if (idSsp == null) {
+            response.sendRedirect(cp + "login.jsp");
+            return;
         }
-        
-        request.setAttribute("esami", esamiPrescritti);
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/medici/erogaesame.html"));
+       
+        request.setAttribute("ricette", ricette);
+
+        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/sspi/ssp.html?idSsp="+idSsp));
         dispatcher.forward(request, response);
     }
 
+
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

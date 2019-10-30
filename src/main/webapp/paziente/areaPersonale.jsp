@@ -220,7 +220,13 @@
                             <c:when test="${sessionScope.status eq 'not_found'}">
                                 <div class="alert alert-danger alert-dismissible" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    Le credenziali <strong>NON </strong> corrispondono! Riprova!
+                                    La password inserita <strong>NON </strong> corrisponde a quella attuale! Riprova!
+                                </div>
+                            </c:when>
+                            <c:when test="${sessionScope.status eq 'found'}">
+                                <div class="alert alert-success alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    Password modificata correttamente!
                                 </div>
                             </c:when>
                         </c:choose>

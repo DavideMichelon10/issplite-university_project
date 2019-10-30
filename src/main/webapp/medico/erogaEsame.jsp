@@ -100,25 +100,7 @@
 
             $(document).ready(function () {
 
-                $('#tabellaEsami').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [{
-                            extend: 'excel',
-                            text: 'XLS',
-                            exportOptions: {
-                                modifier: {
-                                    page: 'current'
-                                }
-                            }
-                        }, {
-                            extend: 'csv',
-
-                        }, {
-                            extend: 'pdf',
-
-                        }
-                    ]
-                });
+                $('#tabellaEsami').DataTable();
             });
 
         </script>
