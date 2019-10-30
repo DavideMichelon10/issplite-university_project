@@ -9,6 +9,7 @@ C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\my
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAO.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\entities\Paziente.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\dao\jdbc\JDBCEsameDAO.java
+C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\entities\Hash.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\servlets\DownloadRicettaServlet.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\servlets\Farmaci.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\listeners\WebContextListener.java
@@ -28,8 +29,10 @@ C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\my
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\dao\factories\DAOException.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\servlets\PazientiServlet.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\dao\RisultatoDAO.java
+C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\dao\jdbc\JDBCHashDAO.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\entities\PazienteUltimiEsamiFarmaci.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\dao\SSPDAO.java
+C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\utilities\HashGenerator.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\entities\RichiamiPrescrittiPaziente.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\servlets\PazientiprescrizioniServlet.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\entities\Visita.java
@@ -49,6 +52,7 @@ C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\my
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAOFactory.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\filters\AuthenticationFilter.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\entities\EsamiSostenutiPaziente.java
+C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\dao\HashDAO.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\entities\TicketPagati.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\entities\Risultato.java
 C:\Users\lollo\OneDrive\Documents\NetBeansProjects\issplite\src\main\java\com\mycompany\issplite\persistence\entities\FarmacoPrescritto.java

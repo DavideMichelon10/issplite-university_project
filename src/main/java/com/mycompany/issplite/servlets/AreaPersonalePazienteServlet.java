@@ -12,6 +12,7 @@ import com.mycompany.issplite.persistence.dao.factories.DAOFactory;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactoryException;
 import com.mycompany.issplite.persistence.entities.Medico;
 import com.mycompany.issplite.persistence.entities.Paziente;
+import com.mycompany.issplite.utilities.HashGenerator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -55,8 +56,7 @@ public class AreaPersonalePazienteServlet extends HttpServlet {
         Paziente paziente = (Paziente) session.getAttribute("paziente");
         Medico medico = new Medico();
         ArrayList<Medico> mediciDisponibili = new ArrayList();
-        try {
-            System.out.println("PAZIENTE: " + paziente);
+        try {            
             medico = medicoDao.getById(paziente.getMedico());           
             mediciDisponibili = (ArrayList<Medico>) medicoDao.getByProvincia(paziente.getProvincia());
         } catch (DAOException ex) {
@@ -77,23 +77,9 @@ public class AreaPersonalePazienteServlet extends HttpServlet {
         Medico medico = new Medico();
         String newMedico = "";
         String email = "";
-        String oldPassword = "";
-        String newPassword = "";
-
         newMedico = request.getParameterValues("newMedico")[0];
         email = request.getParameterValues("email")[0];
-        oldPassword = request.getParameterValues("oldPassword")[0];
-        newPassword = request.getParameterValues("newPassword")[0];
-
-        if (checkPassword(oldPassword, newPassword, paziente.getIdPaziente())) {
-            try {
-                pazienteDao.changePassword(newPassword, paziente.getIdPaziente());
-                paziente = pazienteDao.getById(paziente.getIdPaziente());
-            } catch (DAOException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
-
+        
         if (checkEmail(email, paziente.getEmail())) {
             try {
                 pazienteDao.changeEmail(email, paziente.getIdPaziente());
@@ -102,7 +88,6 @@ public class AreaPersonalePazienteServlet extends HttpServlet {
                 System.out.println(ex.getMessage());
             }
         }
-
         if (checkMedico(newMedico, paziente.getProvincia())) {
             try {
                 pazienteDao.changeMedico(newMedico, paziente.getIdPaziente());
@@ -112,7 +97,6 @@ public class AreaPersonalePazienteServlet extends HttpServlet {
                 System.out.println(ex.getMessage());
             }
         }
-
         session.setAttribute("paziente", paziente);
         request.setAttribute("medico", medico);
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(response.encodeRedirectURL("/pazienti/areePersonali.html"));
@@ -123,17 +107,6 @@ public class AreaPersonalePazienteServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private boolean checkPassword(String oldPassword, String newPassword, String idPaziente) {
-        try {
-            Paziente paziente = pazienteDao.getByIdAndPassword(idPaziente, oldPassword);
-
-            return (paziente != null) && newPassword != "";
-        } catch (DAOException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return false;
-    }
 
     private boolean checkEmail(String newEmail, String oldEmail) {
         return (newEmail != "" && newEmail != null) && newEmail != oldEmail;
@@ -156,8 +129,7 @@ public class AreaPersonalePazienteServlet extends HttpServlet {
         }
 
         HttpSession session = ((HttpServletRequest) request).getSession(false);
-        Paziente paziente = (Paziente) session.getAttribute("paziente");
-
+        Paziente paziente = (Paziente) session.getAttribute("paziente");      
         if (paziente == null) {
             response.sendRedirect(cp + "login.jsp");
         } else if (paziente.getIdPaziente() == null) {

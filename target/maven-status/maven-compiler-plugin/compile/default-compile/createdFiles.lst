@@ -6,6 +6,7 @@ com\mycompany\issplite\servlets\AreaPersonalePazienteServlet.class
 com\mycompany\issplite\persistence\entities\Farmaco.class
 com\mycompany\issplite\persistence\entities\RicettePrescrittePaziente.class
 com\mycompany\issplite\persistence\dao\jdbc\JDBCMedicoDAO.class
+com\mycompany\issplite\persistence\dao\jdbc\JDBCHashDAO.class
 com\mycompany\issplite\persistence\entities\Visita.class
 com\mycompany\issplite\persistence\entities\RichiamiPrescrittiPaziente.class
 com\mycompany\issplite\servlets\LoginServlet.class
@@ -20,6 +21,7 @@ com\mycompany\issplite\persistence\entities\EsamiSostenutiPaziente.class
 com\mycompany\issplite\servlets\DownloadRisultatoServlet.class
 com\mycompany\issplite\persistence\dao\factories\DAOException.class
 com\mycompany\issplite\servlets\CreaVisitaServlet$2.class
+com\mycompany\issplite\persistence\dao\HashDAO.class
 com\mycompany\issplite\servlets\ErogaEsameDettaglioServlet.class
 com\mycompany\issplite\persistence\dao\factories\DAOFactory.class
 com\mycompany\issplite\servlets\LogoutServlet.class
@@ -31,7 +33,9 @@ com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAO.class
 com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAOFactory.class
 com\mycompany\issplite\persistence\dao\factories\jdbc\JDBCDAOImpl.class
 com\mycompany\issplite\servlets\CreaVisitaServlet.class
+com\mycompany\issplite\persistence\entities\Hash.class
 com\mycompany\issplite\servlets\CreaRichiamoServlet.class
+com\mycompany\issplite\utilities\HashGenerator.class
 com\mycompany\issplite\persistence\entities\SSP.class
 com\mycompany\issplite\persistence\dao\factories\DAO.class
 com\mycompany\issplite\persistence\dao\RisultatoDAO.class
@@ -57,3 +61,4 @@ com\mycompany\issplite\servlets\DownloadTicketServlet.class
 com\mycompany\issplite\servlets\Farmaci.class
 com\mycompany\issplite\persistence\dao\EsameDAO.class
 com\mycompany\issplite\servlets\PazientiServlet.class
+com\mycompany\issplite\servlets\AggiornaPasswordServlet.class

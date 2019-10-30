@@ -314,7 +314,7 @@
                     <div class="text-center mb-4">
                         <p>Autenticati per poter accedere al tuo profilo personale di paziente/medico/ISSP.</p>
                     </div>
-                    <form action="login.handler" method="POST">
+                    <form action="login.handler" method="POST" onsubmit="cryptPassword()">
                         <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username" required>
                         <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password" required>
                         <div class="checkbox mb-3">
@@ -364,7 +364,12 @@
                     element.classList.add("alertCookieClass");
                 }
             </script>
-
+            <script>
+                function cryptPassword(password){
+                    console.log('ciao' + password)
+                    return true
+                }
+            </script>
             <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.0/js.cookie.min.js"></script>
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.css">

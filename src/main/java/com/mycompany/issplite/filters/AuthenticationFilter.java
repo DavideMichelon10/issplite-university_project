@@ -74,13 +74,13 @@ public class AuthenticationFilter implements Filter {
     }
 
     private Object getUser(ServletRequest request) {
-        String jsessionid;
+        String isspCookie;
         Cookie[] cookies = ((HttpServletRequest) request).getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("ISSPLiteId")) {
-                    jsessionid = cookie.getValue();
-                    return LoginServlet.retrieveId(jsessionid);
+                    isspCookie = cookie.getValue();
+                    return LoginServlet.retrieveId(isspCookie);
                 }
             }
         }

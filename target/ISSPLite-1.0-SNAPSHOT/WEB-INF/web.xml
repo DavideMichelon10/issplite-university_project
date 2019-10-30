@@ -74,7 +74,6 @@
         <servlet-class>com.mycompany.issplite.servlets.ErogaEsameDettaglioServlet</servlet-class>
     </servlet>
     
-    
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login.handler</url-pattern>
@@ -205,7 +204,6 @@
         <servlet-name>PazientiServlet</servlet-name>
         <url-pattern>/pazienti/pazienti.html</url-pattern>
     </servlet-mapping>
-
     <!--FINE PAZIENTE SERVLET-->
     <!--AREA PERSONALE PAZIENTE-->
     <servlet>
@@ -230,7 +228,6 @@
         <servlet-name>AggiornaFotoServlet</servlet-name>
         <servlet-class>com.mycompany.issplite.servlets.AggiornaFotoServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>AggiornaFotoServlet</servlet-name>
         <url-pattern>/pazienti/aggiornaFoto.html</url-pattern>
@@ -310,10 +307,19 @@
         <servlet-name>ErogaEsameSingoloPage</servlet-name>
         <url-pattern>/medici/erogaesamedettaglio.html</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>ErogaEsameDettaglioServlet</servlet-name>
         <url-pattern>/medici/erogaesamedettagli.html</url-pattern>
+    </servlet-mapping>
+    
+    <!--AGGIORNA PASSWORD SERVLET-->
+    <servlet>
+        <servlet-name>AggiornaPasswordServlet</servlet-name>
+        <servlet-class>com.mycompany.issplite.servlets.AggiornaPasswordServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AggiornaPasswordServlet</servlet-name>
+        <url-pattern>/pazienti/AggiornaPassword.html</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

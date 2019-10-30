@@ -29,8 +29,8 @@
 
         <style>
             .imgProfilo{
-                max-width: 250px;
-                max-height: 250px;
+                max-width: 215px;
+                max-height: 215px;
             }
 
             .cardProfilo{
@@ -127,37 +127,27 @@
         <script>
 
             function editFunction() {
-                document.getElementById("visualizzazioneMedico").style.display = "none";
-                document.getElementById("sceltaMedico").style.display = "block";
+                document.getElementById("formDati").style.display = "block";
+                document.getElementById("formPassword").style.display = "none";
                 document.getElementById("email").readOnly = false;
-                document.getElementById("psw").style.display = "none"
-                document.getElementById("currentPassword").readOnly = false;
-                document.getElementById("modifica").style.display = "block";
-                document.getElementById("newPassword").readOnly = false;
-                document.getElementById("checkPassword").readOnly = false;
-                document.getElementById("comandiBefore").style.display = "none";
+                document.getElementById("mediciSuggestionBox").style.display = "block";
+                document.getElementById("visualizzazioneMedico").style.display = "none";
                 document.getElementById("btnSubmit").style.display = "block";
+                document.getElementById("comandiBefore").style.display = "none";
                 document.getElementById("comandiAfter").style.display = "block";
-                document.getElementById("currentPassword").value = "";
-                document.getElementById("newPassword").value = "";
-                document.getElementById("checkPassword").value = "";
             }
 
             function backFunction() {
                 document.getElementById("visualizzazioneMedico").style.display = "block";
                 document.getElementById("visualizzazioneMedico").value = "${paziente.medico}";
                 document.getElementById("mediciSuggestionBox").value = "${paziente.medico}";
-                document.getElementById("sceltaMedico").style.display = "none";
+                document.getElementById("mediciSuggestionBox").style.display = "none";
                 document.getElementById("email").readOnly = true;
                 document.getElementById("email").value = '${paziente.email}';
-                document.getElementById("currentPassword").readOnly = true;
-                document.getElementById("newPassword").readOnly = true;
-                document.getElementById("checkPassword").readOnly = true;
                 document.getElementById("comandiBefore").style.display = "block";
                 document.getElementById("btnSubmit").style.display = "none";
                 document.getElementById("comandiAfter").style.display = "none";
-                document.getElementById("msgCurrentPsw").style.display = "none";
-                document.getElementById("msgCheckPsw").style.display = "none";
+
             }
 
             function showPassword(id) {
@@ -170,45 +160,33 @@
                 }
             }
 
-            function checkField() {
-                var currentPsw = document.getElementById("currentPassword").value;
-                var oldPsw = '${paziente.password}';
-                var newPsw = document.getElementById("newPassword").value;
-                var checkPsw = document.getElementById("checkPassword").value;
-                if (document.getElementById("psw").style.display == "block") {
-                    if (currentPsw == oldPsw) {
-                        if (newPsw == checkPsw && newPsw != '' && checkPsw != '') {
-                            return true;
-                        } else {
-                            document.getElementById("msgCheckPsw").style.display = "block";
-                            return false;
-                        }
-                    } else {
-                        document.getElementById("msgCurrentPsw").style.display = "block";
-                        return false;
-                    }
-                } else {
-                    document.getElementById("newPassword").value = null;
-                    return true;
-                }
-
-            }
-
             function changePassword() {
-                if (document.getElementById("psw").style.display == "none") {
-                    document.getElementById("modifica").style.display = "none";
+                if (document.getElementById("formPassword").style.display == "none") {
+                    document.getElementById("formDati").style.display = "none";
                     document.getElementById("comandiBefore").style.display = "block";
                     document.getElementById("comandiAfter").style.display = "none";
-                    document.getElementById("psw").style.display = "block";
-                    document.getElementById("btnSubmit").style.display = "block";
+                    document.getElementById("btnSubmit").style.display = "none";
+                    document.getElementById("formPassword").style.display = "block";
+                    document.getElementById("btnSubmitPsw").style.display = "block";
                     document.getElementById("currentPassword").readOnly = false;
                     document.getElementById("newPassword").readOnly = false;
                     document.getElementById("checkPassword").readOnly = false;
                 } else {
-                    document.getElementById("modifica").style.display = "block";
-                    document.getElementById("psw").style.display = "none";
+                    document.getElementById("formDati").style.display = "block";
+                    document.getElementById("btnSubmit").style.display = "block";
+                    document.getElementById("btnSubmitPsw").style.display = "none";
+                    document.getElementById("formPassword").style.display = "none";
                 }
 
+            }
+
+            function checkField() {
+                if (document.getElementById("newPassword").value == document.getElementById("checkPassword").value) {
+                    return true;
+                } else {
+                    document.getElementById("msgCheckPsw").style.display = "block";
+                    return false;
+                }
             }
 
 
@@ -235,7 +213,19 @@
                                 </label>        
                             </form>                                    
                         </div>
-                    </center>          
+                    </center>        
+
+                    <c:if test="${not empty sessionScope.status}">
+                        <c:choose>
+                            <c:when test="${sessionScope.status eq 'not_found'}">
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    Le credenziali <strong>NON </strong> corrispondono! Riprova!
+                                </div>
+                            </c:when>
+                        </c:choose>
+                        <c:remove var="status" scope="session" />
+                    </c:if>
 
 
                     <!--COMANDI FORM-->
@@ -250,11 +240,10 @@
 
                     <br><br><br>
 
-
                     <!--FORM DATI-->
-                    <div id="form">
-                        <form class="form-horizontal" role="form"  onsubmit="return checkField()" action="areaPersonale.html" method="POST">
-                            <div id="modifica" style="display: block;">
+                    <div id="formDati">
+                        <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/pazienti/areaPersonale.html" method="POST">
+                            <div id="modifica">
                                 <div class="form-group row">
                                     <label for="nome" class="col-sm-3 control-label">Nome e Cognome:</label>
                                     <div class="col-sm-9">
@@ -275,11 +264,11 @@
                                 </div>
                                 <div class="form-group row">
                                     <label for="medico" class="col-sm-3 control-label">Medico:</label>
-                                    <div class="col-sm-9" id="visualizzazioneMedico" style="display:block">
+                                    <div class="col-sm-9" id="visualizzazioneMedico">
                                         <input type="text" id="medico" value="${paziente.medico}" class="form-control" readonly>
                                     </div>
-                                    <div class="col-sm-9" id="sceltaMedico" style="display:none">                                    
-                                        <input id="mediciSuggestionBox" list="medici" name="newMedico" class="form-control" value="${paziente.medico}">
+                                    <div class="col-sm-9" id="sceltaMedico">                                    
+                                        <input id="mediciSuggestionBox" list="medici" name="newMedico" class="form-control" value="${paziente.medico}" style="display: none;">
                                         <datalist id="medici">
                                             <c:forEach var="mediciDisponibili" items="${mediciDisponibili}">
                                                 <option value="${mediciDisponibili.idMedico}">                                                
@@ -288,42 +277,46 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div id="psw" style="display: none;">
-                                <div class="form-group row"id="divPswOld">
-                                    <label for="currentPassword" class="col-sm-3 control-label">Password Corrente:</label>
-                                    <div class="col-sm-9">
-                                        <div class="input-icons">
-                                            <div onclick="showPassword('currentPassword')"><i class="fa fa-eye-slash icon"></i></div>
-                                            <input type="password" id="currentPassword" name="oldPassword" class="form-control input-field-password" readonly>
-                                            <p style="color: red; display: none;" id="msgCurrentPsw">Password errata</p>
-                                        </div>                                
-                                    </div>
-                                </div>   
-                                <div class="form-group row" id="divPswNew">
-                                    <label for="newPassword" class="col-sm-3 control-label">Nuova Password</label>
-                                    <div class="col-sm-9">
-                                        <div class="input-icons">
-                                            <div onclick="showPassword('newPassword')"><i class="fa fa-eye-slash icon"></i></div>
-                                            <input type="password" id="newPassword" name="newPassword" class="form-control input-field-password" readonly>
-                                        </div>
-                                    </div>
-                                </div>   
-                                <div class="form-group row" id="divPswCheck">
-                                    <label for="checkPassword" class="col-sm-3 control-label">Conferma Password:</label>
-                                    <div class="col-sm-9">
-                                        <div class="input-icons">
-                                            <div onclick="showPassword('checkPassword')"><i class="fa fa-eye-slash icon"></i></div>
-                                            <input type="password" id="checkPassword" class="form-control input-field-password" readonly>
-                                            <p style="color: red; display: none;" id="msgCheckPsw">Le due password non corrispondono</p>
-                                        </div>
-                                    </div>
-                                </div>  
-                            </div>
-
-                            <button action="submit" style="display: none" id="btnSubmit" class="btnStandard btnConferma">Conferma</button>
-                        </form>                       
+                            <button action="submit" id="btnSubmit" class="btnStandard btnConferma" style="display: none;">Conferma</button>
+                        </form>                                        
                     </div>
+
+                    <div id="formPassword" style="display:none;" onSubmit="return checkField()">
+                        <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/pazienti/AggiornaPassword.html" method="POST">
+
+                            <div class="form-group row"id="divPswOld">
+                                <label for="currentPassword" class="col-sm-3 control-label">Password Corrente:</label>
+                                <div class="col-sm-9">
+                                    <div class="input-icons">
+                                        <div onclick="showPassword('currentPassword')"><i class="fa fa-eye-slash icon"></i></div>
+                                        <input type="password" id="currentPassword" name="oldPassword" class="form-control input-field-password" readonly>
+                                        <p style="color: red; display: none;" id="msgCurrentPsw">Password errata</p>
+                                    </div>                                
+                                </div>
+                            </div>   
+                            <div class="form-group row" id="divPswNew">
+                                <label for="newPassword" class="col-sm-3 control-label">Nuova Password</label>
+                                <div class="col-sm-9">
+                                    <div class="input-icons">
+                                        <div onclick="showPassword('newPassword')"><i class="fa fa-eye-slash icon"></i></div>
+                                        <input type="password" id="newPassword" name="newPassword" class="form-control input-field-password" readonly>
+                                    </div>
+                                </div>
+                            </div>   
+                            <div class="form-group row" id="divPswCheck">
+                                <label for="checkPassword" class="col-sm-3 control-label">Conferma Password:</label>
+                                <div class="col-sm-9">
+                                    <div class="input-icons">
+                                        <div onclick="showPassword('checkPassword')"><i class="fa fa-eye-slash icon"></i></div>
+                                        <input type="password" id="checkPassword" class="form-control input-field-password" readonly>
+                                        <p style="color: red; display: none;" id="msgCheckPsw">Le due password non corrispondono</p>
+                                    </div>
+                                </div>
+                            </div> 
+                            <button action="submit" style="display: none" id="btnSubmitPsw" class="btnStandard btnConferma">Conferma password</button>
+                        </form>
+                    </div>
+
                 </div>
                 <div class="col-md-3"></div>
             </div>

@@ -1,14 +1,17 @@
 package com.mycompany.issplite.servlets;
 
+import com.mycompany.issplite.persistence.dao.HashDAO;
 import com.mycompany.issplite.persistence.dao.MedicoDAO;
 import com.mycompany.issplite.persistence.dao.PazienteDAO;
 import com.mycompany.issplite.persistence.dao.SSPDAO;
 import com.mycompany.issplite.persistence.dao.factories.DAOException;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactory;
 import com.mycompany.issplite.persistence.dao.factories.DAOFactoryException;
+import com.mycompany.issplite.persistence.entities.Hash;
 import com.mycompany.issplite.persistence.entities.Medico;
 import com.mycompany.issplite.persistence.entities.Paziente;
 import com.mycompany.issplite.persistence.entities.SSP;
+import com.mycompany.issplite.utilities.HashGenerator;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -29,6 +32,7 @@ public class LoginServlet extends HttpServlet {
     private PazienteDAO pazienteDao;
     private MedicoDAO medicoDao;
     private SSPDAO sspDao;
+    private HashDAO hashDao;
 
     private static HashMap<String, Object> authenticatedUsers; // jsession + ID
 
@@ -37,8 +41,8 @@ public class LoginServlet extends HttpServlet {
         authenticatedUsers = new HashMap<>();
     }
 
-    public static Object retrieveId(String jSessionId) {
-        return authenticatedUsers.get(jSessionId);
+    public static Object retrieveId(String isspCookie) {
+        return authenticatedUsers.get(isspCookie);
     }
 
     @Override
@@ -51,6 +55,7 @@ public class LoginServlet extends HttpServlet {
             pazienteDao = daoFactory.getDAO(PazienteDAO.class);
             medicoDao = daoFactory.getDAO(MedicoDAO.class);
             sspDao = daoFactory.getDAO(SSPDAO.class);
+            hashDao = daoFactory.getDAO(HashDAO.class);
 
         } catch (DAOFactoryException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,7 +65,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("username");
-        String password = request.getParameter("password");
+        String providedPassword = request.getParameter("password");
 
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
@@ -70,11 +75,12 @@ public class LoginServlet extends HttpServlet {
         Paziente paziente;
         Medico medico;
         SSP ssp;
-        paziente = searchForPaziente(id, password);
+        paziente = searchForPaziente(id, providedPassword);
+        System.out.println("paziente: " + paziente);
         if (paziente == null) {
-            medico = searchForMedico(id, password);
+            medico = searchForMedico(id, providedPassword);
             if (medico == null) {
-                ssp = searchForSSP(id, password);
+                ssp = searchForSSP(id, providedPassword);
                 if (ssp == null) {
                     request.getSession().setAttribute("status", "not_found");
                     HttpSession session = request.getSession(false);
@@ -101,27 +107,42 @@ public class LoginServlet extends HttpServlet {
 
     }
 
-    private Medico searchForMedico(String id, String password) {
+    private Medico searchForMedico(String id, String providedPassword) {
         try {
-            return medicoDao.getByIdAndPassword(id, password);
+            Hash hash = hashDao.getById(id);
+            Medico medico = medicoDao.getById(id);
+            boolean b = false;
+            if(medico != null)
+                b = HashGenerator.verifyUserPassword(providedPassword, medico.getPassword(), hash.getSalt());
+            return b ? medico : null;
         } catch (DAOException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    private SSP searchForSSP(String id, String password) {
+    private SSP searchForSSP(String id, String providedPassword) {
         try {
-            return sspDao.getByIdAndPassword(id, password);
+            Hash hash = hashDao.getById(id);
+            SSP ssp = sspDao.getById(id);
+            boolean b = false;
+            if(ssp != null)
+                 b = HashGenerator.verifyUserPassword(providedPassword, ssp.getPassword(), hash.getSalt());
+            return b ? ssp : null;
         } catch (DAOException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    private Paziente searchForPaziente(String id, String password) {
+    private Paziente searchForPaziente(String id, String providedPassword) {
         try {
-            return pazienteDao.getByIdAndPassword(id, password);
+            Hash hash = hashDao.getById(id);
+            Paziente paziente = pazienteDao.getById(id);
+            boolean b = false;
+            if(paziente != null)
+                b = HashGenerator.verifyUserPassword(providedPassword, paziente.getPassword(), hash.getSalt());
+            return b ? paziente : null;
         } catch (DAOException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -131,10 +152,10 @@ public class LoginServlet extends HttpServlet {
     private void addUserToCookie(Object user, HttpServletRequest request, HttpServletResponse response) {
         if (request.getParameter("rememberMe") != null) {
 
-            String jSessionId = Long.toHexString(Double.doubleToLongBits(Math.random()));
+            String isspCookie = Long.toHexString(Double.doubleToLongBits(Math.random()));
 
-            authenticatedUsers.put(jSessionId, user);
-            Cookie cookie = new Cookie("ISSPLiteId", jSessionId);
+            authenticatedUsers.put(isspCookie, user);
+            Cookie cookie = new Cookie("ISSPLiteId", isspCookie);
             cookie.setMaxAge(60);
             response.addCookie(cookie);
         }
